@@ -1,0 +1,61 @@
+﻿@page
+@model WebHomePro.Pages.LoginModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="~/css/style.css">
+    <style>
+        .form-section {
+            display: none;
+        }
+
+            .form-section.active {
+                display: block;
+            }
+
+        .tab {
+            cursor: pointer;
+            padding: 10px 20px;
+            display: inline-block;
+        }
+
+            .tab.active {
+                font-weight: bold;
+                border-bottom: 2px solid #5fbae9;
+            }
+    </style>
+</head>
+<body>
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
+
+            <div class="fadeIn first">
+                <img src="~/img/LOGO HOMEPRO.png" id="icon" alt="User Icon" />
+            </div>
+
+            <div id="cliente" class="form-section active">
+                <form method="post" asp-page-handler="Cliente">
+                    <input asp-for="Usuario" placeholder="Usuario" />
+                    <input asp-for="Password" type="password" placeholder="Contraseña" />
+                    <input type="submit" value="¡Ingresar!" />
+                </form>
+            </div>
+
+            <!-- Mensaje de error -->
+            @if (!string.IsNullOrEmpty(Model.Mensaje))
+            {
+                <p style="color:red">@Model.Mensaje</p>
+            }
+
+            <div id="formFooter">
+                <a class="underlineHover" href="#">¿Olvidó la contraseña?</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
