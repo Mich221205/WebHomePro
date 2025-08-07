@@ -1,0 +1,22 @@
+# Ignorar archivos de Visual Studio
+.vs/
+*.user
+*.suo
+
+# Ignorar binarios y compilados
+bin/
+obj/
+
+# Ignorar paquetes y dependencias
+packages/
+node_modules/
+
+# Ignorar archivos de publicación
+*.publishsettings
+
+# Ignorar configuraciones de entorno
+.env
+
+# Ignorar archivos temporales
+*.log
+*.tmp

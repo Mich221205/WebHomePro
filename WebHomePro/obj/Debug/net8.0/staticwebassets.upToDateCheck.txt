@@ -1,9 +1,11 @@
 wwwroot\css\site.css
 wwwroot\css\style.css
+wwwroot\css\StyleMenuAdmin.css
 wwwroot\favicon.ico
 wwwroot\img\descarga.png
+wwwroot\img\home-bg.jpg
 wwwroot\img\LOGO HOMEPRO.png
-wwwroot\js\site.js
+wwwroot\js\scripts.js
 wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css
 wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map
 wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css
