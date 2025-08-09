@@ -1,5 +1,5 @@
 ﻿@page
-@model WebHomePro.Pages.Admin.MenuAdminModel
+@model WebHomePro.Pages.Admin.Nuevas_LineasTELEModel
 @{
     Layout = null;
 }
@@ -101,32 +101,44 @@
 
             <div id="formularioNuevo" class="mt-5" style="display: none;">
                 <h4>Registrar nueva línea</h4>
-                <form>
+                <form method="post"
+                      asp-page="./Nuevas_LineasTELE"
+                      asp-page-handler="Nueva"
+                      asp-antiforgery="true">
                     <div class="mb-3">
-                        <label for="telefono" class="form-label">Número de teléfono</label>
-                        <input type="text" class="form-control" id="telefono" maxlength="8" required />
+                        <label asp-for="NumeroTelefono" class="form-label">Numero Telefono</label>
+                        <input asp-for="NumeroTelefono" class="form-control" maxlength="16" required />
                     </div>
                     <div class="mb-3">
-                        <label for="idTelefono" class="form-label">Identificador teléfono (16 dígitos)</label>
-                        <input type="text" class="form-control" id="idTelefono" maxlength="16" required />
+                        <label asp-for="IdTelefono" class="form-label">Identificador teléfono (16 dígitos)</label>
+                        <input asp-for="IdTelefono" class="form-control" maxlength="16" required />
                     </div>
                     <div class="mb-3">
-                        <label for="idTarjeta" class="form-label">Identificador tarjeta (19 dígitos)</label>
-                        <input type="text" class="form-control" id="idTarjeta" maxlength="19" required />
+                        <label asp-for="IdTarjeta" class="form-label">Identificador tarjeta (19 dígitos)</label>
+                        <input asp-for="IdTarjeta" class="form-control" maxlength="19" required />
                     </div>
                     <div class="mb-3">
-                        <label for="tipo" class="form-label">Tipo de servicio</label>
-                        <select class="form-select" id="tipo" required>
+                        <label asp-for="Tipo" class="form-label">Tipo de servicio</label>
+                        <select asp-for="Tipo" class="form-select" required>
                             <option value="">Seleccione</option>
                             <option value="prepago">Prepago</option>
                             <option value="postpago">Postpago</option>
                         </select>
                     </div>
-                    <div class="text-end">
-                        <button type="submit" class="btn btn-success">Guardar</button>
-                    </div>
+                    <button type="submit" class="btn btn-success">Guardar</button>
                 </form>
+
+                <!-- Mensajes de éxito o error -->
+                @if (TempData["Success"] != null)
+                {
+                    <div class="alert alert-success">@TempData["Success"]</div>
+                }
+                @if (TempData["Error"] != null)
+                {
+                    <div class="alert alert-danger">@TempData["Error"]</div>
+                }
             </div>
+
         </div>
     </section>
 

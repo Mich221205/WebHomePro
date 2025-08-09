@@ -10,4 +10,7 @@
     <PackageReference Include="System.ServiceModel.NetTcp" Version="8.*" />
     <PackageReference Include="System.ServiceModel.Primitives" Version="8.*" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\WSProveedor1\WSProveedor1\WSProveedor1.csproj" />
+  </ItemGroup>
 </Project>

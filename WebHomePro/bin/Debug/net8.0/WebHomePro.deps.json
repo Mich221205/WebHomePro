@@ -10,7 +10,8 @@
         "dependencies": {
           "System.ServiceModel.Http": "8.1.2",
           "System.ServiceModel.NetTcp": "8.1.2",
-          "System.ServiceModel.Primitives": "8.1.2"
+          "System.ServiceModel.Primitives": "8.1.2",
+          "WSProveedor1": "1.0.0"
         },
         "runtime": {
           "WebHomePro.dll": {}
@@ -272,6 +273,22 @@
             "locale": "zh-Hant"
           }
         }
+      },
+      "WSProveedor1/1.0.0": {
+        "runtime": {
+          "WSProveedor1.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "Newtonsoft.Json/13.0.0.0": {
+        "runtime": {
+          "Newtonsoft.Json.dll": {
+            "assemblyVersion": "13.0.0.0",
+            "fileVersion": "13.0.3.27908"
+          }
+        }
       }
     }
   },
@@ -329,6 +346,16 @@
       "sha512": "sha512-xlJ07FAUSDjPL/GhvVY1/KVPWn2ce056X4nHPwqAa5rkNLiNN5rqh6VcgMUoF6J7ckwhkVJ1vVx/K/47nyyR9g==",
       "path": "system.servicemodel.primitives/8.1.2",
       "hashPath": "system.servicemodel.primitives.8.1.2.nupkg.sha512"
+    },
+    "WSProveedor1/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Newtonsoft.Json/13.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
     }
   }
 }

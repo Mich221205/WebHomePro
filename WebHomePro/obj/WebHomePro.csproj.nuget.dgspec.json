@@ -31,7 +31,11 @@
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "C:\\Users\\Michel\\workspace\\WSProveedor1\\WSProveedor1\\WSProveedor1.csproj": {
+                "projectPath": "C:\\Users\\Michel\\workspace\\WSProveedor1\\WSProveedor1\\WSProveedor1.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -84,6 +88,22 @@
           },
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.302/PortableRuntimeIdentifierGraph.json"
         }
+      }
+    },
+    "C:\\Users\\Michel\\workspace\\WSProveedor1\\WSProveedor1\\WSProveedor1.csproj": {
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Michel\\workspace\\WSProveedor1\\WSProveedor1\\WSProveedor1.csproj",
+        "projectName": "WSProveedor1",
+        "projectPath": "C:\\Users\\Michel\\workspace\\WSProveedor1\\WSProveedor1\\WSProveedor1.csproj",
+        "UsingMicrosoftNETSdk": false,
+        "frameworks": {
+          "net48": {
+            "projectReferences": {}
+          }
+        }
+      },
+      "frameworks": {
+        "net48": {}
       }
     }
   }
