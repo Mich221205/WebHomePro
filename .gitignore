@@ -20,3 +20,8 @@ node_modules/
 # Ignorar archivos temporales
 *.log
 *.tmp
+
+.vs/
+obj/
+bin/
+
