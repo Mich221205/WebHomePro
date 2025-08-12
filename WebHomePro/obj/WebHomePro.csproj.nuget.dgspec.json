@@ -95,12 +95,28 @@
         "projectUniqueName": "C:\\Users\\Michel\\workspace\\WSProveedor1\\WSProveedor1\\WSProveedor1.csproj",
         "projectName": "WSProveedor1",
         "projectPath": "C:\\Users\\Michel\\workspace\\WSProveedor1\\WSProveedor1\\WSProveedor1.csproj",
+        "packagesPath": "C:\\Users\\Michel\\.nuget\\packages\\",
+        "projectStyle": "PackagesConfig",
         "UsingMicrosoftNETSdk": false,
+        "configFilePaths": [
+          "C:\\Users\\Michel\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
         "frameworks": {
           "net48": {
             "projectReferences": {}
           }
-        }
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low"
+        },
+        "packagesConfigPath": "C:\\Users\\Michel\\workspace\\WSProveedor1\\WSProveedor1\\packages.config"
       },
       "frameworks": {
         "net48": {}

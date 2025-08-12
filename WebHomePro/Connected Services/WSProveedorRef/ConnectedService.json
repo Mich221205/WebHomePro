@@ -1,7 +1,7 @@
 {
   "ExtendedData": {
     "inputs": [
-      "https://localhost:44354/WSProveedor.asmx"
+      "https://localhost:44354/WSProveedor1/WSProveedor.asmx"
     ],
     "collectionTypes": [
       "System.Array",
@@ -9,20 +9,6 @@
     ],
     "namespaceMappings": [
       "*, WSProveedorRef"
-    ],
-    "references": [
-      "C:\\Users\\Michel\\workspace\\WebHomePro\\WebHomePro\\bin\\Debug\\net8.0\\Newtonsoft.Json.dll",
-      "C:\\Users\\Michel\\workspace\\WebHomePro\\WebHomePro\\bin\\Debug\\net8.0\\WSProveedor1.dll",
-      "Microsoft.Extensions.ObjectPool, {Microsoft.Extensions.ObjectPool, 8.0.10}",
-      "System.Security.Cryptography.Pkcs, {System.Security.Cryptography.Pkcs, 8.0.1}",
-      "System.Security.Cryptography.Xml, {System.Security.Cryptography.Xml, 8.0.2}",
-      "System.ServiceModel, {System.ServiceModel.Primitives, 8.1.2}",
-      "System.ServiceModel.Duplex, {System.ServiceModel.Primitives, 8.1.2}",
-      "System.ServiceModel.Http, {System.ServiceModel.Http, 8.1.2}",
-      "System.ServiceModel.NetFramingBase, {System.ServiceModel.NetFramingBase, 8.1.2}",
-      "System.ServiceModel.NetTcp, {System.ServiceModel.NetTcp, 8.1.2}",
-      "System.ServiceModel.Primitives, {System.ServiceModel.Primitives, 8.1.2}",
-      "System.ServiceModel.Security, {System.ServiceModel.Primitives, 8.1.2}"
     ],
     "targetFramework": "net8.0",
     "typeReuseMode": "All"

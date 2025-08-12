@@ -14,7 +14,7 @@ namespace WSProveedorRef
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="RespuestaIngresarServicio", Namespace="https://localhost:44354/WSProveedor.asmx")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="RespuestaIngresarServicio", Namespace="http://wsproveedor1.org/")]
     public partial class RespuestaIngresarServicio : object
     {
         
@@ -51,7 +51,59 @@ namespace WSProveedorRef
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="RespuestaActivarDesactivar", Namespace="https://localhost:44354/WSProveedor.asmx")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="LineaDisponible", Namespace="http://wsproveedor1.org/")]
+    public partial class LineaDisponible : object
+    {
+        
+        private string NumeroField;
+        
+        private string IdTarjetaField;
+        
+        private string TipoField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+        public string Numero
+        {
+            get
+            {
+                return this.NumeroField;
+            }
+            set
+            {
+                this.NumeroField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
+        public string IdTarjeta
+        {
+            get
+            {
+                return this.IdTarjetaField;
+            }
+            set
+            {
+                this.IdTarjetaField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=2)]
+        public string Tipo
+        {
+            get
+            {
+                return this.TipoField;
+            }
+            set
+            {
+                this.TipoField = value;
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="RespuestaActivarDesactivar", Namespace="http://wsproveedor1.org/")]
     public partial class RespuestaActivarDesactivar : object
     {
         
@@ -88,7 +140,7 @@ namespace WSProveedorRef
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="RespuestaCalculoPostpago", Namespace="https://localhost:44354/WSProveedor.asmx")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="RespuestaCalculoPostpago", Namespace="http://wsproveedor1.org/")]
     public partial class RespuestaCalculoPostpago : object
     {
         
@@ -124,17 +176,20 @@ namespace WSProveedorRef
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(Namespace="https://localhost:44354/WSProveedor.asmx", ConfigurationName="WSProveedorRef.WSProveedorSoap")]
+    [System.ServiceModel.ServiceContractAttribute(Namespace="http://wsproveedor1.org/", ConfigurationName="WSProveedorRef.WSProveedorSoap")]
     public interface WSProveedorSoap
     {
         
-        [System.ServiceModel.OperationContractAttribute(Action="https://localhost:44354/WSProveedor.asmx/IngresarNuevoServicio", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://wsproveedor1.org/IngresarNuevoServicio", ReplyAction="*")]
         System.Threading.Tasks.Task<WSProveedorRef.IngresarNuevoServicioResponse> IngresarNuevoServicioAsync(WSProveedorRef.IngresarNuevoServicioRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="https://localhost:44354/WSProveedor.asmx/ActivarDesactivarLinea", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://wsproveedor1.org/ObtenerLineasDisponibles", ReplyAction="*")]
+        System.Threading.Tasks.Task<WSProveedorRef.ObtenerLineasDisponiblesResponse> ObtenerLineasDisponiblesAsync(WSProveedorRef.ObtenerLineasDisponiblesRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://wsproveedor1.org/ActivarDesactivarLinea", ReplyAction="*")]
         System.Threading.Tasks.Task<WSProveedorRef.ActivarDesactivarLineaResponse> ActivarDesactivarLineaAsync(WSProveedorRef.ActivarDesactivarLineaRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="https://localhost:44354/WSProveedor.asmx/CalcularCobroPostpago", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://wsproveedor1.org/CalcularCobroPostpago", ReplyAction="*")]
         System.Threading.Tasks.Task<WSProveedorRef.CalcularCobroPostpagoResponse> CalcularCobroPostpagoAsync(WSProveedorRef.CalcularCobroPostpagoRequest request);
     }
     
@@ -145,7 +200,7 @@ namespace WSProveedorRef
     public partial class IngresarNuevoServicioRequest
     {
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="IngresarNuevoServicio", Namespace="https://localhost:44354/WSProveedor.asmx", Order=0)]
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="IngresarNuevoServicio", Namespace="http://wsproveedor1.org/", Order=0)]
         public WSProveedorRef.IngresarNuevoServicioRequestBody Body;
         
         public IngresarNuevoServicioRequest()
@@ -161,7 +216,7 @@ namespace WSProveedorRef
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.Runtime.Serialization.DataContractAttribute(Namespace="https://localhost:44354/WSProveedor.asmx")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://wsproveedor1.org/")]
     public partial class IngresarNuevoServicioRequestBody
     {
         
@@ -201,7 +256,7 @@ namespace WSProveedorRef
     public partial class IngresarNuevoServicioResponse
     {
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="IngresarNuevoServicioResponse", Namespace="https://localhost:44354/WSProveedor.asmx", Order=0)]
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="IngresarNuevoServicioResponse", Namespace="http://wsproveedor1.org/", Order=0)]
         public WSProveedorRef.IngresarNuevoServicioResponseBody Body;
         
         public IngresarNuevoServicioResponse()
@@ -217,7 +272,7 @@ namespace WSProveedorRef
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.Runtime.Serialization.DataContractAttribute(Namespace="https://localhost:44354/WSProveedor.asmx")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://wsproveedor1.org/")]
     public partial class IngresarNuevoServicioResponseBody
     {
         
@@ -238,10 +293,82 @@ namespace WSProveedorRef
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class ObtenerLineasDisponiblesRequest
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="ObtenerLineasDisponibles", Namespace="http://wsproveedor1.org/", Order=0)]
+        public WSProveedorRef.ObtenerLineasDisponiblesRequestBody Body;
+        
+        public ObtenerLineasDisponiblesRequest()
+        {
+        }
+        
+        public ObtenerLineasDisponiblesRequest(WSProveedorRef.ObtenerLineasDisponiblesRequestBody Body)
+        {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute()]
+    public partial class ObtenerLineasDisponiblesRequestBody
+    {
+        
+        public ObtenerLineasDisponiblesRequestBody()
+        {
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class ObtenerLineasDisponiblesResponse
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="ObtenerLineasDisponiblesResponse", Namespace="http://wsproveedor1.org/", Order=0)]
+        public WSProveedorRef.ObtenerLineasDisponiblesResponseBody Body;
+        
+        public ObtenerLineasDisponiblesResponse()
+        {
+        }
+        
+        public ObtenerLineasDisponiblesResponse(WSProveedorRef.ObtenerLineasDisponiblesResponseBody Body)
+        {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://wsproveedor1.org/")]
+    public partial class ObtenerLineasDisponiblesResponseBody
+    {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public WSProveedorRef.LineaDisponible[] ObtenerLineasDisponiblesResult;
+        
+        public ObtenerLineasDisponiblesResponseBody()
+        {
+        }
+        
+        public ObtenerLineasDisponiblesResponseBody(WSProveedorRef.LineaDisponible[] ObtenerLineasDisponiblesResult)
+        {
+            this.ObtenerLineasDisponiblesResult = ObtenerLineasDisponiblesResult;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class ActivarDesactivarLineaRequest
     {
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="ActivarDesactivarLinea", Namespace="https://localhost:44354/WSProveedor.asmx", Order=0)]
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="ActivarDesactivarLinea", Namespace="http://wsproveedor1.org/", Order=0)]
         public WSProveedorRef.ActivarDesactivarLineaRequestBody Body;
         
         public ActivarDesactivarLineaRequest()
@@ -257,7 +384,7 @@ namespace WSProveedorRef
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.Runtime.Serialization.DataContractAttribute(Namespace="https://localhost:44354/WSProveedor.asmx")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://wsproveedor1.org/")]
     public partial class ActivarDesactivarLineaRequestBody
     {
         
@@ -301,7 +428,7 @@ namespace WSProveedorRef
     public partial class ActivarDesactivarLineaResponse
     {
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="ActivarDesactivarLineaResponse", Namespace="https://localhost:44354/WSProveedor.asmx", Order=0)]
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="ActivarDesactivarLineaResponse", Namespace="http://wsproveedor1.org/", Order=0)]
         public WSProveedorRef.ActivarDesactivarLineaResponseBody Body;
         
         public ActivarDesactivarLineaResponse()
@@ -317,7 +444,7 @@ namespace WSProveedorRef
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.Runtime.Serialization.DataContractAttribute(Namespace="https://localhost:44354/WSProveedor.asmx")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://wsproveedor1.org/")]
     public partial class ActivarDesactivarLineaResponseBody
     {
         
@@ -341,7 +468,7 @@ namespace WSProveedorRef
     public partial class CalcularCobroPostpagoRequest
     {
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="CalcularCobroPostpago", Namespace="https://localhost:44354/WSProveedor.asmx", Order=0)]
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="CalcularCobroPostpago", Namespace="http://wsproveedor1.org/", Order=0)]
         public WSProveedorRef.CalcularCobroPostpagoRequestBody Body;
         
         public CalcularCobroPostpagoRequest()
@@ -357,7 +484,7 @@ namespace WSProveedorRef
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.Runtime.Serialization.DataContractAttribute(Namespace="https://localhost:44354/WSProveedor.asmx")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://wsproveedor1.org/")]
     public partial class CalcularCobroPostpagoRequestBody
     {
         
@@ -385,7 +512,7 @@ namespace WSProveedorRef
     public partial class CalcularCobroPostpagoResponse
     {
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="CalcularCobroPostpagoResponse", Namespace="https://localhost:44354/WSProveedor.asmx", Order=0)]
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="CalcularCobroPostpagoResponse", Namespace="http://wsproveedor1.org/", Order=0)]
         public WSProveedorRef.CalcularCobroPostpagoResponseBody Body;
         
         public CalcularCobroPostpagoResponse()
@@ -401,7 +528,7 @@ namespace WSProveedorRef
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.Runtime.Serialization.DataContractAttribute(Namespace="https://localhost:44354/WSProveedor.asmx")]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://wsproveedor1.org/")]
     public partial class CalcularCobroPostpagoResponseBody
     {
         
@@ -477,6 +604,19 @@ namespace WSProveedorRef
             inValue.Body.tipo = tipo;
             inValue.Body.estado = estado;
             return ((WSProveedorRef.WSProveedorSoap)(this)).IngresarNuevoServicioAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<WSProveedorRef.ObtenerLineasDisponiblesResponse> WSProveedorRef.WSProveedorSoap.ObtenerLineasDisponiblesAsync(WSProveedorRef.ObtenerLineasDisponiblesRequest request)
+        {
+            return base.Channel.ObtenerLineasDisponiblesAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<WSProveedorRef.ObtenerLineasDisponiblesResponse> ObtenerLineasDisponiblesAsync()
+        {
+            WSProveedorRef.ObtenerLineasDisponiblesRequest inValue = new WSProveedorRef.ObtenerLineasDisponiblesRequest();
+            inValue.Body = new WSProveedorRef.ObtenerLineasDisponiblesRequestBody();
+            return ((WSProveedorRef.WSProveedorSoap)(this)).ObtenerLineasDisponiblesAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -557,11 +697,11 @@ namespace WSProveedorRef
         {
             if ((endpointConfiguration == EndpointConfiguration.WSProveedorSoap))
             {
-                return new System.ServiceModel.EndpointAddress("https://localhost:44354/WSProveedor.asmx");
+                return new System.ServiceModel.EndpointAddress("https://localhost:44354/WSProveedor1/WSProveedor.asmx");
             }
             if ((endpointConfiguration == EndpointConfiguration.WSProveedorSoap12))
             {
-                return new System.ServiceModel.EndpointAddress("https://localhost:44354/WSProveedor.asmx");
+                return new System.ServiceModel.EndpointAddress("https://localhost:44354/WSProveedor1/WSProveedor.asmx");
             }
             throw new System.InvalidOperationException(string.Format("No se pudo encontrar un punto de conexión con el nombre \"{0}\".", endpointConfiguration));
         }
