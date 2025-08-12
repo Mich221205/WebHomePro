@@ -289,15 +289,6 @@
             "locale": "zh-Hant"
           }
         }
-      },
-      "WSProveedor1/1.0.0": {
-        "type": "project",
-        "compile": {
-          "bin/placeholder/WSProveedor1.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/WSProveedor1.dll": {}
-        }
       }
     }
   },
@@ -570,19 +561,13 @@
         "system.servicemodel.primitives.8.1.2.nupkg.sha512",
         "system.servicemodel.primitives.nuspec"
       ]
-    },
-    "WSProveedor1/1.0.0": {
-      "type": "project",
-      "path": "../../WSProveedor1/WSProveedor1/WSProveedor1.csproj",
-      "msbuildProject": "../../WSProveedor1/WSProveedor1/WSProveedor1.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net8.0": [
       "System.ServiceModel.Http >= 8.*",
       "System.ServiceModel.NetTcp >= 8.*",
-      "System.ServiceModel.Primitives >= 8.*",
-      "WSProveedor1 >= 1.0.0"
+      "System.ServiceModel.Primitives >= 8.*"
     ]
   },
   "packageFolders": {
@@ -616,11 +601,7 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
-          "projectReferences": {
-            "C:\\Users\\Michel\\workspace\\WSProveedor1\\WSProveedor1\\WSProveedor1.csproj": {
-              "projectPath": "C:\\Users\\Michel\\workspace\\WSProveedor1\\WSProveedor1\\WSProveedor1.csproj"
-            }
-          }
+          "projectReferences": {}
         }
       },
       "warningProperties": {
@@ -671,7 +652,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.302/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.304/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

@@ -180,6 +180,9 @@ namespace WSProveedorRef
     public interface WSProveedorSoap
     {
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://wsproveedor1.org/EliminarLinea", ReplyAction="*")]
+        System.Threading.Tasks.Task<WSProveedorRef.EliminarLineaResponse> EliminarLineaAsync(WSProveedorRef.EliminarLineaRequest request);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://wsproveedor1.org/IngresarNuevoServicio", ReplyAction="*")]
         System.Threading.Tasks.Task<WSProveedorRef.IngresarNuevoServicioResponse> IngresarNuevoServicioAsync(WSProveedorRef.IngresarNuevoServicioRequest request);
         
@@ -191,6 +194,86 @@ namespace WSProveedorRef
         
         [System.ServiceModel.OperationContractAttribute(Action="http://wsproveedor1.org/CalcularCobroPostpago", ReplyAction="*")]
         System.Threading.Tasks.Task<WSProveedorRef.CalcularCobroPostpagoResponse> CalcularCobroPostpagoAsync(WSProveedorRef.CalcularCobroPostpagoRequest request);
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class EliminarLineaRequest
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="EliminarLinea", Namespace="http://wsproveedor1.org/", Order=0)]
+        public WSProveedorRef.EliminarLineaRequestBody Body;
+        
+        public EliminarLineaRequest()
+        {
+        }
+        
+        public EliminarLineaRequest(WSProveedorRef.EliminarLineaRequestBody Body)
+        {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://wsproveedor1.org/")]
+    public partial class EliminarLineaRequestBody
+    {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string numeroTelefono;
+        
+        public EliminarLineaRequestBody()
+        {
+        }
+        
+        public EliminarLineaRequestBody(string numeroTelefono)
+        {
+            this.numeroTelefono = numeroTelefono;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class EliminarLineaResponse
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="EliminarLineaResponse", Namespace="http://wsproveedor1.org/", Order=0)]
+        public WSProveedorRef.EliminarLineaResponseBody Body;
+        
+        public EliminarLineaResponse()
+        {
+        }
+        
+        public EliminarLineaResponse(WSProveedorRef.EliminarLineaResponseBody Body)
+        {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://wsproveedor1.org/")]
+    public partial class EliminarLineaResponseBody
+    {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public WSProveedorRef.RespuestaIngresarServicio EliminarLineaResult;
+        
+        public EliminarLineaResponseBody()
+        {
+        }
+        
+        public EliminarLineaResponseBody(WSProveedorRef.RespuestaIngresarServicio EliminarLineaResult)
+        {
+            this.EliminarLineaResult = EliminarLineaResult;
+        }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -586,6 +669,20 @@ namespace WSProveedorRef
         public WSProveedorSoapClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress)
         {
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<WSProveedorRef.EliminarLineaResponse> WSProveedorRef.WSProveedorSoap.EliminarLineaAsync(WSProveedorRef.EliminarLineaRequest request)
+        {
+            return base.Channel.EliminarLineaAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<WSProveedorRef.EliminarLineaResponse> EliminarLineaAsync(string numeroTelefono)
+        {
+            WSProveedorRef.EliminarLineaRequest inValue = new WSProveedorRef.EliminarLineaRequest();
+            inValue.Body = new WSProveedorRef.EliminarLineaRequestBody();
+            inValue.Body.numeroTelefono = numeroTelefono;
+            return ((WSProveedorRef.WSProveedorSoap)(this)).EliminarLineaAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]

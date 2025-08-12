@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:tns="http://wsproveedor1.org/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" targetNamespace="http://wsproveedor1.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://wsproveedor1.org/">
+      <s:element name="IngresarNuevoServicio">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="numeroTelefono" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="idTelefono" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="idTarjeta" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="tipo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="estado" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="IngresarNuevoServicioResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="IngresarNuevoServicioResult" type="tns:RespuestaIngresarServicio" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="RespuestaIngresarServicio">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Resultado" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="Mensaje" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="IngresarNuevoServicioSoapIn">
+    <wsdl:part name="parameters" element="tns:IngresarNuevoServicio" />
+  </wsdl:message>
+  <wsdl:message name="IngresarNuevoServicioSoapOut">
+    <wsdl:part name="parameters" element="tns:IngresarNuevoServicioResponse" />
+  </wsdl:message>
+  <wsdl:portType name="WSProveedorSoap">
+    <wsdl:operation name="IngresarNuevoServicio">
+      <wsdl:input message="tns:IngresarNuevoServicioSoapIn" />
+      <wsdl:output message="tns:IngresarNuevoServicioSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WSProveedorSoap" type="tns:WSProveedorSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="IngresarNuevoServicio">
+      <soap:operation soapAction="http://wsproveedor1.org/IngresarNuevoServicio" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="WSProveedorSoap12" type="tns:WSProveedorSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="IngresarNuevoServicio">
+      <soap12:operation soapAction="http://wsproveedor1.org/IngresarNuevoServicio" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="WSProveedor">
+    <wsdl:port name="WSProveedorSoap" binding="tns:WSProveedorSoap">
+      <soap:address location="https://localhost:44354/WSProveedor.asmx" />
+    </wsdl:port>
+    <wsdl:port name="WSProveedorSoap12" binding="tns:WSProveedorSoap12">
+      <soap12:address location="https://localhost:44354/WSProveedor.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

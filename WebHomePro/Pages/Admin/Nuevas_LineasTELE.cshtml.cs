@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Security.Cryptography;
 using System.Text;
-using WSProveedor1;
 using WSProveedorRef;
 
 namespace WebHomePro.Pages.Admin
