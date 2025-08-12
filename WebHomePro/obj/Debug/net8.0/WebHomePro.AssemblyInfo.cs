@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WebHomePro")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+05ba1a8b5c49d1e01ef5681e79ef48d3e8ab2833")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4fa33a7e66af9434a8577e788797d944d73d8191")]
 [assembly: System.Reflection.AssemblyProductAttribute("WebHomePro")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WebHomePro")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
