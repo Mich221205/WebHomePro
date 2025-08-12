@@ -5,6 +5,8 @@ VisualStudioVersion = 17.14.36327.8
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebHomePro", "WebHomePro.csproj", "{CE2FDD12-9EA0-46A0-8E25-8D6E6413350D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WSProveedor1", "..\..\WSProveedor1\WSProveedor1\WSProveedor1.csproj", "{0D277C98-66F0-4C69-B491-415E34A01CD0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{CE2FDD12-9EA0-46A0-8E25-8D6E6413350D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CE2FDD12-9EA0-46A0-8E25-8D6E6413350D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CE2FDD12-9EA0-46A0-8E25-8D6E6413350D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D277C98-66F0-4C69-B491-415E34A01CD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D277C98-66F0-4C69-B491-415E34A01CD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D277C98-66F0-4C69-B491-415E34A01CD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D277C98-66F0-4C69-B491-415E34A01CD0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

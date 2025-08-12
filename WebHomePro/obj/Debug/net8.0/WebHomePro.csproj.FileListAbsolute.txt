@@ -132,3 +132,19 @@ C:\Users\Michel\workspace\WebHomePro\WebHomePro\obj\Debug\net8.0\staticwebassets
 C:\Users\Michel\workspace\WebHomePro\WebHomePro\obj\Debug\net8.0\WebHomePro.csproj.Up2Date
 C:\Users\Michel\workspace\WebHomePro\WebHomePro\obj\Debug\net8.0\WebHomePro.genruntimeconfig.cache
 C:\Users\Michel\workspace\WebHomePro\WebHomePro\obj\Debug\net8.0\ref\WebHomePro.dll
+C:\Users\Michel\workspace\WebHomePro\WebHomePro\bin\Debug\net8.0\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\Roslyn45\csc.exe.config
+C:\Users\Michel\workspace\WebHomePro\WebHomePro\bin\Debug\net8.0\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\Roslyn45\vbc.exe.config
+C:\Users\Michel\workspace\WebHomePro\WebHomePro\bin\Debug\net8.0\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\Roslyn45\VBCSCompiler.exe.config
+C:\Users\Michel\workspace\WebHomePro\WebHomePro\bin\Debug\net8.0\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest\csc.exe.config
+C:\Users\Michel\workspace\WebHomePro\WebHomePro\bin\Debug\net8.0\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest\csi.exe.config
+C:\Users\Michel\workspace\WebHomePro\WebHomePro\bin\Debug\net8.0\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest\vbc.exe.config
+C:\Users\Michel\workspace\WebHomePro\WebHomePro\bin\Debug\net8.0\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest\VBCSCompiler.exe.config
+C:\Users\Michel\workspace\WebHomePro\WebHomePro\bin\Debug\net8.0\Connected Services\WSProveedorRef\ConnectedService.json
+C:\Users\Michel\workspace\WebHomePro\WebHomePro\bin\Debug\net8.0\WSProveedor1.dll
+C:\Users\Michel\workspace\WebHomePro\WebHomePro\bin\Debug\net8.0\Newtonsoft.Json.dll
+C:\Users\Michel\workspace\WebHomePro\WebHomePro\bin\Debug\net8.0\WSProveedor1.pdb
+C:\Users\Michel\workspace\WebHomePro\WebHomePro\bin\Debug\net8.0\WSProveedor1.dll.config
+C:\Users\Michel\workspace\WebHomePro\WebHomePro\bin\Debug\net8.0\Newtonsoft.Json.xml
+C:\Users\Michel\workspace\WebHomePro\WebHomePro\bin\Debug\net8.0\packages\EntityFramework.6.5.1\tools\net6.0\any\ef6.runtimeconfig.json
+C:\Users\Michel\workspace\WebHomePro\WebHomePro\bin\Debug\net8.0\EntityFramework.dll
+C:\Users\Michel\workspace\WebHomePro\WebHomePro\bin\Debug\net8.0\EntityFramework.xml

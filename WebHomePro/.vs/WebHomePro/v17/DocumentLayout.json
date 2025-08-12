@@ -12,6 +12,45 @@
           "SelectedChildIndex": -1,
           "Children": [
             {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "WSProveedor.asmx.cs",
+              "DocumentMoniker": "C:\\Users\\Michel\\workspace\\WSProveedor1\\WSProveedor1\\WSProveedor.asmx.cs",
+              "RelativeDocumentMoniker": "..\\..\\WSProveedor1\\WSProveedor1\\WSProveedor.asmx.cs",
+              "ToolTip": "C:\\Users\\Michel\\workspace\\WSProveedor1\\WSProveedor1\\WSProveedor.asmx.cs",
+              "RelativeToolTip": "..\\..\\WSProveedor1\\WSProveedor1\\WSProveedor.asmx.cs",
+              "ViewState": "AgIAAAcBAAAAAAAAAAAcwBsBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-12T06:53:45.781Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Nuevas_LineasTELE.cshtml",
+              "DocumentMoniker": "C:\\Users\\Michel\\workspace\\WebHomePro\\WebHomePro\\Pages\\Admin\\Nuevas_LineasTELE.cshtml",
+              "RelativeDocumentMoniker": "Pages\\Admin\\Nuevas_LineasTELE.cshtml",
+              "ToolTip": "C:\\Users\\Michel\\workspace\\WebHomePro\\WebHomePro\\Pages\\Admin\\Nuevas_LineasTELE.cshtml",
+              "RelativeToolTip": "Pages\\Admin\\Nuevas_LineasTELE.cshtml",
+              "ViewState": "AgIAAEMAAAAAAAAAAAAAAFgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-12T06:48:33.015Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Nuevas_LineasTELE.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\Michel\\workspace\\WebHomePro\\WebHomePro\\Pages\\Admin\\Nuevas_LineasTELE.cshtml.cs",
+              "RelativeDocumentMoniker": "Pages\\Admin\\Nuevas_LineasTELE.cshtml.cs",
+              "ToolTip": "C:\\Users\\Michel\\workspace\\WebHomePro\\WebHomePro\\Pages\\Admin\\Nuevas_LineasTELE.cshtml.cs",
+              "RelativeToolTip": "Pages\\Admin\\Nuevas_LineasTELE.cshtml.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAA9wB8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-12T06:48:13.444Z",
+              "EditorCaption": ""
+            },
+            {
               "$type": "Bookmark",
               "Name": "ST:0:0:{b1e99781-ab81-11d0-b683-00aa00a3ee26}"
             },

@@ -1,0 +1,172 @@
+﻿@page
+@model WebHomePro.Pages.Admin.Nuevas_LineasTELEModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>HomePro - Nuevas Líneas</title>
+    <link rel="icon" type="image/x-icon" href="~/assets/favicon.ico" />
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" />
+    <link href="~/css/StyleMenuAdmin.css" rel="stylesheet" />
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
+        <div class="container px-4 px-lg-5">
+            <a class="navbar-brand" asp-page="/Index">
+                <img src="~/img/LOGO HOMEPRO.png" alt="Logo" style="height: 5rem;" />
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive">
+                Menu <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ms-auto py-4 py-lg-0">
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/MenuAdmin">Nuevas líneas telefónicas</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/#">Activar una línea recién vendida</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/#">Devolución de una línea telefónica</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/#">Calcular facturación</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/#">Nuevos usuarios administrativos</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Login">Salir del Sitio</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="masthead" style="background-image: url('@Url.Content("~/img/home-bg.jpg")')">
+        <div class="container position-relative px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <div class="site-heading">
+                        <h1>HomePro</h1>
+                        <span class="subheading">Gestioná tu contenido fácilmente</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Lista de líneas -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">Líneas telefónicas disponibles</h2>
+
+            <table class="table table-bordered table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Número</th>
+                        <th>Identificador tarjeta</th>
+                        <th>Tipo</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.LineasDisponibles != null && Model.LineasDisponibles.Count > 0)
+                    {
+                        foreach (var linea in Model.LineasDisponibles)
+                        {
+                            <tr>
+                                <td>@linea.Numero</td>
+                                <td>@linea.IdTarjeta</td>
+                                <td>@linea.Tipo</td>
+                                <td>
+                                    <form method="post" asp-page-handler="Eliminar" style="display:inline;">
+                                        <input type="hidden" name="numeroTelefono" value="@linea.Numero" />
+                                        <button type="submit" class="btn btn-danger btn-sm"
+                                                onclick="return confirm('¿Está seguro de borrar la línea @linea.Numero?');">
+                                            Eliminar
+                                        </button>
+                                    </form>
+                                </td>
+
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="4" class="text-center">No hay líneas disponibles</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <div class="text-center mt-4">
+                <button class="btn btn-primary" onclick="mostrarFormulario()">Nuevo</button>
+            </div>
+
+            <!-- Formulario para nueva línea -->
+            <div id="formularioNuevo" class="mt-5" style="display: none;">
+                <h4>Registrar nueva línea</h4>
+                <form method="post"
+                      asp-page="./Nuevas_LineasTELE"
+                      asp-page-handler="Nueva"
+                      asp-antiforgery="true">
+                    <div class="mb-3">
+                        <label asp-for="NumeroTelefono" class="form-label">Número Teléfono</label>
+                        <input asp-for="NumeroTelefono" class="form-control" maxlength="16" required />
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="IdTelefono" class="form-label">Identificador teléfono (16 dígitos)</label>
+                        <input asp-for="IdTelefono" class="form-control" maxlength="16" required />
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="IdTarjeta" class="form-label">Identificador tarjeta (19 dígitos)</label>
+                        <input asp-for="IdTarjeta" class="form-control" maxlength="19" required />
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Tipo" class="form-label">Tipo de servicio</label>
+                        <select asp-for="Tipo" class="form-select" required>
+                            <option value="">Seleccione</option>
+                            <option value="prepago">Prepago</option>
+                            <option value="postpago">Postpago</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-success" asp-page-handler="Nueva">Guardar</button>
+                </form>
+
+                <!-- Mensajes de éxito o error -->
+                @if (TempData["Success"] != null)
+                {
+                    <div class="alert alert-success">@TempData["Success"]</div>
+                }
+                @if (TempData["Error"] != null)
+                {
+                    <div class="alert alert-danger">@TempData["Error"]</div>
+                }
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function confirmarEliminacion(numero) {
+            if (confirm(`¿Está seguro de borrar la línea ${numero}?`)) {
+                alert("Línea eliminada (aquí iría la conexión con WS_PROVEEDOR)");
+            }
+        }
+        function mostrarFormulario() {
+            document.getElementById("formularioNuevo").style.display = "block";
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        }
+    </script>
+
+    <footer class="border-top">
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <div class="small text-center text-muted fst-italic">Derechos Reservados &copy; HomePro 2025</div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
+
