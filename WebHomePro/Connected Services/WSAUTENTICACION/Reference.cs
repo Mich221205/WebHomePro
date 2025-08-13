@@ -216,6 +216,9 @@ namespace WSAUTENTICACION
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthService/RegistrarUsuario", ReplyAction="http://tempuri.org/IAuthService/RegistrarUsuarioResponse")]
         System.Threading.Tasks.Task<WSAUTENTICACION.AuthResponse> RegistrarUsuarioAsync(WSAUTENTICACION.Usuario nuevoUsuario);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthService/ObtenerAdministradores", ReplyAction="http://tempuri.org/IAuthService/ObtenerAdministradoresResponse")]
+        System.Threading.Tasks.Task<WSAUTENTICACION.Usuario[]> ObtenerAdministradoresAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
@@ -276,6 +279,11 @@ namespace WSAUTENTICACION
         public System.Threading.Tasks.Task<WSAUTENTICACION.AuthResponse> RegistrarUsuarioAsync(WSAUTENTICACION.Usuario nuevoUsuario)
         {
             return base.Channel.RegistrarUsuarioAsync(nuevoUsuario);
+        }
+        
+        public System.Threading.Tasks.Task<WSAUTENTICACION.Usuario[]> ObtenerAdministradoresAsync()
+        {
+            return base.Channel.ObtenerAdministradoresAsync();
         }
         
         public virtual System.Threading.Tasks.Task OpenAsync()

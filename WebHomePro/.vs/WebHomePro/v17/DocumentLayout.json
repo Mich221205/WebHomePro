@@ -3,15 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\Michel\\workspace\\WebHomePro\\WebHomePro\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{0D277C98-66F0-4C69-B491-415E34A01CD0}|..\\WSProveedor1\\WSProveedor1\\WSProveedor1.csproj|c:\\users\\michel\\workspace\\webhomepro\\wsproveedor1\\wsproveedor1\\wsproveedor.asmx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{CE2FDD12-9EA0-46A0-8E25-8D6E6413350D}|WebHomePro.csproj|c:\\users\\michel\\workspace\\webhomepro\\webhomepro\\pages\\admin\\nuevos_admin.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CE2FDD12-9EA0-46A0-8E25-8D6E6413350D}|WebHomePro.csproj|solutionrelative:pages\\admin\\nuevos_admin.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CE2FDD12-9EA0-46A0-8E25-8D6E6413350D}|WebHomePro.csproj|c:\\users\\michel\\workspace\\webhomepro\\webhomepro\\pages\\admin\\nuevas_lineastele.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CE2FDD12-9EA0-46A0-8E25-8D6E6413350D}|WebHomePro.csproj|solutionrelative:pages\\admin\\nuevas_lineastele.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CE2FDD12-9EA0-46A0-8E25-8D6E6413350D}|WebHomePro.csproj|c:\\users\\michel\\workspace\\webhomepro\\webhomepro\\pages\\admin\\nuevas_lineastele.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{CE2FDD12-9EA0-46A0-8E25-8D6E6413350D}|WebHomePro.csproj|solutionrelative:pages\\admin\\nuevas_lineastele.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{CE2FDD12-9EA0-46A0-8E25-8D6E6413350D}|WebHomePro.csproj|c:\\users\\michel\\workspace\\webhomepro\\webhomepro\\pages\\admin\\nuevos_admin.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CE2FDD12-9EA0-46A0-8E25-8D6E6413350D}|WebHomePro.csproj|solutionrelative:pages\\admin\\nuevos_admin.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -69,41 +66,28 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Nuevas_LineasTELE.cshtml",
-              "DocumentMoniker": "C:\\Users\\Michel\\workspace\\WebHomePro\\WebHomePro\\Pages\\Admin\\Nuevas_LineasTELE.cshtml",
-              "RelativeDocumentMoniker": "Pages\\Admin\\Nuevas_LineasTELE.cshtml",
-              "ToolTip": "C:\\Users\\Michel\\workspace\\WebHomePro\\WebHomePro\\Pages\\Admin\\Nuevas_LineasTELE.cshtml",
-              "RelativeToolTip": "Pages\\Admin\\Nuevas_LineasTELE.cshtml",
-              "ViewState": "AgIAAHgAAAAAAAAAAAAAAKwAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "Nuevos_Admin.cshtml",
+              "DocumentMoniker": "C:\\Users\\Michel\\workspace\\WebHomePro\\WebHomePro\\Pages\\Admin\\Nuevos_Admin.cshtml",
+              "RelativeDocumentMoniker": "Pages\\Admin\\Nuevos_Admin.cshtml",
+              "ToolTip": "C:\\Users\\Michel\\workspace\\WebHomePro\\WebHomePro\\Pages\\Admin\\Nuevos_Admin.cshtml",
+              "RelativeToolTip": "Pages\\Admin\\Nuevos_Admin.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-08-12T21:37:30.576Z",
+              "WhenOpened": "2025-08-13T06:13:30.489Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "WSProveedor.asmx.cs",
-              "DocumentMoniker": "C:\\Users\\Michel\\workspace\\WebHomePro\\WSProveedor1\\WSProveedor1\\WSProveedor.asmx.cs",
-              "RelativeDocumentMoniker": "..\\WSProveedor1\\WSProveedor1\\WSProveedor.asmx.cs",
-              "ToolTip": "C:\\Users\\Michel\\workspace\\WebHomePro\\WSProveedor1\\WSProveedor1\\WSProveedor.asmx.cs",
-              "RelativeToolTip": "..\\WSProveedor1\\WSProveedor1\\WSProveedor.asmx.cs",
-              "ViewState": "AgIAADUAAAAAAAAAAAAIwFUAAAAAAAAAAAAAAA==",
+              "Title": "Nuevos_Admin.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\Michel\\workspace\\WebHomePro\\WebHomePro\\Pages\\Admin\\Nuevos_Admin.cshtml.cs",
+              "RelativeDocumentMoniker": "Pages\\Admin\\Nuevos_Admin.cshtml.cs",
+              "ToolTip": "C:\\Users\\Michel\\workspace\\WebHomePro\\WebHomePro\\Pages\\Admin\\Nuevos_Admin.cshtml.cs",
+              "RelativeToolTip": "Pages\\Admin\\Nuevos_Admin.cshtml.cs",
+              "ViewState": "AgIAACAAAAAAAAAAAAA6wAYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-12T21:36:38.219Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Nuevas_LineasTELE.cshtml.cs",
-              "DocumentMoniker": "C:\\Users\\Michel\\workspace\\WebHomePro\\WebHomePro\\Pages\\Admin\\Nuevas_LineasTELE.cshtml.cs",
-              "RelativeDocumentMoniker": "Pages\\Admin\\Nuevas_LineasTELE.cshtml.cs",
-              "ToolTip": "C:\\Users\\Michel\\workspace\\WebHomePro\\WebHomePro\\Pages\\Admin\\Nuevas_LineasTELE.cshtml.cs",
-              "RelativeToolTip": "Pages\\Admin\\Nuevas_LineasTELE.cshtml.cs",
-              "ViewState": "AgIAACAAAAAAAAAAAAAuwBAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-12T21:32:48.763Z",
+              "WhenOpened": "2025-08-13T05:59:34.011Z",
               "EditorCaption": ""
             }
           ]

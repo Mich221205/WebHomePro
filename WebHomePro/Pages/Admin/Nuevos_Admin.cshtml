@@ -1,0 +1,170 @@
+﻿@page
+@model WebHomePro.Pages.Admin.Nuevos_AdminModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>HomePro - Administradores</title>
+    <link rel="icon" type="image/x-icon" href="~/assets/favicon.ico" />
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" />
+    <link href="~/css/StyleMenuAdmin.css" rel="stylesheet" />
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
+        <div class="container px-4 px-lg-5">
+            <a class="navbar-brand" asp-page="/Admin/MenuAdmin">
+                <img src="~/img/LOGO HOMEPRO.png" alt="Logo" style="height: 5rem;" />
+            </a>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ms-auto py-4 py-lg-0">
+
+                    <li class="nav-item">
+                        <a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Admin/Nuevas_LineasTELE">
+                            nuevas líneas telefónicas
+                        </a>
+                    </li>
+
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/#">Activar una línea recién vendida</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/#">Devolución de una línea telefónica</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/#">Calcular facturación</a></li>
+
+                    <li class="nav-item">
+                        <a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Admin/Nuevos_Admin">
+                            nuevos usuarios administrativos
+                        </a>
+                    </li>
+
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Login"> Salir del Sitio</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="masthead" style="background-image: url('@Url.Content("~/img/home-bg.jpg")')">
+        <div class="container position-relative px-4 px-lg-5">
+            <div class="site-heading text-center">
+                <h1>Administradores</h1>
+                <span class="subheading">Gestión de usuarios administrativos</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Lista de administradores -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">Usuarios Administradores</h2>
+
+            <table class="table table-bordered table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Identificación</th>
+                        <th>Nombre</th>
+                        <th>Primer Apellido</th>
+                        <th>Segundo Apellido</th>
+                        <th>Correo</th>
+                        <th>Usuario</th>
+                        <th>Contraseña</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Administradores != null && Model.Administradores.Count > 0)
+                    {
+                        foreach (var admin in Model.Administradores)
+                        {
+                            <tr>
+                                <td>@admin.Identificacion</td>
+                                <td>@admin.Nombre</td>
+                                <td>@admin.PrimerApellido</td>
+                                <td>@admin.SegundoApellido</td>
+                                <td>@admin.Correo</td>
+                                <td>@admin.Usuario</td>
+                                <td>@admin.Contrasena</td>
+                                <td>@admin.Estado</td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="8" class="text-center">No hay administradores registrados</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <div class="text-center mt-4">
+                <button class="btn btn-primary" onclick="mostrarFormulario()">Nuevo</button>
+            </div>
+
+            <!-- Formulario para nuevo administrador -->
+            <div id="formularioNuevo" class="mt-5" style="display: none;">
+                <h4>Registrar nuevo administrador</h4>
+                <form method="post" asp-page-handler="Nuevo">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label>Identificación</label>
+                            <input asp-for="Identificacion" class="form-control" required />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label>Nombre</label>
+                            <input asp-for="Nombre" class="form-control" required />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label>Primer Apellido</label>
+                            <input asp-for="PrimerApellido" class="form-control" required />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label>Segundo Apellido</label>
+                            <input asp-for="SegundoApellido" class="form-control" required />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label>Correo</label>
+                            <input asp-for="Correo" type="email" class="form-control" required />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label>Usuario</label>
+                            <input asp-for="Usuario" class="form-control" required />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label>Contraseña</label>
+                            <input asp-for="Contrasena" type="password" class="form-control" required />
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success">Guardar</button>
+                </form>
+
+                <!-- Mensajes -->
+                @if (TempData["Success"] != null)
+                {
+                    <div class="alert alert-success mt-3">@TempData["Success"]</div>
+                }
+                @if (TempData["Error"] != null)
+                {
+                    <div class="alert alert-danger mt-3">@TempData["Error"]</div>
+                }
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function mostrarFormulario() {
+            document.getElementById("formularioNuevo").style.display = "block";
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        }
+    </script>
+
+    <footer class="border-top">
+        <div class="container px-4 px-lg-5">
+            <div class="small text-center text-muted fst-italic">Derechos Reservados &copy; HomePro 2025</div>
+        </div>
+    </footer>
+</body>
+</html>
