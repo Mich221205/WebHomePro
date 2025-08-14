@@ -8,7 +8,6 @@ bin/
 obj/
 
 # Ignorar paquetes y dependencias
-packages/
 node_modules/
 
 # Ignorar archivos de publicación
