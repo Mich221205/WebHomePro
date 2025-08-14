@@ -48,8 +48,8 @@ namespace WebHomePro.Pages.Admin
                     PrimerApellido = u.apellido1,
                     SegundoApellido = u.apellido2,
                     Correo = u.correo,
-                    Usuario = "[CIFRADO]", // no mostrar el real
-                    Contrasena = "**************", // ocultar contraseña
+                    Usuario = "[CIFRADO]", 
+                    Contrasena = "**************", 
                     Estado = u.estado
                 }).ToList();
             }

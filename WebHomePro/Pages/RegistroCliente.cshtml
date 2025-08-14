@@ -1,0 +1,65 @@
+﻿@page
+@model WebHomePro.Pages.RegistroClienteModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Registro de Cliente</title>
+    <link rel="stylesheet" href="~/css/style.css">
+    <style>
+        .form-section {
+            display: block;
+        }
+
+        .tab {
+            cursor: pointer;
+            padding: 10px 20px;
+            display: inline-block;
+        }
+
+            .tab.active {
+                font-weight: bold;
+                border-bottom: 2px solid #5fbae9;
+            }
+    </style>
+</head>
+<body>
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
+
+            <div class="fadeIn first">
+                <img src="~/img/LOGO HOMEPRO.png" id="icon" alt="User Icon" />
+            </div>
+
+            <div id="registro" class="form-section active">
+                <form method="post" asp-page-handler="Registrar">
+                    <input asp-for="Identificacion" placeholder="Identificación" />
+                    <input asp-for="Nombre" placeholder="Nombre" />
+                    <input asp-for="PrimerApellido" placeholder="Primer Apellido" />
+                    <input asp-for="SegundoApellido" placeholder="Segundo Apellido" />
+                    <input asp-for="Correo" type="text" placeholder="Correo Electrónico" />
+                    <input asp-for="Usuario" placeholder="Usuario" />
+                    <input asp-for="Password" type="password" placeholder="Contraseña (14 caracteres, 1 mayús, 1 minús, 1 número, 1 caracter especial)" />
+
+                    <input type="submit" value="¡Registrarme!" />
+                </form>
+            </div>
+
+            <!-- Mensaje de error o éxito -->
+            @if (!string.IsNullOrEmpty(Model.Mensaje))
+            {
+                <p style="color:@(Model.EsExitoso ? "green" : "red")">@Model.Mensaje</p>
+            }
+
+            <div id="formFooter">
+                <a class="underlineHover" asp-page="/Login">
+                    ¿Ya tienes cuenta? ¡Inicia sesión!
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

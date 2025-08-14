@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace WebHomePro.Pages.Cliente
 {
-    public class MenuClienteModel : PageModel
+    public class MenuclienteModel : PageModel
     {
         public void OnGet()
         {
