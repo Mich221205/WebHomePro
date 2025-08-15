@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using WSAUTENTICACION; 
+using WSAUTENTICACION;
+using Microsoft.AspNetCore.Http;
+
 
 namespace WebHomePro.Pages
 {
@@ -31,8 +33,12 @@ namespace WebHomePro.Pages
                 }
                 else if (respuesta.TipoUsuario == 2)
                 {
-                    return RedirectToPage("/Cliente/MenuCliente"); 
+                    // Guardar el nombre del cliente en sesión
+                    HttpContext.Session.SetString("ClienteNombre", $"{respuesta.Nombre} {respuesta.Apellido1}");
+
+                    return RedirectToPage("/Cliente/MenuCliente");
                 }
+
                 else
                 {
                     Mensaje = "Tipo de usuario no reconocido.";

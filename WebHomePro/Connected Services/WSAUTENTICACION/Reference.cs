@@ -18,11 +18,28 @@ namespace WSAUTENTICACION
     public partial class AuthResponse : object
     {
         
+        private string Apellido1Field;
+        
         private string MensajeField;
+        
+        private string NombreField;
         
         private bool ResultadoField;
         
         private int TipoUsuarioField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Apellido1
+        {
+            get
+            {
+                return this.Apellido1Field;
+            }
+            set
+            {
+                this.Apellido1Field = value;
+            }
+        }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
         public string Mensaje
@@ -34,6 +51,19 @@ namespace WSAUTENTICACION
             set
             {
                 this.MensajeField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Nombre
+        {
+            get
+            {
+                return this.NombreField;
+            }
+            set
+            {
+                this.NombreField = value;
             }
         }
         

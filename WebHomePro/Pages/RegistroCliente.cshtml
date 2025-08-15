@@ -35,14 +35,14 @@
             </div>
 
             <div id="registro" class="form-section active">
-                <form method="post" asp-page-handler="Registrar">
+                <form method="post" asp-page-handler="Nuevo">
                     <input asp-for="Identificacion" placeholder="Identificación" />
                     <input asp-for="Nombre" placeholder="Nombre" />
                     <input asp-for="PrimerApellido" placeholder="Primer Apellido" />
                     <input asp-for="SegundoApellido" placeholder="Segundo Apellido" />
                     <input asp-for="Correo" type="text" placeholder="Correo Electrónico" />
                     <input asp-for="Usuario" placeholder="Usuario" />
-                    <input asp-for="Password" type="password" placeholder="Contraseña (14 caracteres, 1 mayús, 1 minús, 1 número, 1 caracter especial)" />
+                    <input asp-for="Contrasena" type="password" placeholder="Contraseña" />
 
                     <input type="submit" value="¡Registrarme!" />
                 </form>

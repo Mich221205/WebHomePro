@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Net.Sockets;
@@ -84,6 +85,51 @@ namespace WSProveedor1
             }
         }
 
+        public class ClientesSQL
+        {
+            public string CEDULA { get; set; }
+            public string NOMBRE_COMPLETO { get; set; }
+        }
+
+        public class Resultado
+        {
+            public bool RESULTADO { get; set; }
+            public string Mensaje { get; set; }
+        }
+
+
+        [WebMethod]
+        public Resultado InsertarClienteBasico(string cedula, string nombre)
+        {
+            try
+            {
+                using (var ctx = new COMPANIA_TELEFONICAEntities())
+                {
+                    var nuevoCliente = new CLIENTES
+                    {
+                        CEDULA = cedula,
+                        NOMBRE = nombre
+                    };
+
+                    ctx.CLIENTES.Add(nuevoCliente);
+                    ctx.SaveChanges();
+                }
+
+                return new Resultado
+                {
+                    RESULTADO = true,
+                    Mensaje = "Registro exitoso en SQL Server"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new Resultado
+                {
+                    RESULTADO = false,
+                    Mensaje = "Error al insertar en SQL Server: " + ex.Message
+                };
+            }
+        }
 
         [WebMethod]
         public RespuestaIngresarServicio EliminarLinea(string numeroTelefono)
@@ -121,7 +167,6 @@ namespace WSProveedor1
             public bool Resultado { get; set; }
             public string Mensaje { get; set; }
         }
-
 
         [WebMethod]
         public RespuestaIngresarServicio IngresarNuevoServicio(string numeroTelefono, string idTelefono, string idTarjeta, string tipo, string estado)
@@ -199,48 +244,167 @@ namespace WSProveedor1
 
 
         [WebMethod]
-        public RespuestaActivarDesactivar ActivarDesactivarLinea(string numeroTelefono, string idTelefono, string idTarjeta, string tipo, string identificacionDuenio, string estado)
+        public RespuestaActivarDesactivar ActivarDesactivarLinea(
+        string numeroTelefono, string idTelefono, string idTarjeta,
+        string tipo, string identificacionDuenio, string estado)
         {
-            if (string.IsNullOrWhiteSpace(numeroTelefono) || string.IsNullOrWhiteSpace(idTelefono)
-                || string.IsNullOrWhiteSpace(idTarjeta) || string.IsNullOrWhiteSpace(tipo)
-                || string.IsNullOrWhiteSpace(identificacionDuenio) || string.IsNullOrWhiteSpace(estado))
-            {
+            if (string.IsNullOrWhiteSpace(numeroTelefono) ||
+                string.IsNullOrWhiteSpace(idTelefono) ||
+                string.IsNullOrWhiteSpace(idTarjeta) ||
+                string.IsNullOrWhiteSpace(tipo) ||
+                string.IsNullOrWhiteSpace(identificacionDuenio) ||
+                string.IsNullOrWhiteSpace(estado))
                 return new RespuestaActivarDesactivar { Resultado = false, Mensaje = "Datos incompletos" };
-            }
 
             try
             {
-                var tramaJson = new
+                // 1) Normalizar estado -> activar / desactivar
+                string e = (estado ?? "").Trim().ToLowerInvariant();
+                if (e == "activo" || e == "activado" || e == "1" || e == "true" || e == "on") e = "activar";
+                else if (e == "inactivo" || e == "desactivado" || e == "2" || e == "false" || e == "off") e = "desactivar";
+                if (e != "activar" && e != "desactivar")
+                    return new RespuestaActivarDesactivar { Resultado = false, Mensaje = "Estado inválido. Use 'activar' o 'desactivar'." };
+
+                // 2) Normalizar tipo -> prepago / postpago
+                string t = (tipo ?? "").Trim().ToLowerInvariant();
+                if (int.TryParse(t, out var n)) t = (n == 1 ? "prepago" : (n == 2 ? "postpago" : t));
+                if (t == "pago" || t == "post-pago" || t == "pospago") t = "postpago";
+
+                // 3) Resolver 'duenio' a CÉDULA (si te llega ID_CLIENTE u otro formato)
+                var duenioRaw = (identificacionDuenio ?? "").Trim();
+                var duenioDigits = System.Text.RegularExpressions.Regex.Replace(duenioRaw, "[^0-9]", "");
+                string duenioProv = duenioRaw; // por defecto, lo que llegó
+
+                if (!string.IsNullOrEmpty(duenioDigits))
+                {
+
+                    var ced = ObtenerCedulaPorIdCliente(duenioDigits);
+
+                    duenioProv = !string.IsNullOrWhiteSpace(ced)
+                        ? System.Text.RegularExpressions.Regex.Replace(ced, "[^0-9]", "")
+                        : duenioDigits;
+                }
+
+                int estadoCode = (e == "activar") ? 1 : 2;
+
+
+                var trama = new
                 {
                     tipo_transaccion = "6",
-                    telefono = numeroTelefono,
-                    identificadorTel = idTelefono,
-                    identificador_tarjeta = idTarjeta,
-                    tipo = tipo.ToLower(),
-                    duenio = identificacionDuenio,
-                    estado = estado.ToLower()
+                    telefono = numeroTelefono?.Trim(),
+                    identificadorTel = idTelefono?.Trim(),
+                    identificador_tarjeta = idTarjeta?.Trim(),
+                    tipo = t,
+                    duenio = duenioProv,
+                    estado = estadoCode
                 };
 
-                string respuesta = EnviarAlProveedor(JsonConvert.SerializeObject(tramaJson));
+                string json = JsonConvert.SerializeObject(trama);
+                System.Diagnostics.Debug.WriteLine($"WSProveedor -> JSON: {json}");
 
-                if (respuesta.Contains("\"status\":\"OK\""))
-                {
+                string resp = EnviarAlProveedor(json);
+                System.Diagnostics.Debug.WriteLine("WSProveedor <- RESP: " + resp);
+
+                if (resp.Contains("\"status\":\"OK\"") || resp.Trim().Equals("OK", StringComparison.OrdinalIgnoreCase))
                     return new RespuestaActivarDesactivar { Resultado = true, Mensaje = "Exitoso" };
-                }
-                else
+
+                dynamic obj = JsonConvert.DeserializeObject(resp);
+                return new RespuestaActivarDesactivar
                 {
-                    dynamic respObj = JsonConvert.DeserializeObject(respuesta);
-                    return new RespuestaActivarDesactivar
+                    Resultado = false,
+                    Mensaje = obj?.mensaje != null ? (string)obj.mensaje : "Problemas al activar/desactivar línea"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new RespuestaActivarDesactivar { Resultado = false, Mensaje = "Error: " + ex.Message };
+            }
+        }
+
+        private static string ObtenerCedulaPorIdCliente(string idCliente)
+        {
+            if (string.IsNullOrWhiteSpace(idCliente)) return null;
+            string cs = "Server=Laptop-Michel;Database=COMPANIA_TELEFONICA;User Id=sa;Password=mich22;";
+            using (var cn = new SqlConnection(cs))
+            {
+                cn.Open();
+                using (var cmd = new SqlCommand("SELECT CEDULA FROM dbo.CLIENTES WHERE ID_CLIENTE=@id", cn))
+                {
+                    cmd.Parameters.AddWithValue("@id", idCliente);
+                    var o = cmd.ExecuteScalar();
+                    return o?.ToString();
+                }
+            }
+        }
+
+        [WebMethod]
+        public List<LineaEnUso> ListarLineasEnUso()
+        {
+            var lista = new List<LineaEnUso>();
+            try
+            {
+                string cs = "Server=Laptop-Michel;Database=COMPANIA_TELEFONICA;User Id=sa;Password=mich22;";
+                using (var conn = new SqlConnection(cs))
+                {
+                    conn.Open();
+                    string sql = @"
+                        SELECT
+                            t.NUM_TELEFONO,
+                            t.IDENTIFICADOR_TARJETA,
+                            t.IDENTIFICADOR_TELEFONO,
+                            c.CEDULA,
+                            c.NOMBRE,
+                            TIPO_TELEFONO.DESCRIPCION
+                        FROM dbo.TELEFONOS t
+                        INNER JOIN dbo.CLIENTES c ON c.ID_CLIENTE = t.ID_CLIENTE
+                        inner join TIPO_TELEFONO on t.TIPO_TELEFONO = TIPO_TELEFONO.ID_T_TELEFONO
+                        WHERE t.ID_CLIENTE IS NOT NULL
+                          AND t.ID_ESTADO = 1;";
+
+                    using (var cmd = new SqlCommand(sql, conn))
+                    using (var dr = cmd.ExecuteReader())
                     {
-                        Resultado = false,
-                        Mensaje = respObj.mensaje != null ? (string)respObj.mensaje : "Problemas al activar/desactivar línea"
-                    };
+                        while (dr.Read())
+                        {
+                            lista.Add(new LineaEnUso
+                            {
+                                NUM_TELEFONO = dr["NUM_TELEFONO"].ToString(),
+                                IDENTIFICADOR_TARJETA = dr["IDENTIFICADOR_TARJETA"].ToString(),
+                                IDENTIFICADOR_TELEFONO = dr["IDENTIFICADOR_TELEFONO"].ToString(),
+                                CEDULA = dr["CEDULA"].ToString(),
+                                NOMBRE = dr["NOMBRE"].ToString(),
+                                TIPO_TELEFONO = dr["DESCRIPCION"].ToString()
+                            });
+                        }
+                    }
                 }
             }
             catch (Exception ex)
             {
-                return new RespuestaActivarDesactivar { Resultado = false, Mensaje = $"Error: {ex.Message}" };
+                throw new Exception("Error al obtener líneas en uso: " + ex.Message);
             }
+            return lista;
+        }
+
+        private static bool ColumnExists(SqlConnection conn, string table, string column)
+        {
+            using (var cmd = new SqlCommand(@"
+             SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS
+             WHERE TABLE_NAME=@t AND COLUMN_NAME=@c;", conn))
+            {
+                cmd.Parameters.AddWithValue("@t", table);
+                cmd.Parameters.AddWithValue("@c", column);
+                return cmd.ExecuteScalar() != null;
+            }
+        }
+        public class LineaEnUso
+        {
+            public string NUM_TELEFONO { get; set; }
+            public string IDENTIFICADOR_TARJETA { get; set; }
+            public string IDENTIFICADOR_TELEFONO { get; set; }
+            public string CEDULA { get; set; }
+            public string NOMBRE { get; set; }
+            public string TIPO_TELEFONO { get; set; }
         }
 
         [WebMethod]

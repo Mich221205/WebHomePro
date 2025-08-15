@@ -14,6 +14,43 @@ namespace WSProveedorRef
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Resultado", Namespace="http://wsproveedor1.org/")]
+    public partial class Resultado : object
+    {
+        
+        private bool RESULTADOField;
+        
+        private string MensajeField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public bool RESULTADO
+        {
+            get
+            {
+                return this.RESULTADOField;
+            }
+            set
+            {
+                this.RESULTADOField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
+        public string Mensaje
+        {
+            get
+            {
+                return this.MensajeField;
+            }
+            set
+            {
+                this.MensajeField = value;
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="RespuestaIngresarServicio", Namespace="http://wsproveedor1.org/")]
     public partial class RespuestaIngresarServicio : object
     {
@@ -140,6 +177,103 @@ namespace WSProveedorRef
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="LineaEnUso", Namespace="http://wsproveedor1.org/")]
+    public partial class LineaEnUso : object
+    {
+        
+        private string NUM_TELEFONOField;
+        
+        private string IDENTIFICADOR_TARJETAField;
+        
+        private string IDENTIFICADOR_TELEFONOField;
+        
+        private string CEDULAField;
+        
+        private string NOMBREField;
+        
+        private string TIPO_TELEFONOField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+        public string NUM_TELEFONO
+        {
+            get
+            {
+                return this.NUM_TELEFONOField;
+            }
+            set
+            {
+                this.NUM_TELEFONOField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
+        public string IDENTIFICADOR_TARJETA
+        {
+            get
+            {
+                return this.IDENTIFICADOR_TARJETAField;
+            }
+            set
+            {
+                this.IDENTIFICADOR_TARJETAField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=2)]
+        public string IDENTIFICADOR_TELEFONO
+        {
+            get
+            {
+                return this.IDENTIFICADOR_TELEFONOField;
+            }
+            set
+            {
+                this.IDENTIFICADOR_TELEFONOField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=3)]
+        public string CEDULA
+        {
+            get
+            {
+                return this.CEDULAField;
+            }
+            set
+            {
+                this.CEDULAField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=4)]
+        public string NOMBRE
+        {
+            get
+            {
+                return this.NOMBREField;
+            }
+            set
+            {
+                this.NOMBREField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=5)]
+        public string TIPO_TELEFONO
+        {
+            get
+            {
+                return this.TIPO_TELEFONOField;
+            }
+            set
+            {
+                this.TIPO_TELEFONOField = value;
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="RespuestaCalculoPostpago", Namespace="http://wsproveedor1.org/")]
     public partial class RespuestaCalculoPostpago : object
     {
@@ -180,6 +314,9 @@ namespace WSProveedorRef
     public interface WSProveedorSoap
     {
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://wsproveedor1.org/InsertarClienteBasico", ReplyAction="*")]
+        System.Threading.Tasks.Task<WSProveedorRef.InsertarClienteBasicoResponse> InsertarClienteBasicoAsync(WSProveedorRef.InsertarClienteBasicoRequest request);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://wsproveedor1.org/EliminarLinea", ReplyAction="*")]
         System.Threading.Tasks.Task<WSProveedorRef.EliminarLineaResponse> EliminarLineaAsync(WSProveedorRef.EliminarLineaRequest request);
         
@@ -192,8 +329,95 @@ namespace WSProveedorRef
         [System.ServiceModel.OperationContractAttribute(Action="http://wsproveedor1.org/ActivarDesactivarLinea", ReplyAction="*")]
         System.Threading.Tasks.Task<WSProveedorRef.ActivarDesactivarLineaResponse> ActivarDesactivarLineaAsync(WSProveedorRef.ActivarDesactivarLineaRequest request);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://wsproveedor1.org/ListarLineasEnUso", ReplyAction="*")]
+        System.Threading.Tasks.Task<WSProveedorRef.ListarLineasEnUsoResponse> ListarLineasEnUsoAsync(WSProveedorRef.ListarLineasEnUsoRequest request);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://wsproveedor1.org/CalcularCobroPostpago", ReplyAction="*")]
         System.Threading.Tasks.Task<WSProveedorRef.CalcularCobroPostpagoResponse> CalcularCobroPostpagoAsync(WSProveedorRef.CalcularCobroPostpagoRequest request);
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class InsertarClienteBasicoRequest
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="InsertarClienteBasico", Namespace="http://wsproveedor1.org/", Order=0)]
+        public WSProveedorRef.InsertarClienteBasicoRequestBody Body;
+        
+        public InsertarClienteBasicoRequest()
+        {
+        }
+        
+        public InsertarClienteBasicoRequest(WSProveedorRef.InsertarClienteBasicoRequestBody Body)
+        {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://wsproveedor1.org/")]
+    public partial class InsertarClienteBasicoRequestBody
+    {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string cedula;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
+        public string nombre;
+        
+        public InsertarClienteBasicoRequestBody()
+        {
+        }
+        
+        public InsertarClienteBasicoRequestBody(string cedula, string nombre)
+        {
+            this.cedula = cedula;
+            this.nombre = nombre;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class InsertarClienteBasicoResponse
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="InsertarClienteBasicoResponse", Namespace="http://wsproveedor1.org/", Order=0)]
+        public WSProveedorRef.InsertarClienteBasicoResponseBody Body;
+        
+        public InsertarClienteBasicoResponse()
+        {
+        }
+        
+        public InsertarClienteBasicoResponse(WSProveedorRef.InsertarClienteBasicoResponseBody Body)
+        {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://wsproveedor1.org/")]
+    public partial class InsertarClienteBasicoResponseBody
+    {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public WSProveedorRef.Resultado InsertarClienteBasicoResult;
+        
+        public InsertarClienteBasicoResponseBody()
+        {
+        }
+        
+        public InsertarClienteBasicoResponseBody(WSProveedorRef.Resultado InsertarClienteBasicoResult)
+        {
+            this.InsertarClienteBasicoResult = InsertarClienteBasicoResult;
+        }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -548,6 +772,78 @@ namespace WSProveedorRef
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class ListarLineasEnUsoRequest
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="ListarLineasEnUso", Namespace="http://wsproveedor1.org/", Order=0)]
+        public WSProveedorRef.ListarLineasEnUsoRequestBody Body;
+        
+        public ListarLineasEnUsoRequest()
+        {
+        }
+        
+        public ListarLineasEnUsoRequest(WSProveedorRef.ListarLineasEnUsoRequestBody Body)
+        {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute()]
+    public partial class ListarLineasEnUsoRequestBody
+    {
+        
+        public ListarLineasEnUsoRequestBody()
+        {
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class ListarLineasEnUsoResponse
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="ListarLineasEnUsoResponse", Namespace="http://wsproveedor1.org/", Order=0)]
+        public WSProveedorRef.ListarLineasEnUsoResponseBody Body;
+        
+        public ListarLineasEnUsoResponse()
+        {
+        }
+        
+        public ListarLineasEnUsoResponse(WSProveedorRef.ListarLineasEnUsoResponseBody Body)
+        {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://wsproveedor1.org/")]
+    public partial class ListarLineasEnUsoResponseBody
+    {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public WSProveedorRef.LineaEnUso[] ListarLineasEnUsoResult;
+        
+        public ListarLineasEnUsoResponseBody()
+        {
+        }
+        
+        public ListarLineasEnUsoResponseBody(WSProveedorRef.LineaEnUso[] ListarLineasEnUsoResult)
+        {
+            this.ListarLineasEnUsoResult = ListarLineasEnUsoResult;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class CalcularCobroPostpagoRequest
     {
         
@@ -672,6 +968,21 @@ namespace WSProveedorRef
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<WSProveedorRef.InsertarClienteBasicoResponse> WSProveedorRef.WSProveedorSoap.InsertarClienteBasicoAsync(WSProveedorRef.InsertarClienteBasicoRequest request)
+        {
+            return base.Channel.InsertarClienteBasicoAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<WSProveedorRef.InsertarClienteBasicoResponse> InsertarClienteBasicoAsync(string cedula, string nombre)
+        {
+            WSProveedorRef.InsertarClienteBasicoRequest inValue = new WSProveedorRef.InsertarClienteBasicoRequest();
+            inValue.Body = new WSProveedorRef.InsertarClienteBasicoRequestBody();
+            inValue.Body.cedula = cedula;
+            inValue.Body.nombre = nombre;
+            return ((WSProveedorRef.WSProveedorSoap)(this)).InsertarClienteBasicoAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         System.Threading.Tasks.Task<WSProveedorRef.EliminarLineaResponse> WSProveedorRef.WSProveedorSoap.EliminarLineaAsync(WSProveedorRef.EliminarLineaRequest request)
         {
             return base.Channel.EliminarLineaAsync(request);
@@ -733,6 +1044,19 @@ namespace WSProveedorRef
             inValue.Body.identificacionDuenio = identificacionDuenio;
             inValue.Body.estado = estado;
             return ((WSProveedorRef.WSProveedorSoap)(this)).ActivarDesactivarLineaAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<WSProveedorRef.ListarLineasEnUsoResponse> WSProveedorRef.WSProveedorSoap.ListarLineasEnUsoAsync(WSProveedorRef.ListarLineasEnUsoRequest request)
+        {
+            return base.Channel.ListarLineasEnUsoAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<WSProveedorRef.ListarLineasEnUsoResponse> ListarLineasEnUsoAsync()
+        {
+            WSProveedorRef.ListarLineasEnUsoRequest inValue = new WSProveedorRef.ListarLineasEnUsoRequest();
+            inValue.Body = new WSProveedorRef.ListarLineasEnUsoRequestBody();
+            return ((WSProveedorRef.WSProveedorSoap)(this)).ListarLineasEnUsoAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]

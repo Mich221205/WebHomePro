@@ -5,10 +5,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{CE2FDD12-9EA0-46A0-8E25-8D6E6413350D}|WebHomePro.csproj|c:\\users\\michel\\workspace\\webhomepro\\webhomepro\\pages\\cliente\\menucliente.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{CE2FDD12-9EA0-46A0-8E25-8D6E6413350D}|WebHomePro.csproj|solutionrelative:pages\\cliente\\menucliente.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CE2FDD12-9EA0-46A0-8E25-8D6E6413350D}|WebHomePro.csproj|c:\\users\\michel\\workspace\\webhomepro\\webhomepro\\pages\\cliente\\menucliente.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CE2FDD12-9EA0-46A0-8E25-8D6E6413350D}|WebHomePro.csproj|solutionrelative:pages\\cliente\\menucliente.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -72,22 +68,10 @@
               "RelativeDocumentMoniker": "Pages\\Cliente\\MenuCliente.cshtml",
               "ToolTip": "C:\\Users\\Michel\\workspace\\WebHomePro\\WebHomePro\\Pages\\Cliente\\MenuCliente.cshtml",
               "RelativeToolTip": "Pages\\Cliente\\MenuCliente.cshtml",
-              "ViewState": "AgIAABsAAAAAAAAAAAAAACgAAAByAAAAAAAAAA==",
+              "ViewState": "AgIAABkAAAAAAAAAAAAswCkAAABQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-08-13T23:10:21.302Z",
+              "WhenOpened": "2025-08-15T19:50:35.37Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "MenuCliente.cshtml.cs",
-              "DocumentMoniker": "C:\\Users\\Michel\\workspace\\WebHomePro\\WebHomePro\\Pages\\Cliente\\MenuCliente.cshtml.cs",
-              "RelativeDocumentMoniker": "Pages\\Cliente\\MenuCliente.cshtml.cs",
-              "ToolTip": "C:\\Users\\Michel\\workspace\\WebHomePro\\WebHomePro\\Pages\\Cliente\\MenuCliente.cshtml.cs",
-              "RelativeToolTip": "Pages\\Cliente\\MenuCliente.cshtml.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAiAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-13T23:09:59.572Z"
             }
           ]
         },

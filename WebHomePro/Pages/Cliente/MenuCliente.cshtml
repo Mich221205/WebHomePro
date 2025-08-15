@@ -1,4 +1,5 @@
 ﻿@page
+@using Microsoft.AspNetCore.Http
 @model WebHomePro.Pages.Cliente.MenuclienteModel
 @{
     Layout = null;
@@ -10,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Clean Blog - Start Bootstrap Theme</title>
+    <title>HomePro - Menú Cliente</title>
     <link rel="icon" type="image/x-icon" href="~/assets/favicon.ico" />
 
     <!-- Font Awesome icons -->
@@ -35,11 +36,19 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ms-auto py-4 py-lg-0">
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/#">Lineas Activas a su Nombre</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/#">Cargar saldo a linea PREPAGO</a></li>
+                    <!-- Saludo al cliente -->
+                    <li class="nav-item">
+                        <span class="navbar-text px-lg-3 py-3 py-lg-4">
+                            Hola @HttpContext.Session.GetString("ClienteNombre")
+                        </span>
+                    </li>
+
+                    <!-- Opciones del menú -->
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/#">Líneas Activas a su Nombre</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/#">Cargar saldo a línea PREPAGO</a></li>
                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/#">Pago facturas pendientes</a></li>
                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/#">Devolver una Línea</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Login"> Salir del Sitio</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Login">Salir del Sitio</a></li>
                 </ul>
             </div>
         </div>
@@ -71,7 +80,6 @@
         </div>
     </section>
 
-
     <!-- Footer -->
     <footer class="border-top">
         <div class="container px-4 px-lg-5">
@@ -88,4 +96,3 @@
     <script src="~/js/scripts.js"></script>
 </body>
 </html>
-
