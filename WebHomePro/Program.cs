@@ -1,8 +1,18 @@
+using WebHomePro.Services.IFaturacionService;
+using WebHomePro.Services.IProveedorService;
+using WebHomePro.Services.IFaturacionService;
+using WebHomePro.Services;
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddRazorPages();
 builder.Services.AddSession();
 builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddSingleton<IFacturacionService, FacturacionService>();
+
+builder.Services.AddSingleton<IProveedorService, ProveedorService>();
 
 
 builder.Services.AddAuthentication("CookieAuth")

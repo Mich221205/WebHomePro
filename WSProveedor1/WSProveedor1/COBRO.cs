@@ -12,19 +12,21 @@ namespace WSProveedor1
     using System;
     using System.Collections.Generic;
     
-    public partial class TIPO_TELEFONO
+    public partial class COBRO
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public TIPO_TELEFONO()
+        public COBRO()
         {
-            this.TELEFONOS = new HashSet<TELEFONO>();
+            this.DETALLE_COBROS = new HashSet<DETALLE_COBROS>();
         }
     
-        public int ID_T_TELEFONO { get; set; }
-        public string DESCRIPCION { get; set; }
-        public Nullable<bool> ESTADO { get; set; }
+        public int ID_COBRO { get; set; }
+        public System.DateTime FECHA_CALCULO { get; set; }
+        public System.DateTime FECHA_M_PAGO { get; set; }
+        public decimal COBRO_TOTAL { get; set; }
+        public System.DateTime FECHA_COBRO { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TELEFONO> TELEFONOS { get; set; }
+        public virtual ICollection<DETALLE_COBROS> DETALLE_COBROS { get; set; }
     }
 }

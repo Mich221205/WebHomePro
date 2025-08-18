@@ -10,12 +10,13 @@
 namespace WSProveedor1
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class ESTADOS_TELEFONOS
+    public partial class sp_helpdiagrams_Result
     {
-        public int ID_ESTADO { get; set; }
-        public string DESCRIPCION { get; set; }
-        public bool ESTADO { get; set; }
+        public string Database { get; set; }
+        public string Name { get; set; }
+        public int ID { get; set; }
+        public string Owner { get; set; }
+        public int OwnerID { get; set; }
     }
 }

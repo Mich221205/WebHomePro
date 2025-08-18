@@ -1,0 +1,151 @@
+﻿@page
+@model WebHomePro.Pages.Admin.ActivarLineaModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>HomePro - Activar Línea</title>
+    <link rel="icon" type="image/x-icon" href="~/assets/favicon.ico" />
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" />
+    <link href="~/css/StyleMenuAdmin.css" rel="stylesheet" />
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
+        <div class="container px-4 px-lg-5">
+            <a class="navbar-brand" asp-page="/Admin/MenuAdmin">
+                <img src="~/img/LOGO HOMEPRO.png" alt="Logo" style="height: 5rem;" />
+            </a>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ms-auto py-4 py-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Admin/Nuevas_LineasTELE">
+                            nuevas líneas telefónicas
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Admin/ActivarLinea">
+                            Activar una línea recién vendida
+                        </a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/#">Devolución de una línea telefónica</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/#">Calcular facturación</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Admin/Nuevos_Admin">
+                            nuevos usuarios administrativos
+                        </a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Login"> Salir del Sitio</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="masthead" style="background-image: url('@Url.Content("~/img/home-bg.jpg")')">
+        <div class="container position-relative px-4 px-lg-5">
+            <div class="site-heading text-center">
+                <h1>Activar Línea</h1>
+                <span class="subheading">Gestión de líneas telefónicas</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenido principal -->
+    <section class="py-5">
+        <div class="container">
+            @if (!string.IsNullOrEmpty(Model.Mensaje))
+            {
+                <div class="alert @(Model.EsExito ? "alert-success" : "alert-danger")">
+                    @Model.Mensaje
+                </div>
+            }
+
+            <div class="row">
+                <div class="col-md-7">
+                    <h4 class="text-center mb-4">Líneas disponibles</h4>
+                    <table class="table table-bordered table-striped">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Teléfono</th>
+                                <th>ID Tarjeta</th>
+                                <th>Tipo</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var l in Model.Lineas)
+                            {
+                                <tr>
+                                    <td>@l.NumeroTelefono</td>
+                                    <td>@l.IdTarjeta</td>
+                                    <td>@l.Tipo</td>
+                                    <td>
+                                        <form method="post" asp-page-handler="Select">
+                                            <input type="hidden" name="numero" value="@l.NumeroTelefono" />
+                                            <input type="hidden" name="idTel" value="@l.IdTelefono" />
+                                            <input type="hidden" name="idTarj" value="@l.IdTarjeta" />
+                                            <input type="hidden" name="tipo" value="@l.Tipo" />
+                                            <button class="btn btn-primary btn-sm" type="submit">Seleccionar</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="col-md-5">
+                    <div class="card">
+                        <div class="card-header bg-dark text-white">
+                            <h4 class="mb-0">Datos de activación</h4>
+                        </div>
+                        <div class="card-body">
+                            <form method="post" asp-page-handler="Activar">
+                                <div class="mb-3">
+                                    <label class="form-label">Número</label>
+                                    <input class="form-control" name="NumeroTelefono" value="@Model.NumeroTelefono" readonly />
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">ID Teléfono</label>
+                                    <input class="form-control" name="IdTelefono" value="@Model.IdTelefono" readonly />
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">ID Tarjeta</label>
+                                    <input class="form-control" name="IdTarjeta" value="@Model.IdTarjeta" readonly />
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Tipo</label>
+                                    <input class="form-control" name="Tipo" value="@Model.Tipo" readonly />
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Cédula</label>
+                                    <input class="form-control" asp-for="Cedula" />
+                                    <span class="text-danger" asp-validation-for="Cedula"></span>
+                                </div>
+                                <button class="btn btn-success w-100" type="submit">Activar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="border-top">
+        <div class="container px-4 px-lg-5">
+            <div class="small text-center text-muted fst-italic">Derechos Reservados &copy; HomePro 2025</div>
+        </div>
+    </footer>
+
+    <!-- Scripts de validación -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+</body>
+</html>

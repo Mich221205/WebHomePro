@@ -9,57 +9,69 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = WebHomePro
 build_property.RootNamespace = WebHomePro
-build_property.ProjectDir = C:\Users\Michel\workspace\WebHomePro\WebHomePro\
+build_property.ProjectDir = C:\Users\jota2\workspace\WebHomePro\WebHomePro\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\Michel\workspace\WebHomePro\WebHomePro
+build_property.MSBuildProjectDirectory = C:\Users\jota2\workspace\WebHomePro\WebHomePro
 build_property._RazorSourceGeneratorDebug = 
 build_property.EffectiveAnalysisLevelStyle = 8.0
 build_property.EnableCodeStyleSeverity = 
 
+<<<<<<< HEAD
 [C:/Users/Michel/workspace/WebHomePro/WebHomePro/Pages/Admin/DesactivarLinea.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cRGVzYWN0aXZhckxpbmVhLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Michel/workspace/WebHomePro/WebHomePro/Pages/Admin/MenuAdmin.cshtml]
+=======
+[C:/Users/jota2/workspace/WebHomePro/WebHomePro/Pages/Admin/ActivarLinea.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cQWN0aXZhckxpbmVhLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/jota2/workspace/WebHomePro/WebHomePro/Pages/Admin/CalcularFacturacion.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cQ2FsY3VsYXJGYWN0dXJhY2lvbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/jota2/workspace/WebHomePro/WebHomePro/Pages/Admin/MenuAdmin.cshtml]
+>>>>>>> b501a8b (ActivarLinea y CalculoFactura)
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cTWVudUFkbWluLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Michel/workspace/WebHomePro/WebHomePro/Pages/Admin/Nuevas_LineasTELE.cshtml]
+[C:/Users/jota2/workspace/WebHomePro/WebHomePro/Pages/Admin/Nuevas_LineasTELE.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cTnVldmFzX0xpbmVhc1RFTEUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Michel/workspace/WebHomePro/WebHomePro/Pages/Admin/Nuevos_Admin.cshtml]
+[C:/Users/jota2/workspace/WebHomePro/WebHomePro/Pages/Admin/Nuevos_Admin.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cTnVldm9zX0FkbWluLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Michel/workspace/WebHomePro/WebHomePro/Pages/Cliente/MenuCliente.cshtml]
+[C:/Users/jota2/workspace/WebHomePro/WebHomePro/Pages/Cliente/MenuCliente.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2xpZW50ZVxNZW51Q2xpZW50ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Michel/workspace/WebHomePro/WebHomePro/Pages/Login.cshtml]
+[C:/Users/jota2/workspace/WebHomePro/WebHomePro/Pages/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTG9naW4uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Michel/workspace/WebHomePro/WebHomePro/Pages/RegistroCliente.cshtml]
+[C:/Users/jota2/workspace/WebHomePro/WebHomePro/Pages/RegistroCliente.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVnaXN0cm9DbGllbnRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Michel/workspace/WebHomePro/WebHomePro/Pages/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/jota2/workspace/WebHomePro/WebHomePro/Pages/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Michel/workspace/WebHomePro/WebHomePro/Pages/_ViewImports.cshtml]
+[C:/Users/jota2/workspace/WebHomePro/WebHomePro/Pages/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Michel/workspace/WebHomePro/WebHomePro/Pages/_ViewStart.cshtml]
+[C:/Users/jota2/workspace/WebHomePro/WebHomePro/Pages/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Michel/workspace/WebHomePro/WebHomePro/Pages/Shared/_Layout.cshtml]
+[C:/Users/jota2/workspace/WebHomePro/WebHomePro/Pages/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-ft61ksf8vu

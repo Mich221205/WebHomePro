@@ -12,10 +12,15 @@ namespace WSProveedor1
     using System;
     using System.Collections.Generic;
     
-    public partial class ESTADOS_TELEFONOS
+    public partial class DETALLE_COBROS
     {
-        public int ID_ESTADO { get; set; }
-        public string DESCRIPCION { get; set; }
-        public bool ESTADO { get; set; }
+        public int ID_DETALLE { get; set; }
+        public int ID_COBRO { get; set; }
+        public int ID_CLIENTE { get; set; }
+        public decimal MONTO_TOTAL { get; set; }
+        public string ESTADO_PAGO { get; set; }
+    
+        public virtual CLIENTE CLIENTE { get; set; }
+        public virtual COBRO COBRO { get; set; }
     }
 }

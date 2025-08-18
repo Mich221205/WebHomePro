@@ -144,7 +144,7 @@ namespace WSProveedor1
                 // Encriptar igual que en OnPostNueva
                 string numEnc = AESEncryptor.Encrypt(numeroTelefono);
 
-                using (var db = new COMPANIA_TELEFONICAEntities())
+                using (var db = new COMPANIA_TELEFONICAEntities1())
                 {
                     var linea = db.TELEFONOS.FirstOrDefault(t => t.NUM_TELEFONO == numEnc);
                     if (linea == null)
@@ -216,22 +216,22 @@ namespace WSProveedor1
         [WebMethod]
         public List<LineaDisponible> ObtenerLineasDisponibles()
         {
-            using (var db = new COMPANIA_TELEFONICAEntities())
+            using (var db = new COMPANIA_TELEFONICAEntities1())
             {
-                //Traer datos sin decrypt
                 var datos = db.TELEFONOS
-                    .Where(t => t.ID_ESTADO == 3)
+                    .Where(t => t.ID_ESTADO == 3) // 'disponibles/sin vender'
                     .Select(t => new
                     {
+                        t.ID_TELEFONO,           
                         t.NUM_TELEFONO,
                         t.IDENTIFICADOR_TARJETA,
                         Tipo = t.TIPO_TELEFONO1.DESCRIPCION
                     })
-                    .ToList(); // Aquí EF ejecuta el SQL y trae los datos en memoria
+                    .ToList();
 
-                // Desencriptar en memoria
                 var lineas = datos.Select(t => new LineaDisponible
                 {
+                    IdTelefono = t.ID_TELEFONO.ToString(),                    
                     Numero = AESDecryptor.Decrypt(t.NUM_TELEFONO),
                     IdTarjeta = AESDecryptor.Decrypt(t.IDENTIFICADOR_TARJETA),
                     Tipo = t.Tipo

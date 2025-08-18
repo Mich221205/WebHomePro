@@ -1,0 +1,132 @@
+﻿@page
+@model WebHomePro.Pages.Admin.CalcularFacturacionModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>HomePro - Calcular Facturación</title>
+    <link rel="icon" type="image/x-icon" href="~/assets/favicon.ico" />
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" />
+    <link href="~/css/StyleMenuAdmin.css" rel="stylesheet" />
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
+        <div class="container px-4 px-lg-5">
+            <a class="navbar-brand" asp-page="/Admin/MenuAdmin">
+                <img src="~/img/LOGO HOMEPRO.png" alt="Logo" style="height: 5rem;" />
+            </a>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ms-auto py-4 py-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Admin/Nuevas_LineasTELE">
+                            nuevas líneas telefónicas
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Admin/ActivarLinea">
+                            Activar una línea recién vendida
+                        </a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/#">Devolución de una línea telefónica</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Admin/CalcularFacturacion">Calcular facturación</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Admin/Nuevos_Admin">
+                            nuevos usuarios administrativos
+                        </a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Login"> Salir del Sitio</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="masthead" style="background-image: url('@Url.Content("~/img/home-bg.jpg")')">
+        <div class="container position-relative px-4 px-lg-5">
+            <div class="site-heading text-center">
+                <h1>Calcular Facturación</h1>
+                <span class="subheading">Gestión de facturación telefónica</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenido principal -->
+    <section class="py-5">
+        <div class="container">
+            @if (!string.IsNullOrEmpty(Model.Mensaje))
+            {
+                <div class="alert @(Model.EsExito ? "alert-success" : "alert-danger")">
+                    @Model.Mensaje
+                </div>
+            }
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card mb-4">
+                        <div class="card-header bg-dark text-white">
+                            <h4 class="mb-0">Última facturación</h4>
+                        </div>
+                        <div class="card-body">
+                            <dl class="row mb-0">
+                                <dt class="col-sm-5">Fecha cálculo</dt>
+                                <dd class="col-sm-7">@Model.Ultima?.FechaCalculo?.ToString("yyyy-MM-dd") ?? "—"</dd>
+
+                                <dt class="col-sm-5">Fecha máx. pago</dt>
+                                <dd class="col-sm-7">@Model.Ultima?.FechaMPago?.ToString("yyyy-MM-dd") ?? "—"</dd>
+
+                                <dt class="col-sm-5">Total</dt>
+                                <dd class="col-sm-7">@((Model.Ultima?.Total ?? 0).ToString("N2"))</dd>
+
+                                <dt class="col-sm-5">Ejecutada</dt>
+                                <dd class="col-sm-7">@Model.Ultima?.FechaCobro?.ToString("yyyy-MM-dd HH:mm") ?? "—"</dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header bg-dark text-white">
+                            <h4 class="mb-0">Nueva ejecución</h4>
+                        </div>
+                        <div class="card-body">
+                            <form method="post" asp-page-handler="Calcular">
+                                <div class="mb-3">
+                                    <label class="form-label">Fecha inicio (cálculo)</label>
+                                    <input asp-for="NuevoInicio" class="form-control" type="date" />
+                                    <span asp-validation-for="NuevoInicio" class="text-danger"></span>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Fecha fin (máx. pago)</label>
+                                    <input asp-for="NuevoFin" class="form-control" type="date" />
+                                    <span asp-validation-for="NuevoFin" class="text-danger"></span>
+                                </div>
+
+                                <button class="btn btn-primary w-100" type="submit">Calcular</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="border-top">
+        <div class="container px-4 px-lg-5">
+            <div class="small text-center text-muted fst-italic">Derechos Reservados &copy; HomePro 2025</div>
+        </div>
+    </footer>
+
+    <!-- Scripts de validación -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+</body>
+</html>

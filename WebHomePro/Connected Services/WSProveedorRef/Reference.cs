@@ -93,9 +93,8 @@ namespace WSProveedorRef
     {
         
         private string NumeroField;
-        
         private string IdTarjetaField;
-        
+        private string IdTelefonoField;
         private string TipoField;
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
@@ -123,7 +122,20 @@ namespace WSProveedorRef
                 this.IdTarjetaField = value;
             }
         }
-        
+
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue = false, Order = 1)]
+        public string IdTelefono
+        {
+            get
+            {
+                return this.IdTelefonoField;
+            }
+            set
+            {
+                this.IdTelefonoField = value;
+            }
+        }
+
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=2)]
         public string Tipo
         {

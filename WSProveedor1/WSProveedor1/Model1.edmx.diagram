@@ -4,20 +4,23 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="c7c49e6d30c3424cb01c7329ea627936" Name="Diagram1">
-        <EntityTypeShape EntityType="COMPANIA_TELEFONICAModel.BONOS" Width="1.5" PointX="5.25" PointY="1.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="COMPANIA_TELEFONICAModel.CLIENTES" Width="1.5" PointX="0.75" PointY="1.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="COMPANIA_TELEFONICAModel.COBROS" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="COMPANIA_TELEFONICAModel.CODIGO_PAIS" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="COMPANIA_TELEFONICAModel.ESTADOS_TELEFONOS" Width="1.5" PointX="7.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="COMPANIA_TELEFONICAModel.LLAMADAS" Width="1.5" PointX="2.75" PointY="6" IsExpanded="true" />
-        <EntityTypeShape EntityType="COMPANIA_TELEFONICAModel.sysdiagrams" Width="1.5" PointX="7.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="COMPANIA_TELEFONICAModel.TELEFONOS" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="COMPANIA_TELEFONICAModel.TIPO_TELEFONO" Width="1.5" PointX="0.75" PointY="7.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="COMPANIA_TELEFONICAModel.TIPO_TRANSACCION" Width="1.5" PointX="2.75" PointY="11.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="COMPANIA_TELEFONICAModel.TRANSACCIONES" Width="1.5" PointX="5" PointY="6.125" IsExpanded="true" />
+      <Diagram DiagramId="a01d1704cc9f499496515212984c80fe" Name="Diagram1">
+        <EntityTypeShape EntityType="COMPANIA_TELEFONICAModel.BONO" Width="1.5" PointX="8.25" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="COMPANIA_TELEFONICAModel.CLIENTE" Width="1.5" PointX="0.75" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="COMPANIA_TELEFONICAModel.COBRO" Width="1.5" PointX="0.75" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="COMPANIA_TELEFONICAModel.CODIGO_PAIS" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COMPANIA_TELEFONICAModel.DETALLE_COBROS" Width="1.5" PointX="3" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="COMPANIA_TELEFONICAModel.ESTADOS_TELEFONOS" Width="1.5" PointX="0.75" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="COMPANIA_TELEFONICAModel.LLAMADA" Width="1.5" PointX="5.75" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="COMPANIA_TELEFONICAModel.sysdiagram" Width="1.5" PointX="8.75" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="COMPANIA_TELEFONICAModel.TELEFONO" Width="1.5" PointX="6" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="COMPANIA_TELEFONICAModel.TIPO_TELEFONO" Width="1.5" PointX="3.75" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="COMPANIA_TELEFONICAModel.TIPO_TRANSACCION" Width="1.5" PointX="5.75" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="COMPANIA_TELEFONICAModel.TRANSACCIONE" Width="1.5" PointX="8" PointY="8.625" IsExpanded="true" />
         <AssociationConnector Association="COMPANIA_TELEFONICAModel.FK__BONOS__TELEFONO__403A8C7D" ManuallyRouted="false" />
+        <AssociationConnector Association="COMPANIA_TELEFONICAModel.FK__DETALLE_C__ID_CL__0A688BB1" ManuallyRouted="false" />
         <AssociationConnector Association="COMPANIA_TELEFONICAModel.FK__TELEFONOS__ID_CL__3C69FB99" ManuallyRouted="false" />
+        <AssociationConnector Association="COMPANIA_TELEFONICAModel.FK__DETALLE_C__ID_CO__09746778" ManuallyRouted="false" />
         <AssociationConnector Association="COMPANIA_TELEFONICAModel.FK_TELEFONOS_CODIGO_PAIS" ManuallyRouted="false" />
         <AssociationConnector Association="COMPANIA_TELEFONICAModel.FK__TRANSACCI__ID_LL__4D94879B" ManuallyRouted="false" />
         <AssociationConnector Association="COMPANIA_TELEFONICAModel.FK__TELEFONOS__TIPO___3D5E1FD2" ManuallyRouted="false" />

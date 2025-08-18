@@ -92,16 +92,19 @@
     <Content Include="WSProveedor.asmx" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BONOS.cs">
+    <Compile Include="BONO.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="CLIENTES.cs">
+    <Compile Include="CLIENTE.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="COBROS.cs">
+    <Compile Include="COBRO.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="CODIGO_PAIS.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DETALLE_COBROS.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="ESTADOS_TELEFONOS.cs">
@@ -112,7 +115,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="LLAMADAS.cs">
+    <Compile Include="LLAMADA.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model1.Context.cs">
@@ -134,10 +137,16 @@
     <Compile Include="RespuestaActivarDesactivar.cs" />
     <Compile Include="RespuestaCalculoPostpago.cs" />
     <Compile Include="RespuestaIngresarServicio.cs" />
-    <Compile Include="sysdiagrams.cs">
+    <Compile Include="sp_helpdiagramdefinition_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="TELEFONOS.cs">
+    <Compile Include="sp_helpdiagrams_Result.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sysdiagram.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TELEFONO.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="TIPO_TELEFONO.cs">
@@ -146,7 +155,7 @@
     <Compile Include="TIPO_TRANSACCION.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="TRANSACCIONES.cs">
+    <Compile Include="TRANSACCIONE.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="WSProveedor.asmx.cs">
