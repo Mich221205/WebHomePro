@@ -14,6 +14,43 @@ namespace WSProveedorRef
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Resultado", Namespace="http://wsproveedor1.org/")]
+    public partial class Resultado : object
+    {
+        
+        private bool RESULTADOField;
+        
+        private string MensajeField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public bool RESULTADO
+        {
+            get
+            {
+                return this.RESULTADOField;
+            }
+            set
+            {
+                this.RESULTADOField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
+        public string Mensaje
+        {
+            get
+            {
+                return this.MensajeField;
+            }
+            set
+            {
+                this.MensajeField = value;
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="LineaPrepago", Namespace="http://wsproveedor1.org/")]
     public partial class LineaPrepago : object
     {
@@ -51,8 +88,8 @@ namespace WSProveedorRef
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="LineaPostpago", Namespace="http://wsproveedor1.org/")]
-    public partial class LineaPostpago : object
+    [System.Runtime.Serialization.DataContractAttribute(Name="LineaPostpagoSimple", Namespace="http://wsproveedor1.org/")]
+    public partial class LineaPostpagoSimple : object
     {
         
         private string TelefonoField;
@@ -88,37 +125,67 @@ namespace WSProveedorRef
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Resultado", Namespace="http://wsproveedor1.org/")]
-    public partial class Resultado : object
+    [System.Runtime.Serialization.DataContractAttribute(Name="LineaPostpago", Namespace="http://wsproveedor1.org/")]
+    public partial class LineaPostpago : object
     {
         
-        private bool RESULTADOField;
+        private string NumeroTelefonoField;
         
-        private string MensajeField;
+        private string IdentificadorTarjetaField;
         
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
-        public bool RESULTADO
+        private decimal MontoPendiente2Field;
+        
+        private string EstadoPagoField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+        public string NumeroTelefono
         {
             get
             {
-                return this.RESULTADOField;
+                return this.NumeroTelefonoField;
             }
             set
             {
-                this.RESULTADOField = value;
+                this.NumeroTelefonoField = value;
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
-        public string Mensaje
+        public string IdentificadorTarjeta
         {
             get
             {
-                return this.MensajeField;
+                return this.IdentificadorTarjetaField;
             }
             set
             {
-                this.MensajeField = value;
+                this.IdentificadorTarjetaField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=2)]
+        public decimal MontoPendiente2
+        {
+            get
+            {
+                return this.MontoPendiente2Field;
+            }
+            set
+            {
+                this.MontoPendiente2Field = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=3)]
+        public string EstadoPago
+        {
+            get
+            {
+                return this.EstadoPagoField;
+            }
+            set
+            {
+                this.EstadoPagoField = value;
             }
         }
     }
@@ -641,11 +708,17 @@ namespace WSProveedorRef
     public interface WSProveedorSoap
     {
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://wsproveedor1.org/PagarFacturaPostpago", ReplyAction="*")]
+        System.Threading.Tasks.Task<WSProveedorRef.PagarFacturaPostpagoResponse> PagarFacturaPostpagoAsync(WSProveedorRef.PagarFacturaPostpagoRequest request);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://wsproveedor1.org/ListarLineasPrepagoPorCliente", ReplyAction="*")]
         System.Threading.Tasks.Task<WSProveedorRef.ListarLineasPrepagoPorClienteResponse> ListarLineasPrepagoPorClienteAsync(WSProveedorRef.ListarLineasPrepagoPorClienteRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://wsproveedor1.org/ObtenerLineasPostpagoPorCedula", ReplyAction="*")]
         System.Threading.Tasks.Task<WSProveedorRef.ObtenerLineasPostpagoPorCedulaResponse> ObtenerLineasPostpagoPorCedulaAsync(WSProveedorRef.ObtenerLineasPostpagoPorCedulaRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://wsproveedor1.org/ObtenerFacturasPostpagoPorCliente", ReplyAction="*")]
+        System.Threading.Tasks.Task<WSProveedorRef.ObtenerFacturasPostpagoPorClienteResponse> ObtenerFacturasPostpagoPorClienteAsync(WSProveedorRef.ObtenerFacturasPostpagoPorClienteRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://wsproveedor1.org/ObtenerIdClientePorCedula", ReplyAction="*")]
         System.Threading.Tasks.Task<WSProveedorRef.ObtenerIdClientePorCedulaResponse> ObtenerIdClientePorCedulaAsync(WSProveedorRef.ObtenerIdClientePorCedulaRequest request);
@@ -682,6 +755,90 @@ namespace WSProveedorRef
         
         [System.ServiceModel.OperationContractAttribute(Action="http://wsproveedor1.org/RecargarSaldoPrepago", ReplyAction="*")]
         System.Threading.Tasks.Task<WSProveedorRef.RecargarSaldoPrepagoResponse> RecargarSaldoPrepagoAsync(WSProveedorRef.RecargarSaldoPrepagoRequest request);
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class PagarFacturaPostpagoRequest
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="PagarFacturaPostpago", Namespace="http://wsproveedor1.org/", Order=0)]
+        public WSProveedorRef.PagarFacturaPostpagoRequestBody Body;
+        
+        public PagarFacturaPostpagoRequest()
+        {
+        }
+        
+        public PagarFacturaPostpagoRequest(WSProveedorRef.PagarFacturaPostpagoRequestBody Body)
+        {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://wsproveedor1.org/")]
+    public partial class PagarFacturaPostpagoRequestBody
+    {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string cedula;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=1)]
+        public string telefono;
+        
+        public PagarFacturaPostpagoRequestBody()
+        {
+        }
+        
+        public PagarFacturaPostpagoRequestBody(string cedula, string telefono)
+        {
+            this.cedula = cedula;
+            this.telefono = telefono;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class PagarFacturaPostpagoResponse
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="PagarFacturaPostpagoResponse", Namespace="http://wsproveedor1.org/", Order=0)]
+        public WSProveedorRef.PagarFacturaPostpagoResponseBody Body;
+        
+        public PagarFacturaPostpagoResponse()
+        {
+        }
+        
+        public PagarFacturaPostpagoResponse(WSProveedorRef.PagarFacturaPostpagoResponseBody Body)
+        {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://wsproveedor1.org/")]
+    public partial class PagarFacturaPostpagoResponseBody
+    {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public WSProveedorRef.Resultado PagarFacturaPostpagoResult;
+        
+        public PagarFacturaPostpagoResponseBody()
+        {
+        }
+        
+        public PagarFacturaPostpagoResponseBody(WSProveedorRef.Resultado PagarFacturaPostpagoResult)
+        {
+            this.PagarFacturaPostpagoResult = PagarFacturaPostpagoResult;
+        }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -832,15 +989,95 @@ namespace WSProveedorRef
     {
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
-        public WSProveedorRef.LineaPostpago[] ObtenerLineasPostpagoPorCedulaResult;
+        public WSProveedorRef.LineaPostpagoSimple[] ObtenerLineasPostpagoPorCedulaResult;
         
         public ObtenerLineasPostpagoPorCedulaResponseBody()
         {
         }
         
-        public ObtenerLineasPostpagoPorCedulaResponseBody(WSProveedorRef.LineaPostpago[] ObtenerLineasPostpagoPorCedulaResult)
+        public ObtenerLineasPostpagoPorCedulaResponseBody(WSProveedorRef.LineaPostpagoSimple[] ObtenerLineasPostpagoPorCedulaResult)
         {
             this.ObtenerLineasPostpagoPorCedulaResult = ObtenerLineasPostpagoPorCedulaResult;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class ObtenerFacturasPostpagoPorClienteRequest
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="ObtenerFacturasPostpagoPorCliente", Namespace="http://wsproveedor1.org/", Order=0)]
+        public WSProveedorRef.ObtenerFacturasPostpagoPorClienteRequestBody Body;
+        
+        public ObtenerFacturasPostpagoPorClienteRequest()
+        {
+        }
+        
+        public ObtenerFacturasPostpagoPorClienteRequest(WSProveedorRef.ObtenerFacturasPostpagoPorClienteRequestBody Body)
+        {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://wsproveedor1.org/")]
+    public partial class ObtenerFacturasPostpagoPorClienteRequestBody
+    {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string cedula;
+        
+        public ObtenerFacturasPostpagoPorClienteRequestBody()
+        {
+        }
+        
+        public ObtenerFacturasPostpagoPorClienteRequestBody(string cedula)
+        {
+            this.cedula = cedula;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class ObtenerFacturasPostpagoPorClienteResponse
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="ObtenerFacturasPostpagoPorClienteResponse", Namespace="http://wsproveedor1.org/", Order=0)]
+        public WSProveedorRef.ObtenerFacturasPostpagoPorClienteResponseBody Body;
+        
+        public ObtenerFacturasPostpagoPorClienteResponse()
+        {
+        }
+        
+        public ObtenerFacturasPostpagoPorClienteResponse(WSProveedorRef.ObtenerFacturasPostpagoPorClienteResponseBody Body)
+        {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://wsproveedor1.org/")]
+    public partial class ObtenerFacturasPostpagoPorClienteResponseBody
+    {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public WSProveedorRef.LineaPostpago[] ObtenerFacturasPostpagoPorClienteResult;
+        
+        public ObtenerFacturasPostpagoPorClienteResponseBody()
+        {
+        }
+        
+        public ObtenerFacturasPostpagoPorClienteResponseBody(WSProveedorRef.LineaPostpago[] ObtenerFacturasPostpagoPorClienteResult)
+        {
+            this.ObtenerFacturasPostpagoPorClienteResult = ObtenerFacturasPostpagoPorClienteResult;
         }
     }
     
@@ -992,13 +1229,13 @@ namespace WSProveedorRef
     {
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
-        public WSProveedorRef.LineaPostpago[] ListarLineasPostpagoPorClienteResult;
+        public WSProveedorRef.LineaPostpagoSimple[] ListarLineasPostpagoPorClienteResult;
         
         public ListarLineasPostpagoPorClienteResponseBody()
         {
         }
         
-        public ListarLineasPostpagoPorClienteResponseBody(WSProveedorRef.LineaPostpago[] ListarLineasPostpagoPorClienteResult)
+        public ListarLineasPostpagoPorClienteResponseBody(WSProveedorRef.LineaPostpagoSimple[] ListarLineasPostpagoPorClienteResult)
         {
             this.ListarLineasPostpagoPorClienteResult = ListarLineasPostpagoPorClienteResult;
         }
@@ -1888,6 +2125,21 @@ namespace WSProveedorRef
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<WSProveedorRef.PagarFacturaPostpagoResponse> WSProveedorRef.WSProveedorSoap.PagarFacturaPostpagoAsync(WSProveedorRef.PagarFacturaPostpagoRequest request)
+        {
+            return base.Channel.PagarFacturaPostpagoAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<WSProveedorRef.PagarFacturaPostpagoResponse> PagarFacturaPostpagoAsync(string cedula, string telefono)
+        {
+            WSProveedorRef.PagarFacturaPostpagoRequest inValue = new WSProveedorRef.PagarFacturaPostpagoRequest();
+            inValue.Body = new WSProveedorRef.PagarFacturaPostpagoRequestBody();
+            inValue.Body.cedula = cedula;
+            inValue.Body.telefono = telefono;
+            return ((WSProveedorRef.WSProveedorSoap)(this)).PagarFacturaPostpagoAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         System.Threading.Tasks.Task<WSProveedorRef.ListarLineasPrepagoPorClienteResponse> WSProveedorRef.WSProveedorSoap.ListarLineasPrepagoPorClienteAsync(WSProveedorRef.ListarLineasPrepagoPorClienteRequest request)
         {
             return base.Channel.ListarLineasPrepagoPorClienteAsync(request);
@@ -1913,6 +2165,20 @@ namespace WSProveedorRef
             inValue.Body = new WSProveedorRef.ObtenerLineasPostpagoPorCedulaRequestBody();
             inValue.Body.cedula = cedula;
             return ((WSProveedorRef.WSProveedorSoap)(this)).ObtenerLineasPostpagoPorCedulaAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<WSProveedorRef.ObtenerFacturasPostpagoPorClienteResponse> WSProveedorRef.WSProveedorSoap.ObtenerFacturasPostpagoPorClienteAsync(WSProveedorRef.ObtenerFacturasPostpagoPorClienteRequest request)
+        {
+            return base.Channel.ObtenerFacturasPostpagoPorClienteAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<WSProveedorRef.ObtenerFacturasPostpagoPorClienteResponse> ObtenerFacturasPostpagoPorClienteAsync(string cedula)
+        {
+            WSProveedorRef.ObtenerFacturasPostpagoPorClienteRequest inValue = new WSProveedorRef.ObtenerFacturasPostpagoPorClienteRequest();
+            inValue.Body = new WSProveedorRef.ObtenerFacturasPostpagoPorClienteRequestBody();
+            inValue.Body.cedula = cedula;
+            return ((WSProveedorRef.WSProveedorSoap)(this)).ObtenerFacturasPostpagoPorClienteAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]

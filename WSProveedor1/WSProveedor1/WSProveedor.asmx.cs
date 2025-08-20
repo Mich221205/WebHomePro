@@ -98,6 +98,47 @@ namespace WSProveedor1
             public string Mensaje { get; set; }
         }
 
+        [WebMethod]
+        public Resultado PagarFacturaPostpago(string cedula, string telefono)
+        {
+            try
+            {
+                int idCliente = ObtenerIdClientePorCedula(cedula);
+
+                string telefonoEnc = AESEncryptor.Encrypt(telefono);
+
+                using (var cn = new SqlConnection("Server=Laptop-Michel;Database=COMPANIA_TELEFONICA;User Id=sa;Password=mich22;TrustServerCertificate=True;"))
+                using (var cmd = new SqlCommand(@"
+                    UPDATE d
+                    SET d.ESTADO_PAGO = 'Pagado'
+                    FROM DETALLE_COBROS d
+                    INNER JOIN COBROS c ON d.ID_COBRO = c.ID_COBRO
+                    INNER JOIN TELEFONOS t ON t.ID_CLIENTE = d.ID_CLIENTE
+                    WHERE d.ID_CLIENTE = @IdCliente
+                      AND t.NUM_TELEFONO = @Telefono
+                      AND d.ESTADO_PAGO <> 'Pagado';", cn))
+                {
+                    cmd.Parameters.AddWithValue("@IdCliente", idCliente);
+                    cmd.Parameters.AddWithValue("@Telefono", telefonoEnc);
+
+                    cn.Open();
+                    int filas = cmd.ExecuteNonQuery();
+
+                    if (filas > 0)
+                    {
+                        return new Resultado { RESULTADO = true, Mensaje = "Registro exitoso" };
+                    }
+                    else
+                    {
+                        return new Resultado { RESULTADO = false, Mensaje = "No había facturas pendientes o ya estaban pagadas." };
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return new Resultado { RESULTADO = false, Mensaje = $"Error al registrar el pago: {ex.Message}" };
+            }
+        }
 
         [WebMethod]
         public List<LineaPrepago> ListarLineasPrepagoPorCliente(string cedula)
@@ -138,9 +179,9 @@ namespace WSProveedor1
         }
 
         [WebMethod]
-        public List<LineaPostpago> ObtenerLineasPostpagoPorCedula(string cedula)
+        public List<LineaPostpagoSimple> ObtenerLineasPostpagoPorCedula(string cedula)
         {
-            var lista = new List<LineaPostpago>();
+            var lista = new List<LineaPostpagoSimple>();
 
             if (string.IsNullOrWhiteSpace(cedula))
                 return lista;
@@ -184,7 +225,7 @@ namespace WSProveedor1
                         var tel = rd["Telefono"]?.ToString() ?? "";
                         tel = AESDecryptor.Decrypt(tel);
 
-                        lista.Add(new LineaPostpago
+                        lista.Add(new LineaPostpagoSimple
                         {
                             Telefono = tel,
                             MontoPendiente = Convert.ToDecimal(rd["MontoPendiente"])
@@ -196,6 +237,59 @@ namespace WSProveedor1
             return lista;
         }
 
+        public class LineaPostpago
+        {
+            public string NumeroTelefono { get; set; }
+            public string IdentificadorTarjeta { get; set; }
+            public decimal MontoPendiente2 { get; set; }
+            public string EstadoPago { get; set; }
+        }
+
+
+        [WebMethod]
+        public List<LineaPostpago> ObtenerFacturasPostpagoPorCliente(string cedula)
+        {
+            var lista = new List<LineaPostpago>();
+
+            int idCliente = ObtenerIdClientePorCedula(cedula);
+
+            using (var cn = new SqlConnection("Server=Laptop-Michel;Database=COMPANIA_TELEFONICA;User Id=sa;Password=mich22;TrustServerCertificate=True;"))
+            using (var cmd = new SqlCommand(@"
+                SELECT 
+                    t.NUM_TELEFONO AS Telefono,
+                    t.IDENTIFICADOR_TARJETA AS IdentificadorTarjeta,
+                    COALESCE(d.MONTO_TOTAL,0) AS MontoPendiente,
+                    d.ESTADO_PAGO AS EstadoPago
+                FROM DETALLE_COBROS d
+                INNER JOIN TELEFONOS t ON t.ID_CLIENTE = d.ID_CLIENTE
+                WHERE d.ID_CLIENTE = @IdCliente;", cn))
+            {
+                cmd.Parameters.AddWithValue("@IdCliente", idCliente);
+                cn.Open();
+                using (var rd = cmd.ExecuteReader())
+                {
+                    while (rd.Read())
+                    {
+                        var telefono = rd["Telefono"]?.ToString() ?? "";
+                        var tarjeta = rd["IdentificadorTarjeta"]?.ToString() ?? "";
+
+                        // 🔐 Desencriptar si vienen encriptados
+                        telefono = AESDecryptor.Decrypt(telefono);
+                        tarjeta = AESDecryptor.Decrypt(tarjeta);
+
+                        lista.Add(new LineaPostpago
+                        {
+                            NumeroTelefono = telefono,
+                            IdentificadorTarjeta = tarjeta,
+                            MontoPendiente2 = Convert.ToDecimal(rd["MontoPendiente"]),
+                            EstadoPago = rd["EstadoPago"]?.ToString() ?? "Pendiente"
+                        });
+                    }
+                }
+            }
+
+            return lista;
+        }
 
 
         [WebMethod]
@@ -214,12 +308,17 @@ namespace WSProveedor1
         }
 
     public class LineaPrepago { public string Telefono; public decimal SaldoDisponible; }
-        public class LineaPostpago { public string Telefono; public decimal MontoPendiente; }
+        public class LineaPostpagoSimple
+        {
+            public string Telefono;
+            public decimal MontoPendiente;
+        }
+
 
         [WebMethod]
-        public List<LineaPostpago> ListarLineasPostpagoPorCliente(int idCliente)
+        public List<LineaPostpagoSimple> ListarLineasPostpagoPorCliente(int idCliente)
         {
-            var lista = new List<LineaPostpago>();
+            var lista = new List<LineaPostpagoSimple>();
 
             using (var cn = new SqlConnection(ConfigurationManager.ConnectionStrings["SQLServer"].ConnectionString))
             using (var cmd = new SqlCommand(@"
@@ -257,7 +356,7 @@ namespace WSProveedor1
                         // 🔓 Desencriptar si está en formato ENC:
                         tel = AESDecryptor.Decrypt(tel);
 
-                        lista.Add(new LineaPostpago
+                        lista.Add(new LineaPostpagoSimple
                         {
                             Telefono = tel,
                             MontoPendiente = Convert.ToDecimal(rd["MontoPendiente"])

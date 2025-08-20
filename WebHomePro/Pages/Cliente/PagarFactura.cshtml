@@ -1,0 +1,288 @@
+﻿@page "/Cliente/PagarFactura"
+@using Microsoft.AspNetCore.Http
+@model WebHomePro.Pages.Cliente.PagarFacturaModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Pago de facturas postpago" />
+    <meta name="author" content="HomePro" />
+    <title>HomePro - Pago facturas postpago</title>
+    <link rel="icon" type="image/x-icon" href="~/assets/favicon.ico" />
+
+    <!-- Font Awesome icons -->
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+
+    <!-- Google fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet" />
+
+    <!-- Theme CSS (usa el mismo que tu menú) -->
+    <link href="~/css/StyleMenuAdmin.css" rel="stylesheet" />
+</head>
+<body>
+    <!-- Navigation (idéntico a tu menú cliente, con enlaces activos) -->
+    <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
+        <div class="container px-4 px-lg-5">
+            <a class="navbar-brand" asp-page="/Index">
+                <img src="~/img/LOGO HOMEPRO.png" alt="Logo" style="height: 5rem;" />
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive">
+                Menu <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ms-auto py-4 py-lg-0">
+                    <li class="nav-item">
+                        <span class="navbar-text px-lg-3 py-3 py-lg-4">
+                            Hola @HttpContext.Session.GetString("ClienteNombre")
+                        </span>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Cliente/LineasCliente">Líneas Activas a su Nombre</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Cliente/CargarSaldo">Cargar saldo a línea PREPAGO</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-lg-3 py-3 py-lg-4 active" asp-page="/Cliente/PagarFactura">Pago facturas pendientes</a>
+                    </li>
+
+                    <!-- Duplico tu acceso directo ya existente -->
+                    <li class="nav-item">
+                        <a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Cliente/CargarSaldo">Cargar Saldo Lineas Prepago</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Cliente/DevolverLinea">Devolver una Línea</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Login">Salir del Sitio</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header (mismo estilo masthead) -->
+    <header class="masthead" style="background-image: url('@Url.Content("~/img/home-bg.jpg")')">
+        <div class="container position-relative px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <div class="site-heading">
+                        <h1>Pagar facturas postpago</h1>
+                        <span class="subheading">Visualiza y cancela facturación pendiente</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenido principal -->
+    <main class="py-5">
+        <div class="container px-4 px-lg-5">
+
+            <!-- Mensajes de estado -->
+            @if (!string.IsNullOrWhiteSpace(Model.MensajeFacturas))
+            {
+                <div class="alert alert-info">
+                    @Model.MensajeFacturas
+                </div>
+            }
+
+            @if (!string.IsNullOrWhiteSpace(Model.Mensaje))
+            {
+                <div class="alert @(Model.EsExito ? "alert-success" : "alert-danger")">
+                    @Model.Mensaje
+                </div>
+            }
+
+            <!-- Tabla: líneas postpago -->
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header">
+                    <strong>Líneas postpago a su nombre</strong>
+                    <small class="text-muted d-block">Doble click sobre una fila para abrir el formulario de pago</small>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-sm mb-0" id="tablaPostpago">
+                            <thead class="table-light">
+                                <tr>
+                                    <th style="width: 30%">Número</th>
+                                    <th style="width: 35%">Identificador Tarjeta</th>
+                                    <th style="width: 20%" class="text-end">Monto pendiente</th>
+                                    <th style="width: 15%" class="text-center">Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.LineasPostpago?.Count > 0)
+                                {
+                                    foreach (var l in Model.LineasPostpago)
+                                    {
+                                        var tieneDeuda = l.MontoPendiente > 0;
+                                        <tr class="fila-linea" data-telefono="@l.NumeroTelefono" data-monto="@l.MontoPendiente.ToString("0.00")">
+                                            <td>@l.NumeroTelefono</td>
+                                            <td>@l.IdTarjeta</td>
+                                            <td class="text-end">@l.MontoPendiente.ToString("N2")</td>
+                                            <td class="text-center">
+                                                @if (tieneDeuda)
+                                                {
+                                                    <span class="badge bg-warning text-dark">Pendiente</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge bg-success">Al día</span>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="4" class="text-center py-3 text-muted">
+                                            No hay líneas postpago registradas.
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Formulario de pago (aparece al doble click) -->
+            <div id="panelPago" class="card shadow-sm @(Model.MostrarFormulario ? "" : "d-none")">
+                <div class="card-header">
+                    <strong>Registrar pago con tarjeta</strong>
+                </div>
+                <div class="card-body">
+                    <form method="post" asp-page-handler="Pagar" novalidate>
+                        <input type="hidden" asp-for="Pago.Telefono" />
+
+                        <div class="row g-3">
+                            <div class="col-12 col-md-4">
+                                <label class="form-label">Número de teléfono</label>
+                                <input class="form-control" value="@Model.Pago.Telefono" readonly />
+                            </div>
+
+                            <div class="col-12 col-md-4">
+                                <label class="form-label">Monto factura a cancelar (CRC)</label>
+                                <input class="form-control" asp-for="Pago.MontoFactura" readonly />
+                            </div>
+                        </div>
+
+                        <hr />
+
+                        <div class="row g-3">
+                            <div class="col-12 col-md-6">
+                                <label asp-for="Pago.NumeroTarjeta" class="form-label">Número de Tarjeta</label>
+                                <input asp-for="Pago.NumeroTarjeta" class="form-control" placeholder="#### #### ####" maxlength="14" inputmode="numeric" />
+                                <span class="text-muted small">Formato: 12 dígitos en grupos de 4 (#### #### ####)</span><br />
+                                <span asp-validation-for="Pago.NumeroTarjeta" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <label asp-for="Pago.NombreTarjeta" class="form-label">Nombre del dueño de la tarjeta</label>
+                                <input asp-for="Pago.NombreTarjeta" class="form-control" placeholder="Nombre en la tarjeta" />
+                                <span asp-validation-for="Pago.NombreTarjeta" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-6 col-md-3">
+                                <label asp-for="Pago.FechaVencimiento" class="form-label">Fecha vencimiento (MM/YY)</label>
+                                <input asp-for="Pago.FechaVencimiento" class="form-control" placeholder="MM/YY" maxlength="5" />
+                                <span asp-validation-for="Pago.FechaVencimiento" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-6 col-md-3">
+                                <label asp-for="Pago.CVV" class="form-label">Código seguridad (CVV)</label>
+                                <input asp-for="Pago.CVV" class="form-control" placeholder="###" maxlength="3" inputmode="numeric" />
+                                <span asp-validation-for="Pago.CVV" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 d-flex gap-2">
+                            <button type="submit" class="btn btn-primary">Pagar</button>
+                            <a asp-page="/Cliente/PagarFactura" class="btn btn-outline-secondary">Cancelar</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer (igual al tuyo) -->
+    <footer class="border-top">
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <div class="small text-center text-muted fst-italic">Derechos Reservados &copy; HomePro 2025</div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        // Doble click: abrir panel con teléfono + monto
+        document.querySelectorAll(".fila-linea").forEach(tr => {
+            tr.addEventListener("dblclick", () => {
+                const telefono = tr.getAttribute("data-telefono");
+                const monto = tr.getAttribute("data-monto");
+                const panel = document.getElementById("panelPago");
+                panel.classList.remove("d-none");
+
+                document.querySelector('input[name="Pago.Telefono"]').value = telefono;
+                document.querySelector('input[name="Pago.MontoFactura"]').value = parseFloat(monto).toFixed(2);
+                window.scrollTo({ top: panel.offsetTop - 20, behavior: 'smooth' });
+            });
+        });
+
+        // Máscaras rápidas (sin librerías)
+        const numTarjeta = document.getElementById("Pago_NumeroTarjeta");
+        if (numTarjeta) {
+            numTarjeta.addEventListener("input", (e) => {
+                let v = e.target.value.replace(/\D/g, '').slice(0, 12);
+                v = v.replace(/(\d{4})(?=\d)/g, '$1 ');
+                e.target.value = v;
+            });
+        }
+
+        const fecha = document.getElementById("Pago_FechaVencimiento");
+        if (fecha) {
+            fecha.addEventListener("input", (e) => {
+                let v = e.target.value.replace(/\D/g, '').slice(0, 4); // MMYY
+                if (v.length >= 3) v = v.slice(0, 2) + '/' + v.slice(2);
+                e.target.value = v;
+            });
+        }
+
+        const cvv = document.getElementById("Pago_CVV");
+        if (cvv) {
+            cvv.addEventListener("input", (e) => {
+                e.target.value = e.target.value.replace(/\D/g, '').slice(0, 3);
+            });
+        }
+
+        // Si viene seleccionado desde CLIENTE4, abrir el panel automáticamente
+        @if (Model.MostrarFormulario)
+        {
+                    <text>
+                    (function(){
+                        const panel = document.getElementById("panelPago");
+                        panel.classList.remove("d-none");
+                        window.scrollTo({ top: panel.offsetTop - 20, behavior: 'smooth' });
+                    })();
+                    </text>
+        }
+    </script>
+    <script src="~/js/scripts.js"></script>
+</body>
+</html>
