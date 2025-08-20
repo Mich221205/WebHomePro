@@ -3,64 +3,84 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
-using System.ServiceModel;                       // BasicHttpBinding / EndpointAddress
+using System.ServiceModel;
 using System.Threading.Tasks;
-using WebHomePro.Services;
-using WebHomePro.Services.IProveedorService;
-using WSProveedorRef;
-using WSAUTENTICACION;
-using WebHomePro.Services.IFacturacionServices;
+
+using WebHomePro.Services;                         // FacturacionService
+using WebHomePro.Services.IFacturacionServices;    // IFacturacionService
+using WebHomePro.Services.IProveedorService;       // IProveedorService, ProveedorService (implementación)
+using WSProveedorRef;                              // WSProveedorSoapClient (Connected Service)
+using WSAUTENTICACION;                             // AuthServiceClient (WCF/Service Reference)
 
 var builder = WebApplication.CreateBuilder(args);
 
-// -------------------- Servicios existentes --------------------
+// -------------------- Servicios base --------------------
 builder.Services.AddRazorPages();
 builder.Services.AddSession();
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddScoped<IFacturacionService, FacturacionService>();
 
-builder.Services.AddAuthentication("CookieAuth")
+builder.Services
+    .AddAuthentication("CookieAuth")
     .AddCookie("CookieAuth", options =>
     {
         options.LoginPath = "/Login";
         options.AccessDeniedPath = "/Login";
     });
 
-// -------------------- Registrar clientes SOAP --------------------
-builder.Services.AddScoped<WSProveedorSoapClient>(provider =>
+// -------------------- Servicios de dominio --------------------
+builder.Services.AddScoped<IFacturacionService, FacturacionService>();
+builder.Services.AddScoped<IProveedorService, ProveedorService>();
+
+// -------------------- Clientes SOAP (DI) --------------------
+// WSProveedorSoapClient (URL desde appsettings.json con fallback)
+builder.Services.AddSingleton(sp =>
 {
-    var binding = new BasicHttpBinding
+    var cfg = sp.GetRequiredService<IConfiguration>();
+    var url = cfg["WSProveedor:BaseAddress"];
+    if (string.IsNullOrWhiteSpace(url))
     {
-        Security = new BasicHttpSecurity
-        {
-            Mode = BasicHttpSecurityMode.None
-        }
+        // Fallback seguro (dev)
+        url = "http://localhost:1234/WSProveedor.asmx";
+    }
+
+    var isHttps = url.StartsWith("https://", StringComparison.OrdinalIgnoreCase);
+    var binding = new BasicHttpBinding(isHttps ? BasicHttpSecurityMode.Transport : BasicHttpSecurityMode.None)
+    {
+        MaxReceivedMessageSize = 10 * 1024 * 1024,
+        OpenTimeout = TimeSpan.FromSeconds(15),
+        CloseTimeout = TimeSpan.FromSeconds(15),
+        SendTimeout = TimeSpan.FromSeconds(30),
+        ReceiveTimeout = TimeSpan.FromSeconds(30)
     };
 
-    var endpoint = new EndpointAddress("http://localhost:1234/WSProveedor.asmx");
+    var endpoint = new EndpointAddress(url);
     return new WSProveedorSoapClient(binding, endpoint);
 });
 
-builder.Services.AddScoped<AuthServiceClient>(provider =>
+// AuthServiceClient (URL desde appsettings.json con fallback)
+builder.Services.AddSingleton(sp =>
 {
-    var binding = new BasicHttpBinding
+    var cfg = sp.GetRequiredService<IConfiguration>();
+    var url = cfg["AuthService:BaseAddress"];
+    if (string.IsNullOrWhiteSpace(url))
     {
-        Security = new BasicHttpSecurity
-        {
-            Mode = BasicHttpSecurityMode.None
-        }
+        // Fallback seguro (dev)
+        url = "http://localhost:50339/AuthService.svc";
+    }
+
+    var isHttps = url.StartsWith("https://", StringComparison.OrdinalIgnoreCase);
+    var binding = new BasicHttpBinding(isHttps ? BasicHttpSecurityMode.Transport : BasicHttpSecurityMode.None)
+    {
+        MaxReceivedMessageSize = 10 * 1024 * 1024,
+        OpenTimeout = TimeSpan.FromSeconds(15),
+        CloseTimeout = TimeSpan.FromSeconds(15),
+        SendTimeout = TimeSpan.FromSeconds(30),
+        ReceiveTimeout = TimeSpan.FromSeconds(30)
     };
 
-    var endpoint = new EndpointAddress("http://localhost:50339/AuthService.svc");
+    var endpoint = new EndpointAddress(url);
     return new AuthServiceClient(binding, endpoint);
 });
-
-// -------------------- Wrappers para inyección --------------------
-// Para IProveedorService
-builder.Services.AddScoped<IProveedorService, WebHomePro.Services.IProveedorService.ProveedorService>();
-
-// Para ProveedorService2
-builder.Services.AddScoped<ProveedorService2, WebHomePro.Services.ProveedorService>();
 
 // -------------------- Pipeline --------------------
 var app = builder.Build();
@@ -76,7 +96,6 @@ app.UseStaticFiles();
 
 app.UseRouting();
 app.UseSession();
-
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -87,4 +106,5 @@ app.MapGet("/", context =>
 });
 
 app.MapRazorPages();
+
 app.Run();

@@ -1,23 +1,8 @@
 ﻿@page
 @using Microsoft.AspNetCore.Http
-@using WebHomePro.Services
 @model WebHomePro.Pages.Cliente.MenuclienteModel
-@inject ProveedorService2 Prov
 @{
     Layout = null;
-
-    var prepago = new List<LineaPrepagoVm>();
-    var postpago = new List<LineaPostpagoVm>();
-    string error = string.Empty;
-    try
-    {
-        prepago = await Prov.GetLineasPrepagoAsync();
-        postpago = await Prov.GetLineasPostpagoAsync();
-    }
-    catch (System.Exception ex)
-    {
-        error = "No fue posible cargar tus líneas. " + ex.Message;
-    }
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -59,10 +44,14 @@
                     </li>
 
                     <!-- Opciones del menú -->
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Cliente/Lineas">Líneas Activas a su Nombre</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/#">Cargar saldo a línea PREPAGO</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/#">Pago facturas pendientes</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Cliente/DevolverLineaCliente">Devolver una Línea</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/#">Líneas Activas a su Nombre</a></li>
+
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Cliente/CargarSaldo">Cargar saldo a línea PREPAGO</a></li>
+
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/#">Pagar factura Pendiente</a></li>
+
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/#">Devolver una Línea</a></li>
+
                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Login">Salir del Sitio</a></li>
                 </ul>
             </div>
@@ -95,76 +84,6 @@
         </div>
     </section>
 
-    <!-- CLIENTE4: Tablas de líneas -->
-    <section class="py-5">
-        <div class="container px-4 px-lg-5">
-            <div class="row gx-4 gx-lg-5 justify-content-center">
-                <div class="col-md-10 col-lg-8 col-xl-7">
-
-                    @if (!string.IsNullOrWhiteSpace(error))
-                    {
-                        <div class="alert alert-danger">@error</div>
-                    }
-
-                    <h3 class="mb-3">Líneas Prepago</h3>
-                    @if (prepago == null || prepago.Count == 0)
-                    {
-                        <div class="alert alert-info">No tienes líneas prepago registradas.</div>
-                    }
-                    else
-                    {
-                        <table id="prepago" class="table table-hover align-middle">
-                            <thead class="table-light">
-                                <tr>
-                                    <th>Teléfono</th>
-                                    <th class="text-end">Saldo disponible</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var l in prepago)
-                                {
-                                    <tr data-tel="@l.Telefono">
-                                        <td>@l.Telefono</td>
-                                        <td class="text-end">@l.SaldoDisponible.ToString("N2")</td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    }
-
-                    <hr class="my-4" />
-
-                    <h3 class="mb-3">Líneas Postpago</h3>
-                    @if (postpago == null || postpago.Count == 0)
-                    {
-                        <div class="alert alert-info">No tienes líneas postpago registradas.</div>
-                    }
-                    else
-                    {
-                        <table id="postpago" class="table table-hover align-middle">
-                            <thead class="table-light">
-                                <tr>
-                                    <th>Teléfono</th>
-                                    <th class="text-end">Monto pendiente</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var l in postpago)
-                                {
-                                    <tr data-tel="@l.Telefono" data-monto="@l.MontoPendiente">
-                                        <td>@l.Telefono</td>
-                                        <td class="text-end">@l.MontoPendiente.ToString("N2")</td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    }
-
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Footer -->
     <footer class="border-top">
         <div class="container px-4 px-lg-5">
@@ -179,44 +98,5 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/scripts.js"></script>
-
-    <!-- Doble clic: mensajes / navegación -->
-    <script>
-        // Pon en true cuando quieras navegar a pantallas reales
-        var navegarCliente5 = false;
-        var navegarCliente6 = false;
-
-        (function () {
-            // PREPAGO
-            document.querySelectorAll('#prepago tbody tr').forEach(function (tr) {
-                tr.addEventListener('dblclick', function () {
-                    var tel = tr.getAttribute('data-tel');
-                    if (navegarCliente5) {
-                        window.location.href = '' + encodeURIComponent(tel);
-                    } else {
-                        alert('Doble clic en PREPAGO (' + tel + '). Navegación deshabilitada (CLIENTE5 no creado).');
-                    }
-                });
-            });
-
-            // POSTPAGO
-            document.querySelectorAll('#postpago tbody tr').forEach(function (tr) {
-                tr.addEventListener('dblclick', function () {
-                    var tel = tr.getAttribute('data-tel');
-                    var monto = parseFloat(tr.getAttribute('data-monto') || '0');
-                    if (monto <= 0) {
-                        alert('Esta línea no tiene facturación pendiente.');
-                        return;
-                    }
-                    if (navegarCliente6) {
-                        window.location.href = '' + encodeURIComponent(tel);
-                    } else {
-                        alert('Doble clic en POSTPAGO (' + tel + ') con monto ' + monto.toFixed(2) +
-                            '. Navegación deshabilitada (CLIENTE6 no creado).');
-                    }
-                });
-            });
-        })();
-    </script>
 </body>
 </html>

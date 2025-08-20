@@ -1,4 +1,231 @@
-﻿@page
+﻿@page "{telefono?}"
 @model WebHomePro.Pages.Cliente.CargarSaldoModel
 @{
+    Layout = null;
+    ViewData["Title"] = "Cargar saldo (Prepago)";
 }
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>HomePro - Cargar saldo</title>
+    <link rel="icon" type="image/x-icon" href="~/assets/favicon.ico" />
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet" />
+    <link href="~/css/StyleMenuAdmin.css" rel="stylesheet" />
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
+        <div class="container px-4 px-lg-5">
+            <a class="navbar-brand" asp-page="/Cliente/MenuCliente">
+                <img src="~/img/LOGO HOMEPRO.png" alt="Logo" style="height: 5rem;" />
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive">
+                Menu <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ms-auto py-4 py-lg-0">
+
+                    <!-- Opciones del menú -->
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/#">Líneas Activas a su Nombre</a></li>
+
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Cliente/CargarSaldo">Cargar saldo a línea PREPAGO</a></li>
+
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/#">Pagar factura Pendiente</a></li>
+
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/#">Devolver una Línea</a></li>
+
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Login">Salir del Sitio</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="masthead" style="background-image: url('@Url.Content("~/img/home-bg.jpg")')">
+        <div class="container position-relative px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <div class="site-heading">
+                        <h1>Cargar saldo (Prepago)</h1>
+                        <span class="subheading">Visualiza tus líneas y recarga fácilmente</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenido -->
+    <section class="py-5">
+        <div class="container">
+            @* Mensajes *@
+            @if (TempData["Success"] is string s && !string.IsNullOrWhiteSpace(s))
+            {
+                <div class="alert alert-success" role="alert">@s</div>
+            }
+            @if (TempData["Error"] is string e && !string.IsNullOrWhiteSpace(e))
+            {
+                <div class="alert alert-danger" role="alert">@e</div>
+            }
+
+            @if (!Model.MostrarFormulario)
+            {
+                <h2 class="text-center mb-4">Líneas prepago registradas</h2>
+                <p class="text-muted text-center">Haz <strong>doble clic</strong> sobre una línea para abrir el formulario de recarga.</p>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped" id="tablaPrepago">
+                        <thead class="table-dark">
+                            <tr>
+                                <th style="width: 260px;">Número</th>
+                                <th class="text-end" style="width: 180px;">Saldo disponible</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.LineasPrepago?.Count > 0)
+                            {
+                                foreach (var l in Model.LineasPrepago)
+                                {
+                                    <tr class="fila-click" data-numero="@l.NumeroTelefono" style="cursor:pointer;">
+                                        <td>@l.NumeroTelefono</td>
+                                        <td class="text-end">@l.Saldo.ToString("N0")</td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="2" class="text-center">No se encontraron líneas prepago.</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <h2 class="text-center mb-4">Recargar saldo</h2>
+
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <div class="form-control-plaintext"><strong>Línea:</strong> @Model.Recarga.NumeroTelefono</div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-control-plaintext"><strong>Saldo actual:</strong> @Model.SaldoActual.ToString("N0")</div>
+                            </div>
+                        </div>
+
+                        <form method="post" asp-page-handler="Pagar" novalidate>
+                            <input type="hidden" asp-for="Recarga.NumeroTelefono" />
+
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label asp-for="Recarga.NumeroTarjeta" class="form-label">Número de Tarjeta (### ### ###)</label>
+                                    <input asp-for="Recarga.NumeroTarjeta" class="form-control" placeholder="1234 5678 9012" maxlength="14" />
+                                    <span class="text-danger" asp-validation-for="Recarga.NumeroTarjeta"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <label asp-for="Recarga.NombreTarjeta" class="form-label">Nombre del dueño de la tarjeta</label>
+                                    <input asp-for="Recarga.NombreTarjeta" class="form-control" placeholder="Nombre Apellido" />
+                                    <span class="text-danger" asp-validation-for="Recarga.NombreTarjeta"></span>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label asp-for="Recarga.FechaVencimiento" class="form-label">Vencimiento (MM/YY)</label>
+                                    <input asp-for="Recarga.FechaVencimiento" class="form-control" placeholder="08/27" maxlength="5" />
+                                    <span class="text-danger" asp-validation-for="Recarga.FechaVencimiento"></span>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label asp-for="Recarga.CVV" class="form-label">CVV (3 dígitos)</label>
+                                    <input asp-for="Recarga.CVV" class="form-control" maxlength="3" />
+                                    <span class="text-danger" asp-validation-for="Recarga.CVV"></span>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label asp-for="Recarga.Monto" class="form-label">Monto a cargar (entero, sin decimales)</label>
+                                    <input asp-for="Recarga.Monto" class="form-control" inputmode="numeric" />
+                                    <span class="text-danger" asp-validation-for="Recarga.Monto"></span>
+                                </div>
+                            </div>
+
+                            <div class="mt-4 d-flex gap-2">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fa-solid fa-credit-card"></i> Procesar pago
+                                </button>
+                                <a href="@Url.Page("./CargarSaldo")" class="btn btn-outline-secondary">
+                                    <i class="fa-solid fa-arrow-left"></i> Volver
+                                </a>
+
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            }
+        </div>
+    </section>
+
+    <footer class="border-top">
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <div class="small text-center text-muted fst-italic">Derechos Reservados &copy; HomePro 2025</div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    @* Validaciones unobtrusive *@
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        // Doble clic para abrir el formulario con la línea seleccionada
+        document.querySelectorAll(".fila-click").forEach(tr => {
+            tr.addEventListener("dblclick", () => {
+                const numero = tr.getAttribute("data-numero");
+                if (numero) {
+                    window.location.href = '@Url.Page("./CargarSaldo")/' + numero;
+                }
+            });
+        });
+
+        // Helpers de input para formato y restricciones
+        (function () {
+            const num = document.querySelector('[name="Recarga.NumeroTarjeta"]');
+            if (num) {
+                num.addEventListener('input', (e) => {
+                    const digits = e.target.value.replace(/\D/g, '').slice(0, 12);
+                    const parts = digits.match(/.{1,4}/g) || [];
+                    e.target.value = parts.join(' ');
+                });
+            }
+            const cvv = document.querySelector('[name="Recarga.CVV"]');
+            if (cvv) {
+                cvv.addEventListener('input', (e) => {
+                    e.target.value = e.target.value.replace(/\D/g, '').slice(0, 3);
+                });
+            }
+            const ven = document.querySelector('[name="Recarga.FechaVencimiento"]');
+            if (ven) {
+                ven.addEventListener('input', (e) => {
+                    let v = e.target.value.replace(/[^0-9]/g, '').slice(0, 4);
+                    if (v.length >= 3) v = v.slice(0, 2) + '/' + v.slice(2);
+                    e.target.value = v;
+                });
+            }
+            const monto = document.querySelector('[name="Recarga.Monto"]');
+            if (monto) {
+                monto.addEventListener('input', (e) => {
+                    e.target.value = e.target.value.replace(/\D/g, '');
+                });
+            }
+        })();
+    </script>
+
+</body>
+</html>

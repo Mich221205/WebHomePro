@@ -1,14 +1,30 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
-using WebHomePro.Pages.Admin;
-using WebHomePro.Services;
-
+// quita estos dos si no los usas en este archivo:
+// using WebHomePro.Pages.Admin;
+// using WebHomePro.Services;
 
 namespace WebHomePro.Services.IProveedorService
 {
+
+    public interface IProveedorService
+    {
+        Task<List<LineaDisponibleDto>> ObtenerLineasDisponiblesAsync();
+        Task<RespuestaWs> ActivarLineaAsync(string numero, string idTelefono, string idTarjeta, string tipo, string cedula);
+
+        Task<List<LineaNuevaVm>> GetLineasNuevasDisponiblesAsync(CancellationToken ct = default);
+        Task<OperacionResponse> ActivarLineaAsync(ActivarLineaRequestDto req, CancellationToken ct = default);
+
+        Task<List<LineaPrepagoDto>> ObtenerLineasPrepagoAsync(string? cedula);
+        Task<decimal> ObtenerSaldoPrepagoAsync(string telefono);              // queda por compat
+        Task<decimal> ObtenerSaldoPrepagoAsync(string telefono, string? cedula); // fallback con cédula
+        Task<(bool ok, string? mensaje)> RecargarSaldoPrepagoAsync(string telefono, int monto);
+        Task<LineaPrepagoDto?> ObtenerLineaPrepagoAsync(string telefono);
+    }
+
     public class LineaDisponibleDto
     {
-        
         public string NumeroTelefono { get; set; } = "";
         public string IdTelefono { get; set; } = "";
         public string? IdTarjeta { get; set; } = "";
@@ -21,23 +37,10 @@ namespace WebHomePro.Services.IProveedorService
         public string Mensaje { get; set; } = "";
     }
 
-    public interface IProveedorService
-    {  /*
-        Task<List<LineaDisponibleDto>> ObtenerLineasDisponiblesAsync(); // ws proveedor 1
-        Task<RespuestaWs> ActivarLineaAsync(string numero, string idTelefono, string idTarjeta, string tipo, string cedula); //ws proveedor 2
 
-        Task<List<LineaNuevaVm>> GetLineasNuevasDisponiblesAsync(CancellationToken ct);
-        // -> consume WS_PROVEEDOR, retorna líneas sin vender
-
-        Task<OperacionResponse> ActivarLineaAsync(ActivarLineaRequestDto req, CancellationToken ct);
-        // -> */
-
-
-        Task<List<LineaDisponibleDto>> ObtenerLineasDisponiblesAsync();
-        Task<RespuestaWs> ActivarLineaAsync(string numero, string idTelefono, string idTarjeta, string tipo, string cedula);
-
-        Task<List<LineaNuevaVm>> GetLineasNuevasDisponiblesAsync(CancellationToken ct = default);
-        Task<OperacionResponse> ActivarLineaAsync(ActivarLineaRequestDto req, CancellationToken ct = default);
+    public class LineaPrepagoDto
+    {
+        public string NumeroTelefono { get; set; } = default!;
+        public decimal Saldo { get; set; }
     }
-   
 }

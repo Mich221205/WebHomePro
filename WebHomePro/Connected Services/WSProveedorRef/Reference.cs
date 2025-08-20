@@ -14,43 +14,6 @@ namespace WSProveedorRef
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="LineaPostpago", Namespace="http://wsproveedor1.org/")]
-    public partial class LineaPostpago : object
-    {
-        
-        private string TelefonoField;
-        
-        private decimal MontoPendienteField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
-        public string Telefono
-        {
-            get
-            {
-                return this.TelefonoField;
-            }
-            set
-            {
-                this.TelefonoField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=1)]
-        public decimal MontoPendiente
-        {
-            get
-            {
-                return this.MontoPendienteField;
-            }
-            set
-            {
-                this.MontoPendienteField = value;
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="LineaPrepago", Namespace="http://wsproveedor1.org/")]
     public partial class LineaPrepago : object
     {
@@ -82,6 +45,43 @@ namespace WSProveedorRef
             set
             {
                 this.SaldoDisponibleField = value;
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="LineaPostpago", Namespace="http://wsproveedor1.org/")]
+    public partial class LineaPostpago : object
+    {
+        
+        private string TelefonoField;
+        
+        private decimal MontoPendienteField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+        public string Telefono
+        {
+            get
+            {
+                return this.TelefonoField;
+            }
+            set
+            {
+                this.TelefonoField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=1)]
+        public decimal MontoPendiente
+        {
+            get
+            {
+                return this.MontoPendienteField;
+            }
+            set
+            {
+                this.MontoPendienteField = value;
             }
         }
     }
@@ -641,14 +641,14 @@ namespace WSProveedorRef
     public interface WSProveedorSoap
     {
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://wsproveedor1.org/ListarLineasPrepagoPorCliente", ReplyAction="*")]
+        System.Threading.Tasks.Task<WSProveedorRef.ListarLineasPrepagoPorClienteResponse> ListarLineasPrepagoPorClienteAsync(WSProveedorRef.ListarLineasPrepagoPorClienteRequest request);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://wsproveedor1.org/ObtenerIdClientePorCedula", ReplyAction="*")]
         System.Threading.Tasks.Task<WSProveedorRef.ObtenerIdClientePorCedulaResponse> ObtenerIdClientePorCedulaAsync(WSProveedorRef.ObtenerIdClientePorCedulaRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://wsproveedor1.org/ListarLineasPostpagoPorCliente", ReplyAction="*")]
         System.Threading.Tasks.Task<WSProveedorRef.ListarLineasPostpagoPorClienteResponse> ListarLineasPostpagoPorClienteAsync(WSProveedorRef.ListarLineasPostpagoPorClienteRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://wsproveedor1.org/ListarLineasPrepagoPorCliente", ReplyAction="*")]
-        System.Threading.Tasks.Task<WSProveedorRef.ListarLineasPrepagoPorClienteResponse> ListarLineasPrepagoPorClienteAsync(WSProveedorRef.ListarLineasPrepagoPorClienteRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://wsproveedor1.org/InsertarClienteBasico", ReplyAction="*")]
         System.Threading.Tasks.Task<WSProveedorRef.InsertarClienteBasicoResponse> InsertarClienteBasicoAsync(WSProveedorRef.InsertarClienteBasicoRequest request);
@@ -679,6 +679,86 @@ namespace WSProveedorRef
         
         [System.ServiceModel.OperationContractAttribute(Action="http://wsproveedor1.org/RecargarSaldoPrepago", ReplyAction="*")]
         System.Threading.Tasks.Task<WSProveedorRef.RecargarSaldoPrepagoResponse> RecargarSaldoPrepagoAsync(WSProveedorRef.RecargarSaldoPrepagoRequest request);
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class ListarLineasPrepagoPorClienteRequest
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="ListarLineasPrepagoPorCliente", Namespace="http://wsproveedor1.org/", Order=0)]
+        public WSProveedorRef.ListarLineasPrepagoPorClienteRequestBody Body;
+        
+        public ListarLineasPrepagoPorClienteRequest()
+        {
+        }
+        
+        public ListarLineasPrepagoPorClienteRequest(WSProveedorRef.ListarLineasPrepagoPorClienteRequestBody Body)
+        {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://wsproveedor1.org/")]
+    public partial class ListarLineasPrepagoPorClienteRequestBody
+    {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=0)]
+        public int idCliente;
+        
+        public ListarLineasPrepagoPorClienteRequestBody()
+        {
+        }
+        
+        public ListarLineasPrepagoPorClienteRequestBody(int idCliente)
+        {
+            this.idCliente = idCliente;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class ListarLineasPrepagoPorClienteResponse
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="ListarLineasPrepagoPorClienteResponse", Namespace="http://wsproveedor1.org/", Order=0)]
+        public WSProveedorRef.ListarLineasPrepagoPorClienteResponseBody Body;
+        
+        public ListarLineasPrepagoPorClienteResponse()
+        {
+        }
+        
+        public ListarLineasPrepagoPorClienteResponse(WSProveedorRef.ListarLineasPrepagoPorClienteResponseBody Body)
+        {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://wsproveedor1.org/")]
+    public partial class ListarLineasPrepagoPorClienteResponseBody
+    {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public WSProveedorRef.LineaPrepago[] ListarLineasPrepagoPorClienteResult;
+        
+        public ListarLineasPrepagoPorClienteResponseBody()
+        {
+        }
+        
+        public ListarLineasPrepagoPorClienteResponseBody(WSProveedorRef.LineaPrepago[] ListarLineasPrepagoPorClienteResult)
+        {
+            this.ListarLineasPrepagoPorClienteResult = ListarLineasPrepagoPorClienteResult;
+        }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -838,78 +918,6 @@ namespace WSProveedorRef
         public ListarLineasPostpagoPorClienteResponseBody(WSProveedorRef.LineaPostpago[] ListarLineasPostpagoPorClienteResult)
         {
             this.ListarLineasPostpagoPorClienteResult = ListarLineasPostpagoPorClienteResult;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
-    public partial class ListarLineasPrepagoPorClienteRequest
-    {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="ListarLineasPrepagoPorCliente", Namespace="http://wsproveedor1.org/", Order=0)]
-        public WSProveedorRef.ListarLineasPrepagoPorClienteRequestBody Body;
-        
-        public ListarLineasPrepagoPorClienteRequest()
-        {
-        }
-        
-        public ListarLineasPrepagoPorClienteRequest(WSProveedorRef.ListarLineasPrepagoPorClienteRequestBody Body)
-        {
-            this.Body = Body;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.Runtime.Serialization.DataContractAttribute()]
-    public partial class ListarLineasPrepagoPorClienteRequestBody
-    {
-        
-        public ListarLineasPrepagoPorClienteRequestBody()
-        {
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
-    public partial class ListarLineasPrepagoPorClienteResponse
-    {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="ListarLineasPrepagoPorClienteResponse", Namespace="http://wsproveedor1.org/", Order=0)]
-        public WSProveedorRef.ListarLineasPrepagoPorClienteResponseBody Body;
-        
-        public ListarLineasPrepagoPorClienteResponse()
-        {
-        }
-        
-        public ListarLineasPrepagoPorClienteResponse(WSProveedorRef.ListarLineasPrepagoPorClienteResponseBody Body)
-        {
-            this.Body = Body;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://wsproveedor1.org/")]
-    public partial class ListarLineasPrepagoPorClienteResponseBody
-    {
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
-        public WSProveedorRef.LineaPrepago[] ListarLineasPrepagoPorClienteResult;
-        
-        public ListarLineasPrepagoPorClienteResponseBody()
-        {
-        }
-        
-        public ListarLineasPrepagoPorClienteResponseBody(WSProveedorRef.LineaPrepago[] ListarLineasPrepagoPorClienteResult)
-        {
-            this.ListarLineasPrepagoPorClienteResult = ListarLineasPrepagoPorClienteResult;
         }
     }
     
@@ -1797,6 +1805,20 @@ namespace WSProveedorRef
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<WSProveedorRef.ListarLineasPrepagoPorClienteResponse> WSProveedorRef.WSProveedorSoap.ListarLineasPrepagoPorClienteAsync(WSProveedorRef.ListarLineasPrepagoPorClienteRequest request)
+        {
+            return base.Channel.ListarLineasPrepagoPorClienteAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<WSProveedorRef.ListarLineasPrepagoPorClienteResponse> ListarLineasPrepagoPorClienteAsync(int idCliente)
+        {
+            WSProveedorRef.ListarLineasPrepagoPorClienteRequest inValue = new WSProveedorRef.ListarLineasPrepagoPorClienteRequest();
+            inValue.Body = new WSProveedorRef.ListarLineasPrepagoPorClienteRequestBody();
+            inValue.Body.idCliente = idCliente;
+            return ((WSProveedorRef.WSProveedorSoap)(this)).ListarLineasPrepagoPorClienteAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         System.Threading.Tasks.Task<WSProveedorRef.ObtenerIdClientePorCedulaResponse> WSProveedorRef.WSProveedorSoap.ObtenerIdClientePorCedulaAsync(WSProveedorRef.ObtenerIdClientePorCedulaRequest request)
         {
             return base.Channel.ObtenerIdClientePorCedulaAsync(request);
@@ -1822,19 +1844,6 @@ namespace WSProveedorRef
             inValue.Body = new WSProveedorRef.ListarLineasPostpagoPorClienteRequestBody();
             inValue.Body.idCliente = idCliente;
             return ((WSProveedorRef.WSProveedorSoap)(this)).ListarLineasPostpagoPorClienteAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<WSProveedorRef.ListarLineasPrepagoPorClienteResponse> WSProveedorRef.WSProveedorSoap.ListarLineasPrepagoPorClienteAsync(WSProveedorRef.ListarLineasPrepagoPorClienteRequest request)
-        {
-            return base.Channel.ListarLineasPrepagoPorClienteAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<WSProveedorRef.ListarLineasPrepagoPorClienteResponse> ListarLineasPrepagoPorClienteAsync()
-        {
-            WSProveedorRef.ListarLineasPrepagoPorClienteRequest inValue = new WSProveedorRef.ListarLineasPrepagoPorClienteRequest();
-            inValue.Body = new WSProveedorRef.ListarLineasPrepagoPorClienteRequestBody();
-            return ((WSProveedorRef.WSProveedorSoap)(this)).ListarLineasPrepagoPorClienteAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]

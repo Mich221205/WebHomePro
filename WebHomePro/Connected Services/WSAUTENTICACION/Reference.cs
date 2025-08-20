@@ -20,6 +20,8 @@ namespace WSAUTENTICACION
         
         private string Apellido1Field;
         
+        private string IdentificacionField;
+        
         private string MensajeField;
         
         private string NombreField;
@@ -38,6 +40,19 @@ namespace WSAUTENTICACION
             set
             {
                 this.Apellido1Field = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Identificacion
+        {
+            get
+            {
+                return this.IdentificacionField;
+            }
+            set
+            {
+                this.IdentificacionField = value;
             }
         }
         

@@ -13,11 +13,15 @@ namespace WebHomePro.Services.IProveedorService
     public class ProveedorService : IProveedorService
     {
         private readonly IConfiguration _cfg;
-        public ProveedorService(IConfiguration cfg) => _cfg = cfg;
+        private readonly WSProveedorSoapClient _soap;
 
-        // =========================
-        //  Cliente WCF (ASMX/SOAP)
-        // =========================
+        public ProveedorService(IConfiguration cfg, WSProveedorSoapClient soap)
+        {
+            _cfg = cfg;
+            _soap = soap;
+        }
+
+        // (Opcional) Factory si en algún momento quieres crear cliente por llamada
         private WSProveedorSoapClient CrearCliente()
         {
             var url = _cfg["WSProveedor:BaseAddress"];
@@ -59,18 +63,17 @@ namespace WebHomePro.Services.IProveedorService
             }
         }
 
-        // ===========================================
-        //  Métodos "clásicos" que ya usas en tu UI
-        // ===========================================
+        // ===================== ADM: disponibles y activar =====================
 
         public async Task<List<LineaDisponibleDto>> ObtenerLineasDisponiblesAsync()
         {
+            // Uso CrearCliente() aquí porque ya lo tenías así
             WSProveedorSoapClient? client = null;
             try
             {
                 client = CrearCliente();
-                var resp = await client.ObtenerLineasDisponiblesAsync(); // Ajusta al nombre real del método en tu Reference.cs
-                var items = resp.Body.ObtenerLineasDisponiblesResult;    // Ajusta al shape real de tu proxy
+                var resp = await client.ObtenerLineasDisponiblesAsync();
+                var items = resp.Body.ObtenerLineasDisponiblesResult;
 
                 return (items ?? Array.Empty<WSProveedorRef.LineaDisponible>())
                     .Select(x => new LineaDisponibleDto
@@ -84,7 +87,6 @@ namespace WebHomePro.Services.IProveedorService
             }
             catch
             {
-                // Devuelve vacío para que la UI muestre "sin datos"
                 return new List<LineaDisponibleDto>();
             }
             finally
@@ -99,9 +101,8 @@ namespace WebHomePro.Services.IProveedorService
             try
             {
                 client = CrearCliente();
-                var estado = "ACTIVO"; // ADM4 exige activar con estado Activo
+                var estado = "ACTIVO"; // activar
 
-                // Ajusta al nombre real del método y parámetros del proxy
                 var r = await client.ActivarDesactivarLineaAsync(numero, idTelefono, idTarjeta, tipo, cedula, estado);
                 var res = r.Body.ActivarDesactivarLineaResult;
 
@@ -129,17 +130,8 @@ namespace WebHomePro.Services.IProveedorService
             }
         }
 
-        // =====================================================
-        //  Métodos "nuevos" que usa el PageModel propuesto
-        //  (quedan como thin adapters sobre los anteriores)
-        // =====================================================
-
-        // GET: líneas nuevas disponibles (sin vender) para ADM4
         public async Task<List<LineaNuevaVm>> GetLineasNuevasDisponiblesAsync(CancellationToken ct = default)
         {
-            // Reuso tu método existente + mapeo
-            // Nota: los métodos del proxy no aceptan CancellationToken, por eso
-            // no se propaga; si quieres cortar por CT, podrías usar .WaitAsync(ct).
             var lista = await ObtenerLineasDisponiblesAsync();
             return lista.Select(x => new LineaNuevaVm
             {
@@ -150,7 +142,6 @@ namespace WebHomePro.Services.IProveedorService
             }).ToList();
         }
 
-        // POST: activar (DTO completo) — versión usada en el PageModel
         public async Task<OperacionResponse> ActivarLineaAsync(ActivarLineaRequestDto req, CancellationToken ct = default)
         {
             var r = await ActivarLineaAsync(
@@ -169,11 +160,109 @@ namespace WebHomePro.Services.IProveedorService
                             : (r.Mensaje ?? string.Empty)
             };
         }
+
+        // ===================== CLIENTE5: prepago (listar/recargar/saldo) =====================
+
+        public async Task<List<LineaPrepagoDto>> ObtenerLineasPrepagoAsync(string? cedula)
+        {
+            // Aquí usamos el cliente inyectado _soap (consistente con el resto de métodos de prepago)
+            var resp = await _soap.ObtenerLineasPrepagoAsync(cedula);
+            var dto = resp.Body.ObtenerLineasPrepagoResult;
+
+            var list = new List<LineaPrepagoDto>();
+            if (dto?.Resultado == true && dto.Lineas != null)
+            {
+                foreach (var l in dto.Lineas)
+                {
+                    list.Add(new LineaPrepagoDto
+                    {
+                        NumeroTelefono = l.Telefono,
+                        Saldo = l.Saldo
+                    });
+                }
+            }
+            return list;
+        }
+
+        // Fallback con cédula: lista y filtra por teléfono
+        public async Task<decimal> ObtenerSaldoPrepagoAsync(string telefono, string? cedula)
+        {
+            var telNorm = SoloDigitos(telefono);
+
+            var resp = await _soap.ObtenerLineasPrepagoAsync(cedula);
+            var result = resp.Body.ObtenerLineasPrepagoResult;
+
+            if (result?.Resultado == true && result.Lineas != null)
+            {
+                var linea = result.Lineas.FirstOrDefault(l => SoloDigitos(l.Telefono) == telNorm);
+                if (linea != null)
+                    return linea.Saldo;
+            }
+            return 0m;
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="telefono"></param>
+        /// <param name="monto"></param>
+        /// <returns></returns>
+        public async Task<(bool ok, string? mensaje)> RecargarSaldoPrepagoAsync(string telefono, int monto)
+        {
+            // El WS espera monto como string (entero, sin decimales)
+            var resp = await _soap.RecargarSaldoPrepagoAsync(
+                telefono,
+                monto.ToString(),
+                tarjeta: null,
+                titular: null,
+                exp: null,
+                cvv: null
+            );
+
+            var dto = resp.Body.RecargarSaldoPrepagoResult;
+            return (dto?.Resultado == true, dto?.Mensaje ?? "Error desconocido");
+        }
+
+        // ===================== helpers =====================
+
+        private static string SoloDigitos(string? s)
+            => new string((s ?? string.Empty).Where(char.IsDigit).ToArray());
+
+
+        // Compat: sin cédula (la interfaz lo exige)
+        public Task<decimal> ObtenerSaldoPrepagoAsync(string telefono)
+            => ObtenerSaldoPrepagoAsync(telefono, null);
+
+        // Devuelve una línea prepago específica buscando por teléfono (útil en UI)
+        public async Task<LineaPrepagoDto?> ObtenerLineaPrepagoAsync(string telefono)
+        {
+            // Si el WS no trae una operación directa por teléfono, reutilizamos el listado.
+            var resp = await _soap.ObtenerLineasPrepagoAsync(string.Empty);
+            var dto = resp.Body.ObtenerLineasPrepagoResult;
+
+            if (dto?.Resultado == true && dto.Lineas != null)
+            {
+                var telNorm = SoloDigitos(telefono);
+                var match = dto.Lineas.FirstOrDefault(l => SoloDigitos(l.Telefono) == telNorm);
+                if (match != null)
+                {
+                    return new LineaPrepagoDto
+                    {
+                        NumeroTelefono = match.Telefono,
+                        Saldo = match.Saldo
+                    };
+                }
+            }
+            return null;
+        }
     }
 
-    // ================================
+
+
+    // ==============================
     //  VM/DTO usados por el PageModel
-    // ================================
+    // ==============================
     public class LineaNuevaVm
     {
         public string NumeroTelefono { get; set; } = default!;

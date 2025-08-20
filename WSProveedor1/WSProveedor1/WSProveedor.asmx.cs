@@ -99,9 +99,46 @@ namespace WSProveedor1
         }
 
         [WebMethod]
+        public List<LineaPrepago> ListarLineasPrepagoPorCliente(int idCliente)
+        {
+            var lista = new List<LineaPrepago>();
+
+            using (var cn = new SqlConnection("Server=Laptop-Michel;Database=COMPANIA_TELEFONICA;User Id=sa;Password=mich22;TrustServerCertificate=True;"))
+            using (var cmd = new SqlCommand(@"
+                SELECT t.NUM_TELEFONO AS Telefono,
+                       COALESCE(t.SALDO,0) AS SaldoDisponible
+                FROM TELEFONOS t
+                JOIN TIPO_TELEFONO tt ON tt.ID_T_TELEFONO = t.TIPO_TELEFONO
+                WHERE t.ID_CLIENTE = @IdCliente
+                  AND t.ID_ESTADO = 1
+                  AND UPPER(tt.DESCRIPCION) = 'PREPAGO'
+                ORDER BY t.NUM_TELEFONO;", cn))
+            {
+                cmd.Parameters.AddWithValue("@IdCliente", idCliente);
+                cn.Open();
+                using (var rd = cmd.ExecuteReader())
+                {
+                    while (rd.Read())
+                    {
+                        var tel = rd["Telefono"]?.ToString() ?? "";
+                        tel = AESDecryptor.Decrypt(tel);
+                        lista.Add(new LineaPrepago
+                        {
+                            Telefono = tel,
+                            SaldoDisponible = Convert.ToDecimal(rd["SaldoDisponible"])
+                        });
+                    }
+                }
+            }
+
+            return lista;
+        }
+
+
+        [WebMethod]
         public int ObtenerIdClientePorCedula(string cedula)
         {
-            using (var cn = new SqlConnection(ConfigurationManager.ConnectionStrings["SQLServer"].ConnectionString))
+            using(var cn = new SqlConnection("Server=Laptop-Michel;Database=COMPANIA_TELEFONICA;User Id=sa;Password=mich22;TrustServerCertificate=True;"))
             using (var cmd = new SqlCommand("SELECT ID_CLIENTE FROM CLIENTES WHERE CEDULA = @Cedula", cn))
             {
                 cmd.Parameters.AddWithValue("@Cedula", cedula);
@@ -169,7 +206,7 @@ namespace WSProveedor1
             return lista;
         }
 
-
+        /*
         [WebMethod]
         public List<LineaPrepago> ListarLineasPrepagoPorCliente()
         {
@@ -206,6 +243,7 @@ namespace WSProveedor1
 
             return lista;
         }
+        */
 
         [WebMethod]
         public Resultado InsertarClienteBasico(string cedula, string nombre)
@@ -719,67 +757,55 @@ namespace WSProveedor1
             if (string.IsNullOrWhiteSpace(telefono) || string.IsNullOrWhiteSpace(monto))
                 return new RecargaResponse { Resultado = false, Mensaje = "Datos incompletos (telefono/monto)" };
 
-            decimal montoDec;
-            if (!decimal.TryParse(monto, out montoDec) || montoDec <= 0)
+            if (!decimal.TryParse(monto, out var montoDec) || montoDec <= 0)
                 return new RecargaResponse { Resultado = false, Mensaje = "Monto inválido" };
 
             try
             {
-                var payload = new Dictionary<string, string>
+                using (var cn = new SqlConnection("Server=localhost;Database=COMPANIA_TELEFONICA;User Id=sa;Password=mich22;TrustServerCertificate=true;"))
                 {
-                    ["tipo_transaccion"] = "9",
-                    ["telefono"] = telefono.Trim(),
-                    ["monto"] = montoDec.ToString("0.00")
-                };
+                    cn.Open();
 
-                // Estos campos son opcionales, NO se guardan (solo por cumplimiento UI)
-                if (!string.IsNullOrWhiteSpace(tarjeta)) payload["tarjeta"] = tarjeta.Trim();
-                if (!string.IsNullOrWhiteSpace(titular)) payload["titular"] = titular.Trim();
-                if (!string.IsNullOrWhiteSpace(exp)) payload["exp"] = exp.Trim();
-                if (!string.IsNullOrWhiteSpace(cvv)) payload["cvv"] = cvv.Trim();
+                    string telefonoCifrado = AESEncryptor.Encrypt(telefono);
 
-                string json = JsonConvert.SerializeObject(payload);
-                string resp = EnviarAlProveedor(json);
+                    // 1. Actualizar el saldo
+                    var sqlUpdate = @"UPDATE TELEFONOS
+                              SET SALDO = ISNULL(SALDO,0) + @Monto 
+                              WHERE NUM_TELEFONO = @Telefono";
 
-                // Se espera algo como:
-                // {"status":"OK","mensaje":"Recarga exitosa","nuevo_saldo":"1234.56"}
-                dynamic obj = JsonConvert.DeserializeObject(resp);
-                if (obj == null)
-                    return new RecargaResponse { Resultado = false, Mensaje = "Respuesta inválida del proveedor" };
-
-                string status = (string)obj.status;
-                if (!string.Equals(status, "OK", StringComparison.OrdinalIgnoreCase))
-                {
-                    string mensaje = obj.mensaje != null ? (string)obj.mensaje : "No se pudo recargar";
-                    return new RecargaResponse { Resultado = false, Mensaje = mensaje };
-                }
-
-                decimal? nuevoSaldo = null;
-                try
-                {
-                    if (obj.nuevo_saldo != null)
+                    using (var cmd = new SqlCommand(sqlUpdate, cn))
                     {
-                        nuevoSaldo = obj.nuevo_saldo is string
-                            ? Convert.ToDecimal((string)obj.nuevo_saldo)
-                            : Convert.ToDecimal((double)obj.nuevo_saldo);
-                    }
-                }
-                catch { /* ignorar error de conversión */ }
+                        cmd.Parameters.AddWithValue("@Monto", montoDec);
+                        cmd.Parameters.AddWithValue("@Telefono", telefonoCifrado);
+                        int rows = cmd.ExecuteNonQuery();
 
-                return new RecargaResponse
-                {
-                    Resultado = true,
-                    Mensaje = obj.mensaje != null ? (string)obj.mensaje : "Recarga exitosa",
-                    NuevoSaldo = nuevoSaldo
-                };
+                        if (rows == 0)
+                            return new RecargaResponse { Resultado = false, Mensaje = "Número no encontrado" };
+                    }
+
+                    // 2. Obtener el nuevo saldo
+                    decimal nuevoSaldo = 0;
+                    var sqlSelect = "SELECT SALDO FROM TELEFONOS WHERE NUM_TELEFONO = @Telefono";
+                    using (var cmd2 = new SqlCommand(sqlSelect, cn))
+                    {
+                        cmd2.Parameters.AddWithValue("@Telefono", telefonoCifrado);
+                        var result = cmd2.ExecuteScalar();
+                        if (result != null) nuevoSaldo = Convert.ToDecimal(result);
+                    }
+
+                    return new RecargaResponse
+                    {
+                        Resultado = true,
+                        Mensaje = "Recarga exitosa",
+                        NuevoSaldo = nuevoSaldo
+                    };
+                }
             }
             catch (Exception ex)
             {
-                return new RecargaResponse { Resultado = false, Mensaje = "Error: " + ex.Message };
+                return new RecargaResponse { Resultado = false, Mensaje = "Error en SQL: " + ex.Message };
             }
         }
-
-         //
 
 
         public static string EnviarAlProveedor(string trama)

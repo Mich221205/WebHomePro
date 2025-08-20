@@ -22,6 +22,13 @@ namespace WebHomePro.Pages
         [BindProperty] public string Password { get; set; } = string.Empty;
         public string Mensaje { get; set; } = string.Empty;
 
+        // -------------------------------
+        private string? GetClienteCedula()
+        {
+            return HttpContext.Session.GetString("Cedula");
+        }
+        // -------------------------------
+
         public async Task<IActionResult> OnPostAsync()
         {
             try
@@ -35,21 +42,13 @@ namespace WebHomePro.Pages
                     return Page();
                 }
 
-                // ✅ Guardar la cédula en sesión
-                //HttpContext.Session.SetString("CedulaCliente", respuesta.Cedula);
-
-                // ✅ Pedir IdCliente al WSProveedor (SQL Server)
-                //var idClienteResp = await _prov.ObtenerIdClientePorCedulaAsync(respuesta.Cedula);
-                //var idCliente = idClienteResp.Body.ObtenerIdClientePorCedulaResult;
-                //HttpContext.Session.SetInt32("IdCliente", idCliente);
-
-                // ✅ Redirigir según tipo
                 if (respuesta.TipoUsuario == 1)
                     return RedirectToPage("/Admin/MenuAdmin");
 
                 if (respuesta.TipoUsuario == 2)
                 {
                     HttpContext.Session.SetString("ClienteNombre", $"{respuesta.Nombre} {respuesta.Apellido1}");
+                    HttpContext.Session.SetString("Cedula", respuesta.Identificacion);
                     return RedirectToPage("/Cliente/MenuCliente");
                 }
 
