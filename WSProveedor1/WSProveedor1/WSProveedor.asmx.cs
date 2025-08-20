@@ -103,9 +103,9 @@ namespace WSProveedor1
         {
             try
             {
-                using (var ctx = new COMPANIA_TELEFONICAEntities())
+                using (var ctx = new COMPANIA_TELEFONICAEntities1())
                 {
-                    var nuevoCliente = new CLIENTES
+                    var nuevoCliente = new CLIENTE
                     {
                         CEDULA = cedula,
                         NOMBRE = nombre
@@ -167,6 +167,7 @@ namespace WSProveedor1
             public bool Resultado { get; set; }
             public string Mensaje { get; set; }
         }
+        
 
         [WebMethod]
         public RespuestaIngresarServicio IngresarNuevoServicio(string numeroTelefono, string idTelefono, string idTarjeta, string tipo, string estado)
@@ -212,6 +213,9 @@ namespace WSProveedor1
                 return new RespuestaIngresarServicio { Resultado = false, Mensaje = $"Error: {ex.Message}" };
             }
         }
+
+
+        
 
         [WebMethod]
         public List<LineaDisponible> ObtenerLineasDisponibles()
@@ -324,7 +328,7 @@ namespace WSProveedor1
         private static string ObtenerCedulaPorIdCliente(string idCliente)
         {
             if (string.IsNullOrWhiteSpace(idCliente)) return null;
-            string cs = "Server=Laptop-Michel;Database=COMPANIA_TELEFONICA;User Id=sa;Password=mich22;";
+            string cs = "Server=EINSTEIN\\SQLINST1;Database=COMPANIA_TELEFONICA;User Id=sa;Password=2112;";
             using (var cn = new SqlConnection(cs))
             {
                 cn.Open();
@@ -343,7 +347,7 @@ namespace WSProveedor1
             var lista = new List<LineaEnUso>();
             try
             {
-                string cs = "Server=Laptop-Michel;Database=COMPANIA_TELEFONICA;User Id=sa;Password=mich22;";
+                string cs = "Server=EINSTEIN\\SQLINST1;Database=COMPANIA_TELEFONICA;User Id=sa;Password=2112;";
                 using (var conn = new SqlConnection(cs))
                 {
                     conn.Open();
@@ -445,6 +449,227 @@ namespace WSProveedor1
                 return new RespuestaCalculoPostpago { Resultado = false, Mensaje = $"Error: {ex.Message}" };
             }
         }
+        /// <summary>
+        /// ///CalculoFacturacionResponse
+        /// </summary>
+        public class UltimaFacturacionResponse
+        {
+            public bool Resultado { get; set; }
+            public string Mensaje { get; set; }
+            public DateTime? FechaCalculo { get; set; }
+            public DateTime? FechaMaxPago { get; set; } // FECHA_M_PAGO
+            public DateTime? FechaCobro { get; set; }
+            public decimal Total { get; set; }
+        }
+
+
+        [WebMethod]
+        public UltimaFacturacionResponse ObtenerUltimaFacturacion()
+        {
+            try
+            {
+                using (var db = new COMPANIA_TELEFONICAEntities1())
+                {
+                    var ultima = db.COBROS
+                        .OrderByDescending(c => c.FECHA_COBRO)
+                        .FirstOrDefault();
+
+                    if (ultima == null)
+                    {
+                        return new UltimaFacturacionResponse
+                        {
+                            Resultado = true,
+                            Mensaje = "No hay facturaciones previas.",
+                            FechaCalculo = null,
+                            FechaMaxPago = null,
+                            FechaCobro = null,
+                            Total = 0m
+                        };
+                    }
+
+                    return new UltimaFacturacionResponse
+                    {
+                        Resultado = true,
+                        Mensaje = "OK",
+                        FechaCalculo = ultima.FECHA_CALCULO,
+                        FechaMaxPago = ultima.FECHA_M_PAGO,
+                        FechaCobro = ultima.FECHA_COBRO,
+                        Total = ultima.COBRO_TOTAL
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                return new UltimaFacturacionResponse
+                {
+                    Resultado = false,
+                    Mensaje = "Error al consultar la última facturación: " + ex.Message
+                };
+            }
+        }
+        //sdfsfs
+
+        public class LineaPrepagoVM
+        {
+            public string Telefono { get; set; }
+            public decimal Saldo { get; set; }
+        }
+
+        public class LineasPrepagoResponse
+        {
+            public bool Resultado { get; set; }
+            public string Mensaje { get; set; }
+            public List<LineaPrepagoVM> Lineas { get; set; }
+        }
+
+        public class RecargaResponse
+        {
+            public bool Resultado { get; set; }
+            public string Mensaje { get; set; }
+            public decimal? NuevoSaldo { get; set; }
+        }
+        
+
+        [WebMethod]
+        public LineasPrepagoResponse ObtenerLineasPrepago(string cedula = null)
+        {
+            try
+            {
+                // Armar JSON para el proveedor
+                var payload = new Dictionary<string, string>
+                {
+                    ["tipo_transaccion"] = "8"
+                };
+                if (!string.IsNullOrWhiteSpace(cedula))
+                    payload["cedula"] = cedula.Trim();
+
+                string json = JsonConvert.SerializeObject(payload);
+                string resp = EnviarAlProveedor(json);   // usa tu socket a 127.0.0.1:6000
+
+                // Se espera algo como:
+                // {"status":"OK","lineas":[{"telefono":"70001234","saldo":1234.56}, ...]}
+                dynamic obj = JsonConvert.DeserializeObject(resp);
+                if (obj == null)
+                    return new LineasPrepagoResponse { Resultado = false, Mensaje = "Respuesta inválida del proveedor" };
+
+                string status = (string)obj.status;
+                if (!string.Equals(status, "OK", StringComparison.OrdinalIgnoreCase))
+                {
+                    string mensaje = obj.mensaje != null ? (string)obj.mensaje : "Error consultando líneas prepago";
+                    return new LineasPrepagoResponse { Resultado = false, Mensaje = mensaje };
+                }
+
+                var lista = new List<LineaPrepagoVM>();
+                if (obj.lineas != null)
+                {
+                    foreach (var it in obj.lineas)
+                    {
+                        // it.telefono y it.saldo provienen del proveedor
+                        string tel = (string)it.telefono;
+                        decimal saldo = 0m;
+                        try
+                        {
+                            // it.saldo puede venir como number o string; se cubren ambos casos
+                            saldo = it.saldo is string
+                                ? Convert.ToDecimal((string)it.saldo)
+                                : Convert.ToDecimal((double)it.saldo);
+                        }
+                        catch { /* dejar 0 si falla */ }
+
+                        lista.Add(new LineaPrepagoVM
+                        {
+                            Telefono = tel,
+                            Saldo = saldo
+                        });
+                    }
+                }
+
+                return new LineasPrepagoResponse
+                {
+                    Resultado = true,
+                    Mensaje = "OK",
+                    Lineas = lista
+                };
+            }
+            catch (Exception ex)
+            {
+                return new LineasPrepagoResponse
+                {
+                    Resultado = false,
+                    Mensaje = "Error: " + ex.Message,
+                    Lineas = new List<LineaPrepagoVM>()
+                };
+            }
+        }
+
+        [WebMethod]
+        public RecargaResponse RecargarSaldoPrepago(string telefono, string monto, string tarjeta = null, string titular = null, string exp = null, string cvv = null)
+        {
+            if (string.IsNullOrWhiteSpace(telefono) || string.IsNullOrWhiteSpace(monto))
+                return new RecargaResponse { Resultado = false, Mensaje = "Datos incompletos (telefono/monto)" };
+
+            decimal montoDec;
+            if (!decimal.TryParse(monto, out montoDec) || montoDec <= 0)
+                return new RecargaResponse { Resultado = false, Mensaje = "Monto inválido" };
+
+            try
+            {
+                var payload = new Dictionary<string, string>
+                {
+                    ["tipo_transaccion"] = "9",
+                    ["telefono"] = telefono.Trim(),
+                    ["monto"] = montoDec.ToString("0.00")
+                };
+
+                // Estos campos son opcionales, NO se guardan (solo por cumplimiento UI)
+                if (!string.IsNullOrWhiteSpace(tarjeta)) payload["tarjeta"] = tarjeta.Trim();
+                if (!string.IsNullOrWhiteSpace(titular)) payload["titular"] = titular.Trim();
+                if (!string.IsNullOrWhiteSpace(exp)) payload["exp"] = exp.Trim();
+                if (!string.IsNullOrWhiteSpace(cvv)) payload["cvv"] = cvv.Trim();
+
+                string json = JsonConvert.SerializeObject(payload);
+                string resp = EnviarAlProveedor(json);
+
+                // Se espera algo como:
+                // {"status":"OK","mensaje":"Recarga exitosa","nuevo_saldo":"1234.56"}
+                dynamic obj = JsonConvert.DeserializeObject(resp);
+                if (obj == null)
+                    return new RecargaResponse { Resultado = false, Mensaje = "Respuesta inválida del proveedor" };
+
+                string status = (string)obj.status;
+                if (!string.Equals(status, "OK", StringComparison.OrdinalIgnoreCase))
+                {
+                    string mensaje = obj.mensaje != null ? (string)obj.mensaje : "No se pudo recargar";
+                    return new RecargaResponse { Resultado = false, Mensaje = mensaje };
+                }
+
+                decimal? nuevoSaldo = null;
+                try
+                {
+                    if (obj.nuevo_saldo != null)
+                    {
+                        nuevoSaldo = obj.nuevo_saldo is string
+                            ? Convert.ToDecimal((string)obj.nuevo_saldo)
+                            : Convert.ToDecimal((double)obj.nuevo_saldo);
+                    }
+                }
+                catch { /* ignorar error de conversión */ }
+
+                return new RecargaResponse
+                {
+                    Resultado = true,
+                    Mensaje = obj.mensaje != null ? (string)obj.mensaje : "Recarga exitosa",
+                    NuevoSaldo = nuevoSaldo
+                };
+            }
+            catch (Exception ex)
+            {
+                return new RecargaResponse { Resultado = false, Mensaje = "Error: " + ex.Message };
+            }
+        }
+
+         //
+
 
         public static string EnviarAlProveedor(string trama)
         {

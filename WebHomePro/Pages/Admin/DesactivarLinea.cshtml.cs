@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.ServiceModel;         // Solo necesario si usas la opción B de CrearCliente()
+using System.ServiceModel;         
 using System.Threading.Tasks;
 using WSProveedorRef;                 // Namespace del proxy generado por tu Reference.cs
 

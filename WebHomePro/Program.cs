@@ -1,6 +1,5 @@
-using WebHomePro.Services.IFaturacionService;
+using WebHomePro.Services.IFacturacionServices;
 using WebHomePro.Services.IProveedorService;
-using WebHomePro.Services.IFaturacionService;
 using WebHomePro.Services;
 
 
@@ -10,7 +9,8 @@ builder.Services.AddRazorPages();
 builder.Services.AddSession();
 builder.Services.AddHttpContextAccessor();
 
-builder.Services.AddSingleton<IFacturacionService, FacturacionService>();
+//builder.Services.AddSingleton<IFacturacionService, FacturacionService>();
+builder.Services.AddScoped<IFacturacionService, FacturacionService>();
 
 builder.Services.AddSingleton<IProveedorService, ProveedorService>();
 

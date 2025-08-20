@@ -23,24 +23,12 @@
             </a>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ms-auto py-4 py-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Admin/Nuevas_LineasTELE">
-                            nuevas líneas telefónicas
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Admin/ActivarLinea">
-                            Activar una línea recién vendida
-                        </a>
-                    </li>
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Admin/Nuevas_LineasTELE">nuevas líneas telefónicas</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Admin/ActivarLinea">Activar una línea recién vendida</a></li>
                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/#">Devolución de una línea telefónica</a></li>
                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/#">Calcular facturación</a></li>
-                    <li class="nav-item">
-                        <a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Admin/Nuevos_Admin">
-                            nuevos usuarios administrativos
-                        </a>
-                    </li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Login"> Salir del Sitio</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Admin/Nuevos_Admin">nuevos usuarios administrativos</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Login">Salir del Sitio</a></li>
                 </ul>
             </div>
         </div>
@@ -59,14 +47,23 @@
     <!-- Contenido principal -->
     <section class="py-5">
         <div class="container">
-            @if (!string.IsNullOrEmpty(Model.Mensaje))
+
+            @* Mensajes del proceso *@
+            @if (!string.IsNullOrWhiteSpace(Model.Flash))
             {
-                <div class="alert @(Model.EsExito ? "alert-success" : "alert-danger")">
-                    @Model.Mensaje
-                </div>
+                var ok = Model.Flash.Contains("correcta", StringComparison.OrdinalIgnoreCase)
+                || Model.Flash.Contains("éxito", StringComparison.OrdinalIgnoreCase)
+                || Model.Flash.Contains("exitos", StringComparison.OrdinalIgnoreCase);
+                <div class="alert @(ok ? "alert-success" : "alert-danger")">@Model.Flash</div>
+            }
+
+            @if (!string.IsNullOrWhiteSpace(Model.MensajeValidacion))
+            {
+                <div class="alert alert-warning">@Model.MensajeValidacion</div>
             }
 
             <div class="row">
+                <!-- GRID DE LÍNEAS DISPONIBLES -->
                 <div class="col-md-7">
                     <h4 class="text-center mb-4">Líneas disponibles</h4>
                     <table class="table table-bordered table-striped">
@@ -79,27 +76,33 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var l in Model.Lineas)
+                            @if (Model.LineasDisponibles != null && Model.LineasDisponibles.Count > 0)
                             {
-                                <tr>
-                                    <td>@l.NumeroTelefono</td>
-                                    <td>@l.IdTarjeta</td>
-                                    <td>@l.Tipo</td>
-                                    <td>
-                                        <form method="post" asp-page-handler="Select">
-                                            <input type="hidden" name="numero" value="@l.NumeroTelefono" />
-                                            <input type="hidden" name="idTel" value="@l.IdTelefono" />
-                                            <input type="hidden" name="idTarj" value="@l.IdTarjeta" />
-                                            <input type="hidden" name="tipo" value="@l.Tipo" />
-                                            <button class="btn btn-primary btn-sm" type="submit">Seleccionar</button>
-                                        </form>
-                                    </td>
-                                </tr>
+                                foreach (var l in Model.LineasDisponibles)
+                                {
+                                    <tr>
+                                        <td>@l.NumeroTelefono</td>
+                                        <td>@l.IdentificadorTarjeta</td>
+                                        <td>@l.TipoServicio</td>
+                                        <td>
+                                            <button type="button"
+                                                    class="btn btn-primary btn-sm"
+                                                    onclick="seleccionarLinea('@l.NumeroTelefono','@l.IdTelefono','@l.IdentificadorTarjeta','@l.TipoServicio')">
+                                                Seleccionar
+                                            </button>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr><td colspan="4" class="text-center">No hay líneas nuevas disponibles.</td></tr>
                             }
                         </tbody>
                     </table>
                 </div>
 
+                <!-- FORMULARIO DE ACTIVACIÓN -->
                 <div class="col-md-5">
                     <div class="card">
                         <div class="card-header bg-dark text-white">
@@ -107,32 +110,41 @@
                         </div>
                         <div class="card-body">
                             <form method="post" asp-page-handler="Activar">
+                                @Html.AntiForgeryToken()
+
                                 <div class="mb-3">
                                     <label class="form-label">Número</label>
-                                    <input class="form-control" name="NumeroTelefono" value="@Model.NumeroTelefono" readonly />
+                                    <input class="form-control" name="NumeroTelefono" id="NumeroTelefono"
+                                           value="@Model.NumeroTelefono" readonly />
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">ID Teléfono</label>
-                                    <input class="form-control" name="IdTelefono" value="@Model.IdTelefono" readonly />
+                                    <input class="form-control" name="IdTelefono" id="IdTelefono"
+                                           value="@Model.IdTelefono" readonly />
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">ID Tarjeta</label>
-                                    <input class="form-control" name="IdTarjeta" value="@Model.IdTarjeta" readonly />
+                                    <input class="form-control" name="IdTarjeta" id="IdTarjeta"
+                                           value="@Model.IdTarjeta" readonly />
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Tipo</label>
-                                    <input class="form-control" name="Tipo" value="@Model.Tipo" readonly />
+                                    <input class="form-control" name="TipoServicio" id="TipoServicio"
+                                           value="@Model.TipoServicio" readonly />
                                 </div>
+
                                 <div class="mb-3">
-                                    <label class="form-label">Cédula</label>
-                                    <input class="form-control" asp-for="Cedula" />
-                                    <span class="text-danger" asp-validation-for="Cedula"></span>
+                                    <label class="form-label" for="CedulaCliente">Cédula</label>
+                                    <input class="form-control" name="CedulaCliente" id="CedulaCliente"
+                                           value="@Model.CedulaCliente" />
                                 </div>
+
                                 <button class="btn btn-success w-100" type="submit">Activar</button>
                             </form>
                         </div>
                     </div>
                 </div>
+                <!-- /FORM -->
             </div>
         </div>
     </section>
@@ -143,8 +155,19 @@
         </div>
     </footer>
 
-    <!-- Scripts de validación -->
+    <!-- Scripts -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script>
+        // Rellena el formulario sin postback
+        function seleccionarLinea(numero, idTel, idTarj, tipo) {
+            document.getElementById('NumeroTelefono').value = numero;
+            document.getElementById('IdTelefono').value = idTel;
+            document.getElementById('IdTarjeta').value = idTarj;
+            document.getElementById('TipoServicio').value = tipo;
+            // Limpia mensajes previos de validación en cliente si los tuvieras
+        }
+    </script>
+
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 </body>

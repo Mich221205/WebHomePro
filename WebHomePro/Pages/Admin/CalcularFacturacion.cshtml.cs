@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
-using WebHomePro.Services.IFaturacionService;
 using WebHomePro.Services.Dto;
+using WebHomePro.Services.IFacturacionServices;
 
 namespace WebHomePro.Pages.Admin
 {
@@ -17,76 +17,66 @@ namespace WebHomePro.Pages.Admin
             _svc = svc;
         }
 
-        public UltimaFacturacionDto? Ultima { get; set; }
+        // Última facturación mostrada al cargar
+        public UltimaFacturacionDto? Ultima { get; private set; }
 
-        [BindProperty, Required(ErrorMessage = "La fecha de inicio es obligatoria.")]
+        // Campos del formulario
+        [BindProperty, Display(Name = "Fecha de cálculo (inicio)"), DataType(DataType.Date)]
         public DateTime? NuevoInicio { get; set; }
 
-        [BindProperty, Required(ErrorMessage = "La fecha de fin es obligatoria.")]
+        [BindProperty, Display(Name = "Fecha máxima de pago (fin)"), DataType(DataType.Date)]
         public DateTime? NuevoFin { get; set; }
 
-        [TempData] public string? Mensaje { get; set; }
-        [TempData] public bool EsExito { get; set; }
+        // Mensajes en UI
+        public string? Mensaje { get; private set; }
+        public bool EsExito { get; private set; }
 
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
             Ultima = await _svc.GetUltimaFacturacionAsync();
+            return Page();
         }
 
-        public async Task<IActionResult> OnPostCalcularAsync()
+        public async Task<IActionResult> OnPostAsync()
         {
             Ultima = await _svc.GetUltimaFacturacionAsync();
 
-            if (!ModelState.IsValid)
+            if (!NuevoInicio.HasValue) ModelState.AddModelError(nameof(NuevoInicio), "Requerido.");
+            if (!NuevoFin.HasValue) ModelState.AddModelError(nameof(NuevoFin), "Requerido.");
+            if (!ModelState.IsValid) return Page();
+
+            var ini = NuevoInicio.Value.Date;
+            var fin = NuevoFin.Value.Date;
+
+            if (fin < ini)
             {
-                Mensaje = "Datos incompletos o inválidos.";
-                EsExito = false;
+                ModelState.AddModelError(nameof(NuevoFin), "La fecha fin no puede ser menor a la fecha inicio.");
                 return Page();
             }
 
-            var ini = NuevoInicio!.Value.Date;
-            var fin = NuevoFin!.Value.Date;
-
-            // Validaciones básicas
-            if (fin < ini)
-            {
-                ModelState.AddModelError(nameof(NuevoFin), "La fecha fin no puede ser menor que la fecha inicio.");
-            }
-
-            // Valida contra la última ejecución, si existe
+            // Reglas HU ADM6:
+            // i) No iniciar antes de la última ejecución.
+            // ii) No dejar días entre la última ejecución y el nuevo inicio (es decir, el nuevo inicio debe ser el día siguiente a la última fecha de pago).
             if (Ultima?.FechaMPago != null)
             {
                 var lastEnd = Ultima.FechaMPago.Value.Date;
 
-                // i) No iniciar antes (ni igual) que la última fecha fin
                 if (ini <= lastEnd)
-                {
-                    ModelState.AddModelError(nameof(NuevoInicio),
-                        $"La nueva ejecución debe iniciar después de {lastEnd:yyyy-MM-dd}.");
-                }
+                    ModelState.AddModelError(nameof(NuevoInicio), $"Debe iniciar DESPUÉS de {lastEnd:yyyy-MM-dd}.");
 
-                // ii) Sin huecos: debe ser exactamente el día siguiente
                 var esperado = lastEnd.AddDays(1);
                 if (ini != esperado)
-                {
-                    ModelState.AddModelError(nameof(NuevoInicio),
-                        $"No debe dejar días entre procesos. Use {esperado:yyyy-MM-dd} como inicio.");
-                }
+                    ModelState.AddModelError(nameof(NuevoInicio), $"No puede dejar días entre períodos. El inicio correcto es {esperado:yyyy-MM-dd}.");
+
+                if (!ModelState.IsValid) return Page();
             }
 
-            if (!ModelState.IsValid)
-            {
-                Mensaje = "Revise las validaciones de fecha.";
-                EsExito = false;
-                return Page();
-            }
-
-            // Ejecutar cálculo (SP) y mostrar resultado
+            // Ejecutar cálculo por WS_PROVEEDOR3
             var resp = await _svc.EjecutarCalculoFacturacionAsync(ini, fin);
             Mensaje = resp.Mensaje;
             EsExito = resp.Exitoso;
 
-            // Refrescar “última facturación”
+            // Refresca “última facturación”
             Ultima = await _svc.GetUltimaFacturacionAsync();
 
             return Page();
