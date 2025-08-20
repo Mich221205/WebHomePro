@@ -98,10 +98,13 @@ namespace WSProveedor1
             public string Mensaje { get; set; }
         }
 
+
         [WebMethod]
-        public List<LineaPrepago> ListarLineasPrepagoPorCliente(int idCliente)
+        public List<LineaPrepago> ListarLineasPrepagoPorCliente(string cedula)
         {
             var lista = new List<LineaPrepago>();
+
+            int idCliente = ObtenerIdClientePorCedula(cedula);
 
             using (var cn = new SqlConnection("Server=Laptop-Michel;Database=COMPANIA_TELEFONICA;User Id=sa;Password=mich22;TrustServerCertificate=True;"))
             using (var cmd = new SqlCommand(@"
@@ -133,6 +136,66 @@ namespace WSProveedor1
 
             return lista;
         }
+
+        [WebMethod]
+        public List<LineaPostpago> ObtenerLineasPostpagoPorCedula(string cedula)
+        {
+            var lista = new List<LineaPostpago>();
+
+            if (string.IsNullOrWhiteSpace(cedula))
+                return lista;
+
+            // Primero obtener el ID_CLIENTE
+            int idCliente = ObtenerIdClientePorCedula(cedula);
+            if (idCliente == 0)
+                return lista;
+
+            using (var cn = new SqlConnection("Server=Laptop-Michel;Database=COMPANIA_TELEFONICA;User Id=sa;Password=mich22;TrustServerCertificate=True;"))
+            using (var cmd = new SqlCommand(@"
+        WITH postpago AS (
+            SELECT t.NUM_TELEFONO AS Telefono, t.ID_CLIENTE
+            FROM TELEFONOS t
+            JOIN TIPO_TELEFONO tt ON tt.ID_T_TELEFONO = t.TIPO_TELEFONO
+            WHERE t.ID_CLIENTE = @IdCliente
+              AND t.ID_ESTADO = 1
+              AND UPPER(tt.DESCRIPCION) = 'POSTPAGO'
+        ),
+        pendiente_cliente AS (
+            SELECT dc.ID_CLIENTE,
+                   COALESCE(SUM(CASE WHEN UPPER(dc.ESTADO_PAGO)='PENDIENTE'
+                                     THEN COALESCE(dc.MONTO_TOTAL,0) END),0) AS MontoPendiente
+            FROM DETALLE_COBROS dc
+            WHERE dc.ID_CLIENTE = @IdCliente
+            GROUP BY dc.ID_CLIENTE
+        )
+        SELECT p.Telefono,
+               COALESCE(pc.MontoPendiente,0) AS MontoPendiente
+        FROM postpago p
+        LEFT JOIN pendiente_cliente pc ON pc.ID_CLIENTE = p.ID_CLIENTE
+        ORDER BY p.Telefono;", cn))
+            {
+                cmd.Parameters.AddWithValue("@IdCliente", idCliente);
+
+                cn.Open();
+                using (var rd = cmd.ExecuteReader())
+                {
+                    while (rd.Read())
+                    {
+                        var tel = rd["Telefono"]?.ToString() ?? "";
+                        tel = AESDecryptor.Decrypt(tel);
+
+                        lista.Add(new LineaPostpago
+                        {
+                            Telefono = tel,
+                            MontoPendiente = Convert.ToDecimal(rd["MontoPendiente"])
+                        });
+                    }
+                }
+            }
+
+            return lista;
+        }
+
 
 
         [WebMethod]

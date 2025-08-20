@@ -644,6 +644,9 @@ namespace WSProveedorRef
         [System.ServiceModel.OperationContractAttribute(Action="http://wsproveedor1.org/ListarLineasPrepagoPorCliente", ReplyAction="*")]
         System.Threading.Tasks.Task<WSProveedorRef.ListarLineasPrepagoPorClienteResponse> ListarLineasPrepagoPorClienteAsync(WSProveedorRef.ListarLineasPrepagoPorClienteRequest request);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://wsproveedor1.org/ObtenerLineasPostpagoPorCedula", ReplyAction="*")]
+        System.Threading.Tasks.Task<WSProveedorRef.ObtenerLineasPostpagoPorCedulaResponse> ObtenerLineasPostpagoPorCedulaAsync(WSProveedorRef.ObtenerLineasPostpagoPorCedulaRequest request);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://wsproveedor1.org/ObtenerIdClientePorCedula", ReplyAction="*")]
         System.Threading.Tasks.Task<WSProveedorRef.ObtenerIdClientePorCedulaResponse> ObtenerIdClientePorCedulaAsync(WSProveedorRef.ObtenerIdClientePorCedulaRequest request);
         
@@ -708,16 +711,16 @@ namespace WSProveedorRef
     public partial class ListarLineasPrepagoPorClienteRequestBody
     {
         
-        [System.Runtime.Serialization.DataMemberAttribute(Order=0)]
-        public int idCliente;
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string cedula;
         
         public ListarLineasPrepagoPorClienteRequestBody()
         {
         }
         
-        public ListarLineasPrepagoPorClienteRequestBody(int idCliente)
+        public ListarLineasPrepagoPorClienteRequestBody(string cedula)
         {
-            this.idCliente = idCliente;
+            this.cedula = cedula;
         }
     }
     
@@ -758,6 +761,86 @@ namespace WSProveedorRef
         public ListarLineasPrepagoPorClienteResponseBody(WSProveedorRef.LineaPrepago[] ListarLineasPrepagoPorClienteResult)
         {
             this.ListarLineasPrepagoPorClienteResult = ListarLineasPrepagoPorClienteResult;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class ObtenerLineasPostpagoPorCedulaRequest
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="ObtenerLineasPostpagoPorCedula", Namespace="http://wsproveedor1.org/", Order=0)]
+        public WSProveedorRef.ObtenerLineasPostpagoPorCedulaRequestBody Body;
+        
+        public ObtenerLineasPostpagoPorCedulaRequest()
+        {
+        }
+        
+        public ObtenerLineasPostpagoPorCedulaRequest(WSProveedorRef.ObtenerLineasPostpagoPorCedulaRequestBody Body)
+        {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://wsproveedor1.org/")]
+    public partial class ObtenerLineasPostpagoPorCedulaRequestBody
+    {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string cedula;
+        
+        public ObtenerLineasPostpagoPorCedulaRequestBody()
+        {
+        }
+        
+        public ObtenerLineasPostpagoPorCedulaRequestBody(string cedula)
+        {
+            this.cedula = cedula;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class ObtenerLineasPostpagoPorCedulaResponse
+    {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="ObtenerLineasPostpagoPorCedulaResponse", Namespace="http://wsproveedor1.org/", Order=0)]
+        public WSProveedorRef.ObtenerLineasPostpagoPorCedulaResponseBody Body;
+        
+        public ObtenerLineasPostpagoPorCedulaResponse()
+        {
+        }
+        
+        public ObtenerLineasPostpagoPorCedulaResponse(WSProveedorRef.ObtenerLineasPostpagoPorCedulaResponseBody Body)
+        {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "8.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://wsproveedor1.org/")]
+    public partial class ObtenerLineasPostpagoPorCedulaResponseBody
+    {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public WSProveedorRef.LineaPostpago[] ObtenerLineasPostpagoPorCedulaResult;
+        
+        public ObtenerLineasPostpagoPorCedulaResponseBody()
+        {
+        }
+        
+        public ObtenerLineasPostpagoPorCedulaResponseBody(WSProveedorRef.LineaPostpago[] ObtenerLineasPostpagoPorCedulaResult)
+        {
+            this.ObtenerLineasPostpagoPorCedulaResult = ObtenerLineasPostpagoPorCedulaResult;
         }
     }
     
@@ -1810,12 +1893,26 @@ namespace WSProveedorRef
             return base.Channel.ListarLineasPrepagoPorClienteAsync(request);
         }
         
-        public System.Threading.Tasks.Task<WSProveedorRef.ListarLineasPrepagoPorClienteResponse> ListarLineasPrepagoPorClienteAsync(int idCliente)
+        public System.Threading.Tasks.Task<WSProveedorRef.ListarLineasPrepagoPorClienteResponse> ListarLineasPrepagoPorClienteAsync(string cedula)
         {
             WSProveedorRef.ListarLineasPrepagoPorClienteRequest inValue = new WSProveedorRef.ListarLineasPrepagoPorClienteRequest();
             inValue.Body = new WSProveedorRef.ListarLineasPrepagoPorClienteRequestBody();
-            inValue.Body.idCliente = idCliente;
+            inValue.Body.cedula = cedula;
             return ((WSProveedorRef.WSProveedorSoap)(this)).ListarLineasPrepagoPorClienteAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<WSProveedorRef.ObtenerLineasPostpagoPorCedulaResponse> WSProveedorRef.WSProveedorSoap.ObtenerLineasPostpagoPorCedulaAsync(WSProveedorRef.ObtenerLineasPostpagoPorCedulaRequest request)
+        {
+            return base.Channel.ObtenerLineasPostpagoPorCedulaAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<WSProveedorRef.ObtenerLineasPostpagoPorCedulaResponse> ObtenerLineasPostpagoPorCedulaAsync(string cedula)
+        {
+            WSProveedorRef.ObtenerLineasPostpagoPorCedulaRequest inValue = new WSProveedorRef.ObtenerLineasPostpagoPorCedulaRequest();
+            inValue.Body = new WSProveedorRef.ObtenerLineasPostpagoPorCedulaRequestBody();
+            inValue.Body.cedula = cedula;
+            return ((WSProveedorRef.WSProveedorSoap)(this)).ObtenerLineasPostpagoPorCedulaAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]

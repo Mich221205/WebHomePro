@@ -1,28 +1,27 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-// quita estos dos si no los usas en este archivo:
-// using WebHomePro.Pages.Admin;
-// using WebHomePro.Services;
 
 namespace WebHomePro.Services.IProveedorService
 {
-
     public interface IProveedorService
     {
+        // CLIENTE4
+        Task<List<LineaPrepagoVm>> GetLineasPrepagoAsync(string cedula);
+        Task<List<LineaPostpagoVm>> GetLineasPostpagoAsync(string cedula);
+
+        // ADM
         Task<List<LineaDisponibleDto>> ObtenerLineasDisponiblesAsync();
         Task<RespuestaWs> ActivarLineaAsync(string numero, string idTelefono, string idTarjeta, string tipo, string cedula);
-
         Task<List<LineaNuevaVm>> GetLineasNuevasDisponiblesAsync(CancellationToken ct = default);
         Task<OperacionResponse> ActivarLineaAsync(ActivarLineaRequestDto req, CancellationToken ct = default);
 
-        Task<List<LineaPrepagoDto>> ObtenerLineasPrepagoAsync(string? cedula);
-        Task<decimal> ObtenerSaldoPrepagoAsync(string telefono);              // queda por compat
-        Task<decimal> ObtenerSaldoPrepagoAsync(string telefono, string? cedula); // fallback con cédula
+        // CLIENTE5
         Task<(bool ok, string? mensaje)> RecargarSaldoPrepagoAsync(string telefono, int monto);
-        Task<LineaPrepagoDto?> ObtenerLineaPrepagoAsync(string telefono);
+        Task<LineaPrepagoVm?> ObtenerLineaPrepagoAsync(string telefono);
     }
 
+    // ---- DTOs auxiliares ----
     public class LineaDisponibleDto
     {
         public string NumeroTelefono { get; set; } = "";
@@ -36,11 +35,5 @@ namespace WebHomePro.Services.IProveedorService
         public bool Exitoso { get; set; }
         public string Mensaje { get; set; } = "";
     }
-
-
-    public class LineaPrepagoDto
-    {
-        public string NumeroTelefono { get; set; } = default!;
-        public decimal Saldo { get; set; }
-    }
 }
+

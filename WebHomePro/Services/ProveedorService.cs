@@ -63,6 +63,51 @@ namespace WebHomePro.Services.IProveedorService
             }
         }
 
+        // ===================== CLIENTE4: prepago y postpago =====================
+
+        public async Task<List<LineaPrepagoVm>> GetLineasPrepagoAsync(string cedula)
+        {
+            var resp = await _soap.ListarLineasPrepagoPorClienteAsync(cedula);
+            var dto = resp.Body.ListarLineasPrepagoPorClienteResult;
+
+            var list = new List<LineaPrepagoVm>();
+            if (dto != null)
+            {
+                foreach (var l in dto)
+                {
+                    list.Add(new LineaPrepagoVm
+                    {
+                        Telefono = l.Telefono,
+                        SaldoDisponible = l.SaldoDisponible   
+                    });
+                }
+            }
+            return list;
+        }
+
+
+        public async Task<List<LineaPostpagoVm>> GetLineasPostpagoAsync(string cedula)
+        {
+            var resp = await _soap.ObtenerLineasPostpagoPorCedulaAsync(cedula);
+            var dto = resp.Body.ObtenerLineasPostpagoPorCedulaResult;
+
+            var list = new List<LineaPostpagoVm>();
+            if (dto != null)
+            {
+                foreach (var l in dto)
+                {
+                    list.Add(new LineaPostpagoVm
+                    {
+                        Telefono = l.Telefono,
+                        MontoPendiente = l.MontoPendiente
+                    });
+                }
+            }
+            return list;
+        }
+
+
+
         // ===================== ADM: disponibles y activar =====================
 
         public async Task<List<LineaDisponibleDto>> ObtenerLineasDisponiblesAsync()
@@ -163,26 +208,26 @@ namespace WebHomePro.Services.IProveedorService
 
         // ===================== CLIENTE5: prepago (listar/recargar/saldo) =====================
 
-        public async Task<List<LineaPrepagoDto>> ObtenerLineasPrepagoAsync(string? cedula)
+        public async Task<List<LineaPrepagoVm>> ObtenerLineasPrepagoAsync(string? cedula)
         {
-            // Aquí usamos el cliente inyectado _soap (consistente con el resto de métodos de prepago)
             var resp = await _soap.ObtenerLineasPrepagoAsync(cedula);
             var dto = resp.Body.ObtenerLineasPrepagoResult;
 
-            var list = new List<LineaPrepagoDto>();
+            var list = new List<LineaPrepagoVm>();
             if (dto?.Resultado == true && dto.Lineas != null)
             {
                 foreach (var l in dto.Lineas)
                 {
-                    list.Add(new LineaPrepagoDto
+                    list.Add(new LineaPrepagoVm
                     {
-                        NumeroTelefono = l.Telefono,
-                        Saldo = l.Saldo
+                        Telefono = l.Telefono,
+                        SaldoDisponible = l.Saldo
                     });
                 }
             }
             return list;
         }
+
 
         // Fallback con cédula: lista y filtra por teléfono
         public async Task<decimal> ObtenerSaldoPrepagoAsync(string telefono, string? cedula)
@@ -235,9 +280,8 @@ namespace WebHomePro.Services.IProveedorService
             => ObtenerSaldoPrepagoAsync(telefono, null);
 
         // Devuelve una línea prepago específica buscando por teléfono (útil en UI)
-        public async Task<LineaPrepagoDto?> ObtenerLineaPrepagoAsync(string telefono)
+        public async Task<LineaPrepagoVm?> ObtenerLineaPrepagoAsync(string telefono)
         {
-            // Si el WS no trae una operación directa por teléfono, reutilizamos el listado.
             var resp = await _soap.ObtenerLineasPrepagoAsync(string.Empty);
             var dto = resp.Body.ObtenerLineasPrepagoResult;
 
@@ -247,18 +291,16 @@ namespace WebHomePro.Services.IProveedorService
                 var match = dto.Lineas.FirstOrDefault(l => SoloDigitos(l.Telefono) == telNorm);
                 if (match != null)
                 {
-                    return new LineaPrepagoDto
+                    return new LineaPrepagoVm
                     {
-                        NumeroTelefono = match.Telefono,
-                        Saldo = match.Saldo
+                        Telefono = match.Telefono,
+                        SaldoDisponible = match.Saldo
                     };
                 }
             }
             return null;
         }
     }
-
-
 
     // ==============================
     //  VM/DTO usados por el PageModel

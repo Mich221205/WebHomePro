@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using WSProveedorRef;
+using Microsoft.AspNetCore.Http; // necesario para Session
 
 namespace WebHomePro.Pages.Cliente
 {
@@ -31,47 +32,42 @@ namespace WebHomePro.Pages.Cliente
             if (string.IsNullOrEmpty(cedula))
                 return RedirectToPage("/Login");
 
-            // 🔹 Primero obtener el IdCliente a partir de la cédula
-            var respId = await _ws.ObtenerIdClientePorCedulaAsync(cedula);
-            int idCliente = respId.Body.ObtenerIdClientePorCedulaResult;
-            if (idCliente <= 0)
-            {
-                TempData["Error"] = "No se encontró cliente asociado a la cédula.";
-                return Page();
-            }
-
             if (!string.IsNullOrWhiteSpace(telefono))
             {
                 // Abrir directamente el formulario de recarga (flujo CLIENTE4 -> CLIENTE5)
                 MostrarFormulario = true;
                 Recarga.NumeroTelefono = telefono;
-                SaldoActual = await ObtenerSaldoPorFallbackAsync(telefono, idCliente);
+                SaldoActual = await ObtenerSaldoPorFallbackAsync(telefono, cedula);
                 return Page();
             }
 
-            // Desde menú principal: listar líneas prepago (a)
-            var resp = await _ws.ListarLineasPrepagoPorClienteAsync(idCliente);
+            // Desde menú principal: listar líneas prepago
+            var resp = await _ws.ListarLineasPrepagoPorClienteAsync(cedula);
             var dto = resp.Body.ListarLineasPrepagoPorClienteResult;
 
             LineasPrepago = new List<LineaPrepagoDto>();
             if (dto != null)
             {
                 foreach (var l in dto)
-                    LineasPrepago.Add(new LineaPrepagoDto { NumeroTelefono = l.Telefono, Saldo = l.SaldoDisponible });
+                {
+                    LineasPrepago.Add(new LineaPrepagoDto
+                    {
+                        NumeroTelefono = l.Telefono,
+                        Saldo = l.SaldoDisponible
+                    });
+                }
             }
 
             MostrarFormulario = false;
             return Page();
         }
 
-        // POST: procesar la recarga (b, c)
+        // POST: procesar la recarga
         public async Task<IActionResult> OnPostPagarAsync()
         {
             var cedula = GetClienteCedula();
             if (string.IsNullOrEmpty(cedula))
-{
-    return RedirectToPage("/Login", new { error = "SesionCaduca" });
-}
+                return RedirectToPage("/Login", new { error = "SesionCaduca" });
 
             if (!ValidaExpiracion(Recarga.FechaVencimiento, out var err))
                 ModelState.AddModelError(nameof(Recarga.FechaVencimiento), err ?? "Fecha inválida.");
@@ -79,11 +75,7 @@ namespace WebHomePro.Pages.Cliente
             if (!ModelState.IsValid)
             {
                 MostrarFormulario = true;
-
-                // Recuperar IdCliente de nuevo
-                var respId = await _ws.ObtenerIdClientePorCedulaAsync(cedula);
-                int idCliente = respId.Body.ObtenerIdClientePorCedulaResult;
-                SaldoActual = await ObtenerSaldoPorFallbackAsync(Recarga.NumeroTelefono, idCliente);
+                SaldoActual = await ObtenerSaldoPorFallbackAsync(Recarga.NumeroTelefono, cedula);
                 return Page();
             }
 
@@ -102,16 +94,14 @@ namespace WebHomePro.Pages.Cliente
             if (res?.Resultado == true)
             {
                 TempData["Success"] = "Recarga exitosa";
-                return RedirectToPage("./CargarSaldo"); // 👈 sin telefono
+                return RedirectToPage("./CargarSaldo"); 
             }
 
             TempData["Error"] = res?.Mensaje ?? "Error al realizar el proceso";
 
             // Volver a mostrar formulario con saldo actualizado
-            var respId2 = await _ws.ObtenerIdClientePorCedulaAsync(cedula);
-            int idCliente2 = respId2.Body.ObtenerIdClientePorCedulaResult;
             MostrarFormulario = true;
-            SaldoActual = await ObtenerSaldoPorFallbackAsync(Recarga.NumeroTelefono, idCliente2);
+            SaldoActual = await ObtenerSaldoPorFallbackAsync(Recarga.NumeroTelefono, cedula);
 
             return Page();
         }
@@ -147,11 +137,11 @@ namespace WebHomePro.Pages.Cliente
             return true;
         }
 
-        private async Task<decimal> ObtenerSaldoPorFallbackAsync(string telefono, int idCliente)
+        private async Task<decimal> ObtenerSaldoPorFallbackAsync(string telefono, string cedula)
         {
             // Fallback: listar prepago y filtrar por teléfono
             var telNorm = SoloDigitos(telefono);
-            var resp = await _ws.ListarLineasPrepagoPorClienteAsync(idCliente);
+            var resp = await _ws.ListarLineasPrepagoPorClienteAsync(cedula);
             var dto = resp.Body.ListarLineasPrepagoPorClienteResult;
 
             if (dto != null)

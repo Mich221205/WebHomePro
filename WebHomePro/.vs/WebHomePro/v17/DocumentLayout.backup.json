@@ -9,21 +9,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{CE2FDD12-9EA0-46A0-8E25-8D6E6413350D}|WebHomePro.csproj|c:\\users\\michel\\workspace\\webhomepro\\webhomepro\\pages\\cliente\\cargarsaldo.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{CE2FDD12-9EA0-46A0-8E25-8D6E6413350D}|WebHomePro.csproj|solutionrelative:pages\\cliente\\cargarsaldo.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CE2FDD12-9EA0-46A0-8E25-8D6E6413350D}|WebHomePro.csproj|c:\\users\\michel\\workspace\\webhomepro\\webhomepro\\pages\\cliente\\menucliente.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{CE2FDD12-9EA0-46A0-8E25-8D6E6413350D}|WebHomePro.csproj|solutionrelative:pages\\cliente\\menucliente.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0D277C98-66F0-4C69-B491-415E34A01CD0}|..\\WSProveedor1\\WSProveedor1\\WSProveedor1.csproj|c:\\users\\michel\\workspace\\webhomepro\\wsproveedor1\\wsproveedor1\\wsproveedor.asmx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CE2FDD12-9EA0-46A0-8E25-8D6E6413350D}|WebHomePro.csproj|c:\\users\\michel\\workspace\\webhomepro\\webhomepro\\pages\\login.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CE2FDD12-9EA0-46A0-8E25-8D6E6413350D}|WebHomePro.csproj|solutionrelative:pages\\login.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CE2FDD12-9EA0-46A0-8E25-8D6E6413350D}|WebHomePro.csproj|c:\\users\\michel\\workspace\\webhomepro\\webhomepro\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CE2FDD12-9EA0-46A0-8E25-8D6E6413350D}|WebHomePro.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -33,7 +18,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 16,
+          "SelectedChildIndex": 12,
           "Children": [
             {
               "$type": "Bookmark",
@@ -81,67 +66,15 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "MenuCliente.cshtml",
-              "DocumentMoniker": "C:\\Users\\Michel\\workspace\\WebHomePro\\WebHomePro\\Pages\\Cliente\\MenuCliente.cshtml",
-              "RelativeDocumentMoniker": "Pages\\Cliente\\MenuCliente.cshtml",
-              "ToolTip": "C:\\Users\\Michel\\workspace\\WebHomePro\\WebHomePro\\Pages\\Cliente\\MenuCliente.cshtml",
-              "RelativeToolTip": "Pages\\Cliente\\MenuCliente.cshtml",
-              "ViewState": "AgIAACcAAAAAAAAAAAAAAD4AAAAKAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-08-20T18:22:12.592Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Login.cshtml.cs",
-              "DocumentMoniker": "C:\\Users\\Michel\\workspace\\WebHomePro\\WebHomePro\\Pages\\Login.cshtml.cs",
-              "RelativeDocumentMoniker": "Pages\\Login.cshtml.cs",
-              "ToolTip": "C:\\Users\\Michel\\workspace\\WebHomePro\\WebHomePro\\Pages\\Login.cshtml.cs",
-              "RelativeToolTip": "Pages\\Login.cshtml.cs",
-              "ViewState": "AgIAABkAAAAAAAAAAAA0wDYAAAA7AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-20T17:42:38.44Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\Michel\\workspace\\WebHomePro\\WebHomePro\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\Users\\Michel\\workspace\\WebHomePro\\WebHomePro\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-20T17:22:58.383Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "WSProveedor.asmx.cs",
-              "DocumentMoniker": "C:\\Users\\Michel\\workspace\\WebHomePro\\WSProveedor1\\WSProveedor1\\WSProveedor.asmx.cs",
-              "RelativeDocumentMoniker": "..\\WSProveedor1\\WSProveedor1\\WSProveedor.asmx.cs",
-              "ToolTip": "C:\\Users\\Michel\\workspace\\WebHomePro\\WSProveedor1\\WSProveedor1\\WSProveedor.asmx.cs",
-              "RelativeToolTip": "..\\WSProveedor1\\WSProveedor1\\WSProveedor.asmx.cs",
-              "ViewState": "AgIAAAkDAAAAAAAAAAAAAB8DAAAvAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-20T17:14:56.137Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 1,
               "Title": "CargarSaldo.cshtml.cs",
               "DocumentMoniker": "C:\\Users\\Michel\\workspace\\WebHomePro\\WebHomePro\\Pages\\Cliente\\CargarSaldo.cshtml.cs",
               "RelativeDocumentMoniker": "Pages\\Cliente\\CargarSaldo.cshtml.cs",
-              "ToolTip": "C:\\Users\\Michel\\workspace\\WebHomePro\\WebHomePro\\Pages\\Cliente\\CargarSaldo.cshtml.cs",
-              "RelativeToolTip": "Pages\\Cliente\\CargarSaldo.cshtml.cs",
-              "ViewState": "AgIAADAAAAAAAAAAAAAjwGkAAAANAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\Michel\\workspace\\WebHomePro\\WebHomePro\\Pages\\Cliente\\CargarSaldo.cshtml.cs*",
+              "RelativeToolTip": "Pages\\Cliente\\CargarSaldo.cshtml.cs*",
+              "ViewState": "AgIAAEEAAAAAAAAAAAA8wGAAAAA4AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-20T17:13:47.154Z",
+              "WhenOpened": "2025-08-20T20:15:44.968Z",
               "EditorCaption": ""
             },
             {
@@ -152,9 +85,9 @@
               "RelativeDocumentMoniker": "Pages\\Cliente\\CargarSaldo.cshtml",
               "ToolTip": "C:\\Users\\Michel\\workspace\\WebHomePro\\WebHomePro\\Pages\\Cliente\\CargarSaldo.cshtml",
               "RelativeToolTip": "Pages\\Cliente\\CargarSaldo.cshtml",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAiwBYAAAA2AAAAAAAAAA==",
+              "ViewState": "AgIAAIsAAAAAAAAAAAAqwKMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-08-20T17:13:38.575Z",
+              "WhenOpened": "2025-08-20T20:15:40.902Z",
               "EditorCaption": ""
             }
           ]
