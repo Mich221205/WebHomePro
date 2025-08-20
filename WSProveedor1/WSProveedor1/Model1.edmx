@@ -153,11 +153,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-warning 6035: The relationship 'FK__LLAMADAS__NUMTEL__45F365D3' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <!--Errores durante la generación:
+advertencia 6035: La relación 'FK__LLAMADAS__NUMTEL__45F365D3' tiene columnas que no forman parte de la clave de la tabla en el lado principal de la relación. Se excluyó la relación.
         <Association Name="FK__LLAMADAS__NUMTEL__45F365D3" />-->
-        <!--Errors Found During Generation:
-warning 6035: The relationship 'FK__LLAMADAS__NUMTEL__46E78A0C' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <!--Errores durante la generación:
+advertencia 6035: La relación 'FK__LLAMADAS__NUMTEL__46E78A0C' tiene columnas que no forman parte de la clave de la tabla en el lado principal de la relación. Se excluyó la relación.
         <Association Name="FK__LLAMADAS__NUMTEL__46E78A0C" />-->
         <Association Name="FK__TELEFONOS__ID_CL__3C69FB99">
           <End Role="CLIENTES" Type="Self.CLIENTES" Multiplicity="0..1" />
@@ -219,41 +219,6 @@ warning 6035: The relationship 'FK__LLAMADAS__NUMTEL__46E78A0C' has columns that
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
-        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="version" Type="int" Mode="In" />
-          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
-        </Function>
-        <Function Name="SP_COBROS_POSTPAGOS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="FECHA_CALCULO" Type="date" Mode="In" />
-          <Parameter Name="FECHA_M_PAGO" Type="date" Mode="In" />
-        </Function>
-        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="version" Type="int" Mode="In" />
-          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
-        </Function>
-        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="COMPANIA_TELEFONICAModelStoreContainer">
           <EntitySet Name="BONOS" EntityType="Self.BONOS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CLIENTES" EntityType="Self.CLIENTES" Schema="dbo" store:Type="Tables" />
@@ -305,7 +270,7 @@ warning 6035: The relationship 'FK__LLAMADAS__NUMTEL__46E78A0C' has columns that
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="COMPANIA_TELEFONICAModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="BONO">
+        <EntityType Name="BONOS">
           <Key>
             <PropertyRef Name="ID_BONO" />
           </Key>
@@ -313,9 +278,9 @@ warning 6035: The relationship 'FK__LLAMADAS__NUMTEL__46E78A0C' has columns that
           <Property Name="DESCRIPCION" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="VALOR" Type="Int32" />
           <Property Name="TELEFONO" Type="Int32" />
-          <NavigationProperty Name="TELEFONO1" Relationship="Self.FK__BONOS__TELEFONO__403A8C7D" FromRole="BONOS" ToRole="TELEFONOS" />
+          <NavigationProperty Name="TELEFONOS" Relationship="Self.FK__BONOS__TELEFONO__403A8C7D" FromRole="BONOS" ToRole="TELEFONOS" />
         </EntityType>
-        <EntityType Name="CLIENTE">
+        <EntityType Name="CLIENTES">
           <Key>
             <PropertyRef Name="ID_CLIENTE" />
           </Key>
@@ -325,7 +290,7 @@ warning 6035: The relationship 'FK__LLAMADAS__NUMTEL__46E78A0C' has columns that
           <NavigationProperty Name="DETALLE_COBROS" Relationship="Self.FK__DETALLE_C__ID_CL__0A688BB1" FromRole="CLIENTES" ToRole="DETALLE_COBROS" />
           <NavigationProperty Name="TELEFONOS" Relationship="Self.FK__TELEFONOS__ID_CL__3C69FB99" FromRole="CLIENTES" ToRole="TELEFONOS" />
         </EntityType>
-        <EntityType Name="COBRO">
+        <EntityType Name="COBROS">
           <Key>
             <PropertyRef Name="ID_COBRO" />
           </Key>
@@ -354,8 +319,8 @@ warning 6035: The relationship 'FK__LLAMADAS__NUMTEL__46E78A0C' has columns that
           <Property Name="ID_CLIENTE" Type="Int32" Nullable="false" />
           <Property Name="MONTO_TOTAL" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="ESTADO_PAGO" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="CLIENTE" Relationship="Self.FK__DETALLE_C__ID_CL__0A688BB1" FromRole="DETALLE_COBROS" ToRole="CLIENTES" />
-          <NavigationProperty Name="COBRO" Relationship="Self.FK__DETALLE_C__ID_CO__09746778" FromRole="DETALLE_COBROS" ToRole="COBROS" />
+          <NavigationProperty Name="CLIENTES" Relationship="Self.FK__DETALLE_C__ID_CL__0A688BB1" FromRole="DETALLE_COBROS" ToRole="CLIENTES" />
+          <NavigationProperty Name="COBROS" Relationship="Self.FK__DETALLE_C__ID_CO__09746778" FromRole="DETALLE_COBROS" ToRole="COBROS" />
         </EntityType>
         <EntityType Name="ESTADOS_TELEFONOS">
           <Key>
@@ -365,7 +330,7 @@ warning 6035: The relationship 'FK__LLAMADAS__NUMTEL__46E78A0C' has columns that
           <Property Name="DESCRIPCION" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ESTADO" Type="Boolean" Nullable="false" />
         </EntityType>
-        <EntityType Name="LLAMADA">
+        <EntityType Name="LLAMADAS">
           <Key>
             <PropertyRef Name="ID_LLAMADA" />
           </Key>
@@ -377,7 +342,7 @@ warning 6035: The relationship 'FK__LLAMADAS__NUMTEL__46E78A0C' has columns that
           <Property Name="DURACION" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="TRANSACCIONES" Relationship="Self.FK__TRANSACCI__ID_LL__4D94879B" FromRole="LLAMADAS" ToRole="TRANSACCIONES" />
         </EntityType>
-        <EntityType Name="sysdiagram">
+        <EntityType Name="sysdiagrams">
           <Key>
             <PropertyRef Name="diagram_id" />
           </Key>
@@ -387,7 +352,7 @@ warning 6035: The relationship 'FK__LLAMADAS__NUMTEL__46E78A0C' has columns that
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
-        <EntityType Name="TELEFONO">
+        <EntityType Name="TELEFONOS">
           <Key>
             <PropertyRef Name="ID_TELEFONO" />
           </Key>
@@ -401,7 +366,7 @@ warning 6035: The relationship 'FK__LLAMADAS__NUMTEL__46E78A0C' has columns that
           <Property Name="IDENTIFICADOR_TELEFONO" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="ID_ESTADO" Type="Int32" Nullable="false" />
           <NavigationProperty Name="BONOS" Relationship="Self.FK__BONOS__TELEFONO__403A8C7D" FromRole="TELEFONOS" ToRole="BONOS" />
-          <NavigationProperty Name="CLIENTE" Relationship="Self.FK__TELEFONOS__ID_CL__3C69FB99" FromRole="TELEFONOS" ToRole="CLIENTES" />
+          <NavigationProperty Name="CLIENTES" Relationship="Self.FK__TELEFONOS__ID_CL__3C69FB99" FromRole="TELEFONOS" ToRole="CLIENTES" />
           <NavigationProperty Name="CODIGO_PAIS" Relationship="Self.FK_TELEFONOS_CODIGO_PAIS" FromRole="TELEFONOS" ToRole="CODIGO_PAIS" />
           <NavigationProperty Name="TIPO_TELEFONO1" Relationship="Self.FK__TELEFONOS__TIPO___3D5E1FD2" FromRole="TELEFONOS" ToRole="TIPO_TELEFONO" />
         </EntityType>
@@ -423,19 +388,19 @@ warning 6035: The relationship 'FK__LLAMADAS__NUMTEL__46E78A0C' has columns that
           <Property Name="ESTADO" Type="Boolean" />
           <NavigationProperty Name="TRANSACCIONES" Relationship="Self.FK__TRANSACCI__ID_T___4CA06362" FromRole="TIPO_TRANSACCION" ToRole="TRANSACCIONES" />
         </EntityType>
-        <EntityType Name="TRANSACCIONE">
+        <EntityType Name="TRANSACCIONES">
           <Key>
             <PropertyRef Name="ID_TRANSACCION" />
           </Key>
           <Property Name="ID_TRANSACCION" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ID_T_TRANS" Type="Int32" />
           <Property Name="ID_LLAMADA" Type="Int32" />
-          <NavigationProperty Name="LLAMADA" Relationship="Self.FK__TRANSACCI__ID_LL__4D94879B" FromRole="TRANSACCIONES" ToRole="LLAMADAS" />
+          <NavigationProperty Name="LLAMADAS" Relationship="Self.FK__TRANSACCI__ID_LL__4D94879B" FromRole="TRANSACCIONES" ToRole="LLAMADAS" />
           <NavigationProperty Name="TIPO_TRANSACCION" Relationship="Self.FK__TRANSACCI__ID_T___4CA06362" FromRole="TRANSACCIONES" ToRole="TIPO_TRANSACCION" />
         </EntityType>
         <Association Name="FK__BONOS__TELEFONO__403A8C7D">
-          <End Role="TELEFONOS" Type="Self.TELEFONO" Multiplicity="0..1" />
-          <End Role="BONOS" Type="Self.BONO" Multiplicity="*" />
+          <End Role="TELEFONOS" Type="Self.TELEFONOS" Multiplicity="0..1" />
+          <End Role="BONOS" Type="Self.BONOS" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TELEFONOS">
               <PropertyRef Name="ID_TELEFONO" />
@@ -446,7 +411,7 @@ warning 6035: The relationship 'FK__LLAMADAS__NUMTEL__46E78A0C' has columns that
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__DETALLE_C__ID_CL__0A688BB1">
-          <End Role="CLIENTES" Type="Self.CLIENTE" Multiplicity="1" />
+          <End Role="CLIENTES" Type="Self.CLIENTES" Multiplicity="1" />
           <End Role="DETALLE_COBROS" Type="Self.DETALLE_COBROS" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CLIENTES">
@@ -458,8 +423,8 @@ warning 6035: The relationship 'FK__LLAMADAS__NUMTEL__46E78A0C' has columns that
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__TELEFONOS__ID_CL__3C69FB99">
-          <End Role="CLIENTES" Type="Self.CLIENTE" Multiplicity="0..1" />
-          <End Role="TELEFONOS" Type="Self.TELEFONO" Multiplicity="*" />
+          <End Role="CLIENTES" Type="Self.CLIENTES" Multiplicity="0..1" />
+          <End Role="TELEFONOS" Type="Self.TELEFONOS" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CLIENTES">
               <PropertyRef Name="ID_CLIENTE" />
@@ -470,7 +435,7 @@ warning 6035: The relationship 'FK__LLAMADAS__NUMTEL__46E78A0C' has columns that
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__DETALLE_C__ID_CO__09746778">
-          <End Role="COBROS" Type="Self.COBRO" Multiplicity="1" />
+          <End Role="COBROS" Type="Self.COBROS" Multiplicity="1" />
           <End Role="DETALLE_COBROS" Type="Self.DETALLE_COBROS" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="COBROS">
@@ -483,7 +448,7 @@ warning 6035: The relationship 'FK__LLAMADAS__NUMTEL__46E78A0C' has columns that
         </Association>
         <Association Name="FK_TELEFONOS_CODIGO_PAIS">
           <End Role="CODIGO_PAIS" Type="Self.CODIGO_PAIS" Multiplicity="1" />
-          <End Role="TELEFONOS" Type="Self.TELEFONO" Multiplicity="*" />
+          <End Role="TELEFONOS" Type="Self.TELEFONOS" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CODIGO_PAIS">
               <PropertyRef Name="ID_PAIS" />
@@ -494,8 +459,8 @@ warning 6035: The relationship 'FK__LLAMADAS__NUMTEL__46E78A0C' has columns that
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__TRANSACCI__ID_LL__4D94879B">
-          <End Role="LLAMADAS" Type="Self.LLAMADA" Multiplicity="0..1" />
-          <End Role="TRANSACCIONES" Type="Self.TRANSACCIONE" Multiplicity="*" />
+          <End Role="LLAMADAS" Type="Self.LLAMADAS" Multiplicity="0..1" />
+          <End Role="TRANSACCIONES" Type="Self.TRANSACCIONES" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="LLAMADAS">
               <PropertyRef Name="ID_LLAMADA" />
@@ -507,7 +472,7 @@ warning 6035: The relationship 'FK__LLAMADAS__NUMTEL__46E78A0C' has columns that
         </Association>
         <Association Name="FK__TELEFONOS__TIPO___3D5E1FD2">
           <End Role="TIPO_TELEFONO" Type="Self.TIPO_TELEFONO" Multiplicity="1" />
-          <End Role="TELEFONOS" Type="Self.TELEFONO" Multiplicity="*" />
+          <End Role="TELEFONOS" Type="Self.TELEFONOS" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TIPO_TELEFONO">
               <PropertyRef Name="ID_T_TELEFONO" />
@@ -519,7 +484,7 @@ warning 6035: The relationship 'FK__LLAMADAS__NUMTEL__46E78A0C' has columns that
         </Association>
         <Association Name="FK__TRANSACCI__ID_T___4CA06362">
           <End Role="TIPO_TRANSACCION" Type="Self.TIPO_TRANSACCION" Multiplicity="0..1" />
-          <End Role="TRANSACCIONES" Type="Self.TRANSACCIONE" Multiplicity="*" />
+          <End Role="TRANSACCIONES" Type="Self.TRANSACCIONES" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TIPO_TRANSACCION">
               <PropertyRef Name="ID_T_TRANS" />
@@ -529,19 +494,19 @@ warning 6035: The relationship 'FK__LLAMADAS__NUMTEL__46E78A0C' has columns that
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="COMPANIA_TELEFONICAEntities1" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="BONOS" EntityType="Self.BONO" />
-          <EntitySet Name="CLIENTES" EntityType="Self.CLIENTE" />
-          <EntitySet Name="COBROS" EntityType="Self.COBRO" />
+        <EntityContainer Name="COMPANIA_TELEFONICAEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BONOS" EntityType="Self.BONOS" />
+          <EntitySet Name="CLIENTES" EntityType="Self.CLIENTES" />
+          <EntitySet Name="COBROS" EntityType="Self.COBROS" />
           <EntitySet Name="CODIGO_PAIS" EntityType="Self.CODIGO_PAIS" />
           <EntitySet Name="DETALLE_COBROS" EntityType="Self.DETALLE_COBROS" />
           <EntitySet Name="ESTADOS_TELEFONOS" EntityType="Self.ESTADOS_TELEFONOS" />
-          <EntitySet Name="LLAMADAS" EntityType="Self.LLAMADA" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
-          <EntitySet Name="TELEFONOS" EntityType="Self.TELEFONO" />
+          <EntitySet Name="LLAMADAS" EntityType="Self.LLAMADAS" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="TELEFONOS" EntityType="Self.TELEFONOS" />
           <EntitySet Name="TIPO_TELEFONO" EntityType="Self.TIPO_TELEFONO" />
           <EntitySet Name="TIPO_TRANSACCION" EntityType="Self.TIPO_TRANSACCION" />
-          <EntitySet Name="TRANSACCIONES" EntityType="Self.TRANSACCIONE" />
+          <EntitySet Name="TRANSACCIONES" EntityType="Self.TRANSACCIONES" />
           <AssociationSet Name="FK__BONOS__TELEFONO__403A8C7D" Association="Self.FK__BONOS__TELEFONO__403A8C7D">
             <End Role="TELEFONOS" EntitySet="TELEFONOS" />
             <End Role="BONOS" EntitySet="BONOS" />
@@ -574,60 +539,15 @@ warning 6035: The relationship 'FK__LLAMADAS__NUMTEL__46E78A0C' has columns that
             <End Role="TIPO_TRANSACCION" EntitySet="TIPO_TRANSACCION" />
             <End Role="TRANSACCIONES" EntitySet="TRANSACCIONES" />
           </AssociationSet>
-          <FunctionImport Name="sp_alterdiagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="version" Mode="In" Type="Int32" />
-            <Parameter Name="definition" Mode="In" Type="Binary" />
-          </FunctionImport>
-          <FunctionImport Name="SP_COBROS_POSTPAGOS">
-            <Parameter Name="FECHA_CALCULO" Mode="In" Type="DateTime" />
-            <Parameter Name="FECHA_M_PAGO" Mode="In" Type="DateTime" />
-          </FunctionImport>
-          <FunctionImport Name="sp_creatediagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="version" Mode="In" Type="Int32" />
-            <Parameter Name="definition" Mode="In" Type="Binary" />
-          </FunctionImport>
-          <FunctionImport Name="sp_dropdiagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(COMPANIA_TELEFONICAModel.sp_helpdiagramdefinition_Result)">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(COMPANIA_TELEFONICAModel.sp_helpdiagrams_Result)">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_renamediagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="new_diagramname" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="sp_upgraddiagrams" />
         </EntityContainer>
-        <ComplexType Name="sp_helpdiagramdefinition_Result">
-          <Property Type="Int32" Name="version" Nullable="true" />
-          <Property Type="Binary" Name="definition" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="sp_helpdiagrams_Result">
-          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
-          <Property Type="Int32" Name="ID" Nullable="false" />
-          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
-          <Property Type="Int32" Name="OwnerID" Nullable="false" />
-        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="COMPANIA_TELEFONICAModelStoreContainer" CdmEntityContainer="COMPANIA_TELEFONICAEntities1">
+        <EntityContainerMapping StorageEntityContainer="COMPANIA_TELEFONICAModelStoreContainer" CdmEntityContainer="COMPANIA_TELEFONICAEntities">
           <EntitySetMapping Name="BONOS">
-            <EntityTypeMapping TypeName="COMPANIA_TELEFONICAModel.BONO">
+            <EntityTypeMapping TypeName="COMPANIA_TELEFONICAModel.BONOS">
               <MappingFragment StoreEntitySet="BONOS">
                 <ScalarProperty Name="ID_BONO" ColumnName="ID_BONO" />
                 <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
@@ -637,7 +557,7 @@ warning 6035: The relationship 'FK__LLAMADAS__NUMTEL__46E78A0C' has columns that
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CLIENTES">
-            <EntityTypeMapping TypeName="COMPANIA_TELEFONICAModel.CLIENTE">
+            <EntityTypeMapping TypeName="COMPANIA_TELEFONICAModel.CLIENTES">
               <MappingFragment StoreEntitySet="CLIENTES">
                 <ScalarProperty Name="ID_CLIENTE" ColumnName="ID_CLIENTE" />
                 <ScalarProperty Name="CEDULA" ColumnName="CEDULA" />
@@ -646,7 +566,7 @@ warning 6035: The relationship 'FK__LLAMADAS__NUMTEL__46E78A0C' has columns that
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="COBROS">
-            <EntityTypeMapping TypeName="COMPANIA_TELEFONICAModel.COBRO">
+            <EntityTypeMapping TypeName="COMPANIA_TELEFONICAModel.COBROS">
               <MappingFragment StoreEntitySet="COBROS">
                 <ScalarProperty Name="ID_COBRO" ColumnName="ID_COBRO" />
                 <ScalarProperty Name="FECHA_CALCULO" ColumnName="FECHA_CALCULO" />
@@ -686,7 +606,7 @@ warning 6035: The relationship 'FK__LLAMADAS__NUMTEL__46E78A0C' has columns that
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="LLAMADAS">
-            <EntityTypeMapping TypeName="COMPANIA_TELEFONICAModel.LLAMADA">
+            <EntityTypeMapping TypeName="COMPANIA_TELEFONICAModel.LLAMADAS">
               <MappingFragment StoreEntitySet="LLAMADAS">
                 <ScalarProperty Name="ID_LLAMADA" ColumnName="ID_LLAMADA" />
                 <ScalarProperty Name="NUMTELEFONO_ORIGEN" ColumnName="NUMTELEFONO_ORIGEN" />
@@ -698,7 +618,7 @@ warning 6035: The relationship 'FK__LLAMADAS__NUMTEL__46E78A0C' has columns that
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="COMPANIA_TELEFONICAModel.sysdiagram">
+            <EntityTypeMapping TypeName="COMPANIA_TELEFONICAModel.sysdiagrams">
               <MappingFragment StoreEntitySet="sysdiagrams">
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="principal_id" ColumnName="principal_id" />
@@ -709,7 +629,7 @@ warning 6035: The relationship 'FK__LLAMADAS__NUMTEL__46E78A0C' has columns that
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TELEFONOS">
-            <EntityTypeMapping TypeName="COMPANIA_TELEFONICAModel.TELEFONO">
+            <EntityTypeMapping TypeName="COMPANIA_TELEFONICAModel.TELEFONOS">
               <MappingFragment StoreEntitySet="TELEFONOS">
                 <ScalarProperty Name="ID_TELEFONO" ColumnName="ID_TELEFONO" />
                 <ScalarProperty Name="NUM_TELEFONO" ColumnName="NUM_TELEFONO" />
@@ -742,7 +662,7 @@ warning 6035: The relationship 'FK__LLAMADAS__NUMTEL__46E78A0C' has columns that
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TRANSACCIONES">
-            <EntityTypeMapping TypeName="COMPANIA_TELEFONICAModel.TRANSACCIONE">
+            <EntityTypeMapping TypeName="COMPANIA_TELEFONICAModel.TRANSACCIONES">
               <MappingFragment StoreEntitySet="TRANSACCIONES">
                 <ScalarProperty Name="ID_TRANSACCION" ColumnName="ID_TRANSACCION" />
                 <ScalarProperty Name="ID_T_TRANS" ColumnName="ID_T_TRANS" />
@@ -750,31 +670,6 @@ warning 6035: The relationship 'FK__LLAMADAS__NUMTEL__46E78A0C' has columns that
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="COMPANIA_TELEFONICAModel.Store.sp_alterdiagram" />
-          <FunctionImportMapping FunctionImportName="SP_COBROS_POSTPAGOS" FunctionName="COMPANIA_TELEFONICAModel.Store.SP_COBROS_POSTPAGOS" />
-          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="COMPANIA_TELEFONICAModel.Store.sp_creatediagram" />
-          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="COMPANIA_TELEFONICAModel.Store.sp_dropdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="COMPANIA_TELEFONICAModel.Store.sp_helpdiagramdefinition">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="COMPANIA_TELEFONICAModel.sp_helpdiagramdefinition_Result">
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="COMPANIA_TELEFONICAModel.Store.sp_helpdiagrams">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="COMPANIA_TELEFONICAModel.sp_helpdiagrams_Result">
-                <ScalarProperty Name="Database" ColumnName="Database" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Owner" ColumnName="Owner" />
-                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="COMPANIA_TELEFONICAModel.Store.sp_renamediagram" />
-          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="COMPANIA_TELEFONICAModel.Store.sp_upgraddiagrams" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -789,10 +684,10 @@ warning 6035: The relationship 'FK__LLAMADAS__NUMTEL__46E78A0C' has columns that
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
-        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->

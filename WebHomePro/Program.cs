@@ -1,27 +1,68 @@
-using WebHomePro.Services.IFacturacionServices;
-using WebHomePro.Services.IProveedorService;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using System;
+using System.ServiceModel;                       // BasicHttpBinding / EndpointAddress
+using System.Threading.Tasks;
 using WebHomePro.Services;
-
+using WebHomePro.Services.IProveedorService;
+using WSProveedorRef;
+using WSAUTENTICACION;
+using WebHomePro.Services.IFacturacionServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// -------------------- Servicios existentes --------------------
 builder.Services.AddRazorPages();
 builder.Services.AddSession();
 builder.Services.AddHttpContextAccessor();
-
-//builder.Services.AddSingleton<IFacturacionService, FacturacionService>();
 builder.Services.AddScoped<IFacturacionService, FacturacionService>();
-
-builder.Services.AddSingleton<IProveedorService, ProveedorService>();
-
 
 builder.Services.AddAuthentication("CookieAuth")
     .AddCookie("CookieAuth", options =>
     {
-        options.LoginPath = "/Login"; 
+        options.LoginPath = "/Login";
         options.AccessDeniedPath = "/Login";
     });
 
+// -------------------- Registrar clientes SOAP --------------------
+builder.Services.AddScoped<WSProveedorSoapClient>(provider =>
+{
+    var binding = new BasicHttpBinding
+    {
+        Security = new BasicHttpSecurity
+        {
+            Mode = BasicHttpSecurityMode.None
+        }
+    };
+
+    var endpoint = new EndpointAddress("http://localhost:1234/WSProveedor.asmx");
+    return new WSProveedorSoapClient(binding, endpoint);
+});
+
+builder.Services.AddScoped<AuthServiceClient>(provider =>
+{
+    var binding = new BasicHttpBinding
+    {
+        Security = new BasicHttpSecurity
+        {
+            Mode = BasicHttpSecurityMode.None
+        }
+    };
+
+    var endpoint = new EndpointAddress("http://localhost:50339/AuthService.svc");
+    return new AuthServiceClient(binding, endpoint);
+});
+
+// -------------------- Wrappers para inyección --------------------
+// Para IProveedorService
+builder.Services.AddScoped<IProveedorService, WebHomePro.Services.IProveedorService.ProveedorService>();
+
+// Para ProveedorService2
+builder.Services.AddScoped<ProveedorService2, WebHomePro.Services.ProveedorService>();
+
+// -------------------- Pipeline --------------------
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())

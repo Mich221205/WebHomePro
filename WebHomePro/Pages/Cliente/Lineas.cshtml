@@ -60,8 +60,8 @@
 
                     <!-- Opciones del menú -->
                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Cliente/Lineas">Líneas Activas a su Nombre</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/#">Cargar saldo a línea PREPAGO</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/#">Pago facturas pendientes</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="">Cargar saldo a línea PREPAGO</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="">Pago facturas pendientes</a></li>
                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Cliente/DevolverLineaCliente">Devolver una Línea</a></li>
                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Login">Salir del Sitio</a></li>
                 </ul>
@@ -75,7 +75,7 @@
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
                     <div class="site-heading">
-                        <h1>HomePro</h1>
+                        <h1>Lineas activas a su nombre</h1>
                         <span class="subheading">Gestioná tu contenido fácilmente</span>
                     </div>
                 </div>
@@ -83,19 +83,7 @@
         </div>
     </header>
 
-    <!-- Información sobre la empresa -->
-    <section class="py-5">
-        <div class="container px-4 px-lg-5">
-            <div class="row gx-4 gx-lg-5 justify-content-center">
-                <div class="col-md-10 col-lg-8 col-xl-7 text-center">
-                    <h2 class="mb-4">¿Quiénes somos?</h2>
-                    <p class="lead"><strong>HomePro</strong> es una empresa líder en soluciones de telecomunicaciones, comprometida con la innovación y eficiencia en la gestión de servicios telefónicos. Nos especializamos en ofrecer plataformas tecnológicas que permiten el control, monitoreo y gestión inteligente de llamadas, adaptándonos a las necesidades actuales del sector.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CLIENTE4: Tablas de líneas -->
+    <!-- Tablas -->
     <section class="py-5">
         <div class="container px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
@@ -120,7 +108,7 @@
                                     <th class="text-end">Saldo disponible</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="tbody-prepago">
                                 @foreach (var l in prepago)
                                 {
                                     <tr data-tel="@l.Telefono">
@@ -148,7 +136,7 @@
                                     <th class="text-end">Monto pendiente</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="tbody-postpago">
                                 @foreach (var l in postpago)
                                 {
                                     <tr data-tel="@l.Telefono" data-monto="@l.MontoPendiente">
@@ -180,9 +168,20 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/scripts.js"></script>
 
-    <!-- Doble clic: mensajes / navegación -->
     <script>
-        // Pon en true cuando quieras navegar a pantallas reales
+
+        window.addEventListener('linea-devuelta', () => {
+            try {
+                const raw = localStorage.getItem('lineaDevuelta');
+                if (!raw) return;
+                const data = JSON.parse(raw);
+                if (!data || !data.tel) return;
+                // refrescar tablas desde el servidor (HTML parcial)
+                refrescarTablas();
+            } catch { /* ignore */ }
+        });
+
+        // 2) Doble clics (como tenías)
         var navegarCliente5 = false;
         var navegarCliente6 = false;
 
@@ -217,6 +216,32 @@
                 });
             });
         })();
+
+        // 3) Función que pide HTML parcial y re-renderiza ambos <tbody>
+        async function refrescarTablas() {
+            try {
+                const resp = await fetch('@Url.Page("/Cliente/Lineas", "LineasParciales")', {
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                });
+                if (!resp.ok) return;
+                const html = await resp.text();
+                // El parcial devuelve dos contenedores <template> con los tbodys
+                const tpl = document.createElement('div');
+                tpl.innerHTML = html;
+
+                const nuevoPrepago = tpl.querySelector('#tpl-prepago');
+                const nuevoPostpago = tpl.querySelector('#tpl-postpago');
+
+                if (nuevoPrepago) {
+                    document.querySelector('#tbody-prepago').innerHTML = nuevoPrepago.innerHTML;
+                }
+                if (nuevoPostpago) {
+                    document.querySelector('#tbody-postpago').innerHTML = nuevoPostpago.innerHTML;
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        }
     </script>
 </body>
 </html>

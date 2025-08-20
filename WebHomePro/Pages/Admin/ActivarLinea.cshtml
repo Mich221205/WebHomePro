@@ -21,14 +21,41 @@
             <a class="navbar-brand" asp-page="/Admin/MenuAdmin">
                 <img src="~/img/LOGO HOMEPRO.png" alt="Logo" style="height: 5rem;" />
             </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive">
+                Menu <i class="fas fa-bars"></i>
+            </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ms-auto py-4 py-lg-0">
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Admin/Nuevas_LineasTELE">nuevas líneas telefónicas</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Admin/ActivarLinea">Activar una línea recién vendida</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/#">Devolución de una línea telefónica</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/#">Calcular facturación</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Admin/Nuevos_Admin">nuevos usuarios administrativos</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Login">Salir del Sitio</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Admin/Nuevas_LineasTELE">
+                            Nuevas líneas telefónicas
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Admin/ActivarLinea">
+                            Activar una línea recién vendida
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Admin/DesactivarLinea">
+                            Devolución de una línea telefónica
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Admin/CalcularFacturacion">
+                            Calcular facturación
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Admin/Nuevos_Admin">
+                            Nuevos usuarios administrativos
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Login">
+                            Salir del Sitio
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>

@@ -1,17 +1,18 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\jota2\\workspace\\WebHomePro\\WebHomePro\\",
+  "WorkspaceRootPath": "C:\\Users\\Michel\\workspace\\WebHomePro\\WebHomePro\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{CE2FDD12-9EA0-46A0-8E25-8D6E6413350D}|WebHomePro.csproj|c:\\users\\jota2\\workspace\\webhomepro\\webhomepro\\pages\\cliente\\cargarsaldo.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{CE2FDD12-9EA0-46A0-8E25-8D6E6413350D}|WebHomePro.csproj|solutionrelative:pages\\cliente\\cargarsaldo.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{CE2FDD12-9EA0-46A0-8E25-8D6E6413350D}|WebHomePro.csproj|c:\\users\\michel\\workspace\\webhomepro\\webhomepro\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CE2FDD12-9EA0-46A0-8E25-8D6E6413350D}|WebHomePro.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CE2FDD12-9EA0-46A0-8E25-8D6E6413350D}|WebHomePro.csproj|c:\\users\\jota2\\workspace\\webhomepro\\webhomepro\\pages\\cliente\\cargarsaldo.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CE2FDD12-9EA0-46A0-8E25-8D6E6413350D}|WebHomePro.csproj|solutionrelative:pages\\cliente\\cargarsaldo.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{CE2FDD12-9EA0-46A0-8E25-8D6E6413350D}|WebHomePro.csproj|c:\\users\\michel\\workspace\\webhomepro\\webhomepro\\pages\\admin\\calcularfacturacion.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CE2FDD12-9EA0-46A0-8E25-8D6E6413350D}|WebHomePro.csproj|solutionrelative:pages\\admin\\calcularfacturacion.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0D277C98-66F0-4C69-B491-415E34A01CD0}|..\\WSProveedor1\\WSProveedor1\\WSProveedor1.csproj|c:\\users\\jota2\\workspace\\webhomepro\\wsproveedor1\\wsproveedor1\\wsproveedor.asmx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{CE2FDD12-9EA0-46A0-8E25-8D6E6413350D}|WebHomePro.csproj|c:\\users\\michel\\workspace\\webhomepro\\webhomepro\\pages\\admin\\calcularfacturacion.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CE2FDD12-9EA0-46A0-8E25-8D6E6413350D}|WebHomePro.csproj|solutionrelative:pages\\admin\\calcularfacturacion.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -21,26 +22,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 13,
+          "SelectedChildIndex": 11,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "WSProveedor.asmx.cs",
-              "DocumentMoniker": "C:\\Users\\jota2\\workspace\\WebHomePro\\WSProveedor1\\WSProveedor1\\WSProveedor.asmx.cs",
-              "RelativeDocumentMoniker": "..\\WSProveedor1\\WSProveedor1\\WSProveedor.asmx.cs",
-              "ToolTip": "C:\\Users\\jota2\\workspace\\WebHomePro\\WSProveedor1\\WSProveedor1\\WSProveedor.asmx.cs",
-              "RelativeToolTip": "..\\WSProveedor1\\WSProveedor1\\WSProveedor.asmx.cs",
-              "ViewState": "AgIAAHMCAAAAAAAAAAAUwLACAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-19T05:46:12.838Z",
-              "IsPinned": true,
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{26341fe2-71dd-46fd-bb1b-2e51a92a0d64}"
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{b1e99781-ab81-11d0-b683-00aa00a3ee26}"
@@ -79,32 +62,49 @@
             },
             {
               "$type": "Bookmark",
+              "Name": "ST:0:0:{40ea2e6b-2121-4bb8-a43e-c83c04b51041}"
+            },
+            {
+              "$type": "Bookmark",
               "Name": "ST:1:0:{e8034f19-ab72-4f06-83fd-f6832b41aa63}"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "CargarSaldo.cshtml.cs",
-              "DocumentMoniker": "C:\\Users\\jota2\\workspace\\WebHomePro\\WebHomePro\\Pages\\Cliente\\CargarSaldo.cshtml.cs",
-              "RelativeDocumentMoniker": "Pages\\Cliente\\CargarSaldo.cshtml.cs",
-              "ToolTip": "C:\\Users\\jota2\\workspace\\WebHomePro\\WebHomePro\\Pages\\Cliente\\CargarSaldo.cshtml.cs",
-              "RelativeToolTip": "Pages\\Cliente\\CargarSaldo.cshtml.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Michel\\workspace\\WebHomePro\\WebHomePro\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\Michel\\workspace\\WebHomePro\\WebHomePro\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAABGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-19T21:19:45.53Z",
+              "WhenOpened": "2025-08-20T08:08:04.982Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "CargarSaldo.cshtml",
-              "DocumentMoniker": "C:\\Users\\jota2\\workspace\\WebHomePro\\WebHomePro\\Pages\\Cliente\\CargarSaldo.cshtml",
-              "RelativeDocumentMoniker": "Pages\\Cliente\\CargarSaldo.cshtml",
-              "ToolTip": "C:\\Users\\jota2\\workspace\\WebHomePro\\WebHomePro\\Pages\\Cliente\\CargarSaldo.cshtml",
-              "RelativeToolTip": "Pages\\Cliente\\CargarSaldo.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "CalcularFacturacion.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\Michel\\workspace\\WebHomePro\\WebHomePro\\Pages\\Admin\\CalcularFacturacion.cshtml.cs",
+              "RelativeDocumentMoniker": "Pages\\Admin\\CalcularFacturacion.cshtml.cs",
+              "ToolTip": "C:\\Users\\Michel\\workspace\\WebHomePro\\WebHomePro\\Pages\\Admin\\CalcularFacturacion.cshtml.cs",
+              "RelativeToolTip": "Pages\\Admin\\CalcularFacturacion.cshtml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-20T08:03:55.223Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "CalcularFacturacion.cshtml",
+              "DocumentMoniker": "C:\\Users\\Michel\\workspace\\WebHomePro\\WebHomePro\\Pages\\Admin\\CalcularFacturacion.cshtml",
+              "RelativeDocumentMoniker": "Pages\\Admin\\CalcularFacturacion.cshtml",
+              "ToolTip": "C:\\Users\\Michel\\workspace\\WebHomePro\\WebHomePro\\Pages\\Admin\\CalcularFacturacion.cshtml",
+              "RelativeToolTip": "Pages\\Admin\\CalcularFacturacion.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-08-19T21:18:48.455Z",
+              "WhenOpened": "2025-08-20T08:03:51.495Z",
               "EditorCaption": ""
             }
           ]

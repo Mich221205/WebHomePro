@@ -92,13 +92,13 @@
     <Content Include="WSProveedor.asmx" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BONO.cs">
+    <Compile Include="BONOS.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="CLIENTE.cs">
+    <Compile Include="CLIENTES.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="COBRO.cs">
+    <Compile Include="COBROS.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="CODIGO_PAIS.cs">
@@ -115,7 +115,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="LLAMADA.cs">
+    <Compile Include="LLAMADAS.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model1.Context.cs">
@@ -137,16 +137,10 @@
     <Compile Include="RespuestaActivarDesactivar.cs" />
     <Compile Include="RespuestaCalculoPostpago.cs" />
     <Compile Include="RespuestaIngresarServicio.cs" />
-    <Compile Include="sp_helpdiagramdefinition_Result.cs">
+    <Compile Include="sysdiagrams.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="sp_helpdiagrams_Result.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="sysdiagram.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="TELEFONO.cs">
+    <Compile Include="TELEFONOS.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="TIPO_TELEFONO.cs">
@@ -155,7 +149,7 @@
     <Compile Include="TIPO_TRANSACCION.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="TRANSACCIONE.cs">
+    <Compile Include="TRANSACCIONES.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="WSProveedor.asmx.cs">
@@ -201,7 +195,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>57086</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>https://localhost:44354/WSProveedor1/</IISUrl>
+          <IISUrl>https://localhost:44354/WSProveedor1</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

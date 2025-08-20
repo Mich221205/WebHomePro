@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
@@ -97,15 +98,123 @@ namespace WSProveedor1
             public string Mensaje { get; set; }
         }
 
+        [WebMethod]
+        public int ObtenerIdClientePorCedula(string cedula)
+        {
+            using (var cn = new SqlConnection(ConfigurationManager.ConnectionStrings["SQLServer"].ConnectionString))
+            using (var cmd = new SqlCommand("SELECT ID_CLIENTE FROM CLIENTES WHERE CEDULA = @Cedula", cn))
+            {
+                cmd.Parameters.AddWithValue("@Cedula", cedula);
+
+                cn.Open();
+                var result = cmd.ExecuteScalar();
+
+                return result != null ? Convert.ToInt32(result) : 0;
+            }
+        }
+
+    public class LineaPrepago { public string Telefono; public decimal SaldoDisponible; }
+        public class LineaPostpago { public string Telefono; public decimal MontoPendiente; }
+
+        [WebMethod]
+        public List<LineaPostpago> ListarLineasPostpagoPorCliente(int idCliente)
+        {
+            var lista = new List<LineaPostpago>();
+
+            using (var cn = new SqlConnection(ConfigurationManager.ConnectionStrings["SQLServer"].ConnectionString))
+            using (var cmd = new SqlCommand(@"
+                WITH postpago AS (
+                    SELECT t.NUM_TELEFONO AS Telefono, t.ID_CLIENTE
+                    FROM TELEFONOS t
+                    JOIN TIPO_TELEFONO tt ON tt.ID_T_TELEFONO = t.TIPO_TELEFONO
+                    WHERE t.ID_CLIENTE = @IdCliente
+                      AND t.ID_ESTADO = 1
+                      AND UPPER(tt.DESCRIPCION) = 'POSTPAGO'
+                ),
+                pendiente_cliente AS (
+                    SELECT dc.ID_CLIENTE,
+                           COALESCE(SUM(CASE WHEN UPPER(dc.ESTADO_PAGO)='PENDIENTE'
+                                             THEN COALESCE(dc.MONTO_TOTAL,0) END),0) AS MontoPendiente
+                    FROM DETALLE_COBROS dc
+                    WHERE dc.ID_CLIENTE = @IdCliente
+                    GROUP BY dc.ID_CLIENTE
+                )
+                SELECT p.Telefono,
+                       COALESCE(pc.MontoPendiente,0) AS MontoPendiente
+                FROM postpago p
+                LEFT JOIN pendiente_cliente pc ON pc.ID_CLIENTE = p.ID_CLIENTE
+                ORDER BY p.Telefono;", cn))
+            {
+                // ✅ Parámetro seguro (sin inyección SQL)
+                cmd.Parameters.AddWithValue("@IdCliente", idCliente);
+
+                cn.Open();
+                using (var rd = cmd.ExecuteReader())
+                {
+                    while (rd.Read())
+                    {
+                        var tel = rd["Telefono"]?.ToString() ?? "";
+                        // 🔓 Desencriptar si está en formato ENC:
+                        tel = AESDecryptor.Decrypt(tel);
+
+                        lista.Add(new LineaPostpago
+                        {
+                            Telefono = tel,
+                            MontoPendiente = Convert.ToDecimal(rd["MontoPendiente"])
+                        });
+                    }
+                }
+            }
+
+            return lista;
+        }
+
+
+        [WebMethod]
+        public List<LineaPrepago> ListarLineasPrepagoPorCliente()
+        {
+            var lista = new List<LineaPrepago>();
+
+            using (var cn = new SqlConnection(ConfigurationManager.ConnectionStrings["SQLServer"].ConnectionString))
+            using (var cmd = new SqlCommand(@"
+        SELECT 
+            t.NUM_TELEFONO       AS Telefono,
+            COALESCE(t.SALDO, 0) AS SaldoDisponible
+        FROM TELEFONOS t
+        JOIN TIPO_TELEFONO tt ON tt.ID_T_TELEFONO = t.TIPO_TELEFONO
+        WHERE t.ID_CLIENTE = 25
+          AND t.ID_ESTADO = 1
+          AND UPPER(tt.DESCRIPCION) = 'PREPAGO'
+        ORDER BY t.NUM_TELEFONO;", cn))
+            {
+                cn.Open();
+                using (var rd = cmd.ExecuteReader())
+                {
+                    while (rd.Read())
+                    {
+                        var tel = rd["Telefono"]?.ToString() ?? "";
+                        tel = AESDecryptor.Decrypt(tel);
+
+                        lista.Add(new LineaPrepago
+                        {
+                            Telefono = tel,
+                            SaldoDisponible = Convert.ToDecimal(rd["SaldoDisponible"])
+                        });
+                    }
+                }
+            }
+
+            return lista;
+        }
 
         [WebMethod]
         public Resultado InsertarClienteBasico(string cedula, string nombre)
         {
             try
             {
-                using (var ctx = new COMPANIA_TELEFONICAEntities1())
+                using (var ctx = new COMPANIA_TELEFONICAEntities())
                 {
-                    var nuevoCliente = new CLIENTE
+                    var nuevoCliente = new CLIENTES
                     {
                         CEDULA = cedula,
                         NOMBRE = nombre
@@ -144,7 +253,7 @@ namespace WSProveedor1
                 // Encriptar igual que en OnPostNueva
                 string numEnc = AESEncryptor.Encrypt(numeroTelefono);
 
-                using (var db = new COMPANIA_TELEFONICAEntities1())
+                using (var db = new COMPANIA_TELEFONICAEntities())
                 {
                     var linea = db.TELEFONOS.FirstOrDefault(t => t.NUM_TELEFONO == numEnc);
                     if (linea == null)
@@ -161,6 +270,7 @@ namespace WSProveedor1
                 return new RespuestaIngresarServicio { Resultado = false, Mensaje = "Error: " + ex.Message };
             }
         }
+        
 
         public class RespuestaEliminarLinea
         {
@@ -214,19 +324,16 @@ namespace WSProveedor1
             }
         }
 
-
-        
-
         [WebMethod]
         public List<LineaDisponible> ObtenerLineasDisponibles()
         {
-            using (var db = new COMPANIA_TELEFONICAEntities1())
+            using (var db = new COMPANIA_TELEFONICAEntities())
             {
                 var datos = db.TELEFONOS
                     .Where(t => t.ID_ESTADO == 3) // 'disponibles/sin vender'
                     .Select(t => new
                     {
-                        t.ID_TELEFONO,           
+                        t.IDENTIFICADOR_TELEFONO,           
                         t.NUM_TELEFONO,
                         t.IDENTIFICADOR_TARJETA,
                         Tipo = t.TIPO_TELEFONO1.DESCRIPCION
@@ -235,7 +342,7 @@ namespace WSProveedor1
 
                 var lineas = datos.Select(t => new LineaDisponible
                 {
-                    IdTelefono = t.ID_TELEFONO.ToString(),                    
+                    IdTelefono = AESDecryptor.Decrypt(t.IDENTIFICADOR_TELEFONO),                    
                     Numero = AESDecryptor.Decrypt(t.NUM_TELEFONO),
                     IdTarjeta = AESDecryptor.Decrypt(t.IDENTIFICADOR_TARJETA),
                     Tipo = t.Tipo
@@ -244,8 +351,6 @@ namespace WSProveedor1
                 return lineas;
             }
         }
-
-
 
         [WebMethod]
         public RespuestaActivarDesactivar ActivarDesactivarLinea(
@@ -292,16 +397,21 @@ namespace WSProveedor1
                 int estadoCode = (e == "activar") ? 1 : 2;
 
 
+                string telefonoEnc = AESEncryptor.Encrypt(numeroTelefono.Trim());
+                string idChipEnc = AESEncryptor.Encrypt(idTarjeta.Trim());
+                string idTelEnc = AESEncryptor.Encrypt(idTelefono.Trim());
+
                 var trama = new
                 {
                     tipo_transaccion = "6",
-                    telefono = numeroTelefono?.Trim(),
-                    identificadorTel = idTelefono?.Trim(),
-                    identificador_tarjeta = idTarjeta?.Trim(),
+                    telefono = telefonoEnc,
+                    identificadorTel = idTelEnc,
+                    identificador_tarjeta = idChipEnc,
                     tipo = t,
                     duenio = duenioProv,
                     estado = estadoCode
                 };
+
 
                 string json = JsonConvert.SerializeObject(trama);
                 System.Diagnostics.Debug.WriteLine($"WSProveedor -> JSON: {json}");
@@ -324,11 +434,10 @@ namespace WSProveedor1
                 return new RespuestaActivarDesactivar { Resultado = false, Mensaje = "Error: " + ex.Message };
             }
         }
-
         private static string ObtenerCedulaPorIdCliente(string idCliente)
         {
             if (string.IsNullOrWhiteSpace(idCliente)) return null;
-            string cs = "Server=EINSTEIN\\SQLINST1;Database=COMPANIA_TELEFONICA;User Id=sa;Password=2112;";
+            string cs = "Server=Laptop-Michel;Database=COMPANIA_TELEFONICA;User Id=sa;Password=mich22;";
             using (var cn = new SqlConnection(cs))
             {
                 cn.Open();
@@ -347,7 +456,7 @@ namespace WSProveedor1
             var lista = new List<LineaEnUso>();
             try
             {
-                string cs = "Server=EINSTEIN\\SQLINST1;Database=COMPANIA_TELEFONICA;User Id=sa;Password=2112;";
+                string cs = "Server=Laptop-Michel;Database=COMPANIA_TELEFONICA;User Id=sa;Password=mich22;";
                 using (var conn = new SqlConnection(cs))
                 {
                     conn.Open();
@@ -372,13 +481,14 @@ namespace WSProveedor1
                         {
                             lista.Add(new LineaEnUso
                             {
-                                NUM_TELEFONO = dr["NUM_TELEFONO"].ToString(),
-                                IDENTIFICADOR_TARJETA = dr["IDENTIFICADOR_TARJETA"].ToString(),
-                                IDENTIFICADOR_TELEFONO = dr["IDENTIFICADOR_TELEFONO"].ToString(),
+                                NUM_TELEFONO = AESDecryptor.Decrypt(dr["NUM_TELEFONO"].ToString()),
+                                IDENTIFICADOR_TARJETA = AESDecryptor.Decrypt(dr["IDENTIFICADOR_TARJETA"].ToString()),
+                                IDENTIFICADOR_TELEFONO = AESDecryptor.Decrypt(dr["IDENTIFICADOR_TELEFONO"].ToString()),
                                 CEDULA = dr["CEDULA"].ToString(),
                                 NOMBRE = dr["NOMBRE"].ToString(),
                                 TIPO_TELEFONO = dr["DESCRIPCION"].ToString()
                             });
+
                         }
                     }
                 }
@@ -449,6 +559,7 @@ namespace WSProveedor1
                 return new RespuestaCalculoPostpago { Resultado = false, Mensaje = $"Error: {ex.Message}" };
             }
         }
+
         /// <summary>
         /// ///CalculoFacturacionResponse
         /// </summary>
@@ -468,7 +579,7 @@ namespace WSProveedor1
         {
             try
             {
-                using (var db = new COMPANIA_TELEFONICAEntities1())
+                using (var db = new COMPANIA_TELEFONICAEntities())
                 {
                     var ultima = db.COBROS
                         .OrderByDescending(c => c.FECHA_COBRO)

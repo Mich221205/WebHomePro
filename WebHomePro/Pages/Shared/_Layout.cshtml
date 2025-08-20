@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,26 +10,57 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">WebHomePro</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+        <!-- NAVBAR ADMIN -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom box-shadow mb-3" id="mainNav">
+            <div class="container px-4 px-lg-5">
+                <a class="navbar-brand" asp-page="/Admin/MenuAdmin">
+                    <img src="~/img/LOGO HOMEPRO.png" alt="Logo" style="height: 5rem;" />
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
+                        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ms-auto py-4 py-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+                            <a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Admin/Nuevas_LineasTELE">
+                                Nuevas líneas telefónicas
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
+                            <a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Admin/ActivarLinea">
+                                Activar una línea recién vendida
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Admin/DesactivarLinea">
+                                Devolución de una línea telefónica
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Admin/CalcularFacturacion">
+                                Calcular facturación
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Admin/Nuevos_Admin">
+                                Nuevos usuarios administrativos
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Login">
+                                Salir del Sitio
+                            </a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
+        <!-- FIN NAVBAR ADMIN -->
     </header>
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
@@ -37,8 +68,8 @@
     </div>
 
     <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - WebHomePro - <a asp-area="" asp-page="/Privacy">Privacy</a>
+        <div class="container text-center">
+            &copy; @DateTime.Now.Year - Central General
         </div>
     </footer>
 
