@@ -3,14 +3,6 @@
   "WorkspaceRootPath": "C:\\Users\\Michel\\workspace\\WebHomePro\\WebHomePro\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{CE2FDD12-9EA0-46A0-8E25-8D6E6413350D}|WebHomePro.csproj|c:\\users\\michel\\workspace\\webhomepro\\webhomepro\\pages\\cliente\\pagarfactura.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{CE2FDD12-9EA0-46A0-8E25-8D6E6413350D}|WebHomePro.csproj|solutionrelative:pages\\cliente\\pagarfactura.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CE2FDD12-9EA0-46A0-8E25-8D6E6413350D}|WebHomePro.csproj|c:\\users\\michel\\workspace\\webhomepro\\webhomepro\\pages\\cliente\\pagarfactura.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CE2FDD12-9EA0-46A0-8E25-8D6E6413350D}|WebHomePro.csproj|solutionrelative:pages\\cliente\\pagarfactura.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{0D277C98-66F0-4C69-B491-415E34A01CD0}|..\\WSProveedor1\\WSProveedor1\\WSProveedor1.csproj|c:\\users\\michel\\workspace\\webhomepro\\wsproveedor1\\wsproveedor1\\wsproveedor.asmx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -21,7 +13,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 13,
+          "SelectedChildIndex": 11,
           "Children": [
             {
               "$type": "Bookmark",
@@ -69,41 +61,15 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "WSProveedor.asmx.cs",
               "DocumentMoniker": "C:\\Users\\Michel\\workspace\\WebHomePro\\WSProveedor1\\WSProveedor1\\WSProveedor.asmx.cs",
               "RelativeDocumentMoniker": "..\\WSProveedor1\\WSProveedor1\\WSProveedor.asmx.cs",
               "ToolTip": "C:\\Users\\Michel\\workspace\\WebHomePro\\WSProveedor1\\WSProveedor1\\WSProveedor.asmx.cs",
               "RelativeToolTip": "..\\WSProveedor1\\WSProveedor1\\WSProveedor.asmx.cs",
-              "ViewState": "AgIAAFwAAAAAAAAAAAD4v3kAAABIAAAAAAAAAA==",
+              "ViewState": "AgIAAGAAAAAAAAAAAAA3wAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-20T20:58:45.772Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "PagarFactura.cshtml.cs",
-              "DocumentMoniker": "C:\\Users\\Michel\\workspace\\WebHomePro\\WebHomePro\\Pages\\Cliente\\PagarFactura.cshtml.cs",
-              "RelativeDocumentMoniker": "Pages\\Cliente\\PagarFactura.cshtml.cs",
-              "ToolTip": "C:\\Users\\Michel\\workspace\\WebHomePro\\WebHomePro\\Pages\\Cliente\\PagarFactura.cshtml.cs",
-              "RelativeToolTip": "Pages\\Cliente\\PagarFactura.cshtml.cs",
-              "ViewState": "AgIAAMYAAAAAAAAAAAAowOIAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-20T20:51:45.213Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "PagarFactura.cshtml",
-              "DocumentMoniker": "C:\\Users\\Michel\\workspace\\WebHomePro\\WebHomePro\\Pages\\Cliente\\PagarFactura.cshtml",
-              "RelativeDocumentMoniker": "Pages\\Cliente\\PagarFactura.cshtml",
-              "ToolTip": "C:\\Users\\Michel\\workspace\\WebHomePro\\WebHomePro\\Pages\\Cliente\\PagarFactura.cshtml",
-              "RelativeToolTip": "Pages\\Cliente\\PagarFactura.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAAsAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-08-20T20:47:41.286Z",
+              "WhenOpened": "2025-08-21T04:22:07.534Z",
               "EditorCaption": ""
             }
           ]

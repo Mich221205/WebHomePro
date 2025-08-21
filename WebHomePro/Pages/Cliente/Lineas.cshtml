@@ -15,10 +15,10 @@
     <link href="~/css/StyleMenuAdmin.css" rel="stylesheet" />
 </head>
 <body>
-    <!-- Navigation -->
+    <!-- Navigation (idéntico a tu menú cliente, con enlaces activos) -->
     <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
         <div class="container px-4 px-lg-5">
-            <a class="navbar-brand" asp-page="/Cliente/MenuCliente">
+            <a class="navbar-brand" asp-page="/Index">
                 <img src="~/img/LOGO HOMEPRO.png" alt="Logo" style="height: 5rem;" />
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive">
@@ -26,17 +26,32 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ms-auto py-4 py-lg-0">
+                    <li class="nav-item">
+                        <span class="navbar-text px-lg-3 py-3 py-lg-4">
+                            Hola @HttpContext.Session.GetString("ClienteNombre")
+                        </span>
+                    </li>
 
-                    <!-- Opciones del menú -->
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Cliente/Lineas">Líneas Activas a su Nombre</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Cliente/LineasCliente">Líneas Activas a su Nombre</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Cliente/CargarSaldo">Cargar saldo a línea PREPAGO</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-lg-3 py-3 py-lg-4 active" asp-page="/Cliente/PagarFactura">Pago facturas pendientes</a>
+                    </li>
 
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Cliente/CargarSaldo">Cargar saldo a línea PREPAGO</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Cliente/CargarSaldo">Cargar Saldo Lineas Prepago</a>
+                    </li>
 
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/#">Pagar factura Pendiente</a></li>
-
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/#">Devolver una Línea</a></li>
-
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Login">Salir del Sitio</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Cliente/DevolverLinea">Devolver una Línea</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-lg-3 py-3 py-lg-4" asp-page="/Login">Salir del Sitio</a>
+                    </li>
                 </ul>
             </div>
         </div>
